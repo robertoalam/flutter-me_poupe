@@ -10,6 +10,11 @@ class ContaBancariaTipoModel{
 
 	ContaBancariaTipoModel({this.id, this.descricao});
 
+  @override
+  toString(){
+    return "${this.id} ${this.descricao}";
+  }
+
 	factory ContaBancariaTipoModel.fromJson(Map<String, dynamic> json) {
 		return ContaBancariaTipoModel(
 			id: json['id'],

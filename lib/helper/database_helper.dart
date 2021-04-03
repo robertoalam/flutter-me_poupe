@@ -140,7 +140,7 @@ class DatabaseHelper {
   }
 
 	contaBancariaTipoCadCriar(Database db) async {
-		await db.execute(''' CREATE TABLE IF NOT EXISTS conta_bancaria_tipo_cad ( id INTEGER PRIMARY KEY, descricao VARCHAR(70) ); ''');
+		await db.execute(''' CREATE TABLE IF NOT EXISTS conta_bancaria_tipo_cad ( _id INTEGER PRIMARY KEY, descricao VARCHAR(70) ); ''');
 	}
 
   contaBancariaCadCriar(Database db) async {

@@ -311,7 +311,7 @@ class _TabInicioTelaState extends State<TabInicioTela> {
                   alignment: Alignment.topCenter,
                   child: SizedBox(
                     width: 128,height: 128,
-                    child: Image.asset("assets/images/cartoes.png"),
+                    child: Image.asset("assets/images/cartoes_${_modo}.png"),
                   )
               ),
               Align(
