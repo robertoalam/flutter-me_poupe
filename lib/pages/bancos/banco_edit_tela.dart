@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:me_poupe/componentes/cortina_modal.dart';
 import 'package:me_poupe/helper/configuracoes_helper.dart';
 import 'package:me_poupe/helper/funcoes_helper.dart';
 import 'package:me_poupe/model/cad/cad_banco_model.dart';
 import 'package:me_poupe/model/configuracoes/configuracao_model.dart';
+import 'package:me_poupe/model/configuracoes/icone_cad_model.dart';
+import 'package:me_poupe/model/conta/conta_model.dart';
 import 'package:me_poupe/model/conta/conta_tipo_model.dart';
 
 class BancoEditTela extends StatefulWidget {
@@ -33,9 +36,11 @@ class _BancoEditTelaState extends State<BancoEditTela> {
     Widget _body;
     var _dados = null;
     BancoCadModel _banco = null;
+    ContaModel _conta = new ContaModel();
+      // TIPO DE CONTA
     ContaBancariaTipoModel _contaTipo = new ContaBancariaTipoModel();
     List<ContaBancariaTipoModel> _contaTipoLista = new List<ContaBancariaTipoModel>();
-
+    String _contaTipoDescricaoSelecionada = "Clique aqui";
 
     @override
     void initState() {
@@ -182,6 +187,29 @@ class _BancoEditTelaState extends State<BancoEditTela> {
                             ),
                         ],
                     ),
+                    SizedBox(height: 10,),
+                    InkWell(
+                        onTap: () async { 
+                            var retorno = await _cortinaTipoConta( context );
+                            if(retorno != null){
+                                _setarTipoConta(retorno);
+                            }                                
+                        },
+                        child:  Container(
+                            width: MediaQuery.of(context).size.width,
+                            padding: EdgeInsets.fromLTRB(10, 15, 10, 15),
+                            decoration: BoxDecoration(
+                                border: Border.all( width: 2, color: Color(int.parse( _colorLetra) ) ),
+                                borderRadius: BorderRadius.circular(10)
+                            ),                                
+                            child: Text("${_contaTipoDescricaoSelecionada}" ,style: TextStyle(
+                                    color: Color( int.parse( _colorLetra) ),
+                                    fontSize: 18,
+                                    fontFamily: "Quicksand"
+                                ),           
+                            ),
+                        ),
+                    ),
                 ],
             );
         }
@@ -191,6 +219,19 @@ class _BancoEditTelaState extends State<BancoEditTela> {
                 title: Text('Banco'),
                 backgroundColor: Color(int.parse(_colorAppBar) ),
             ),    
+            floatingActionButton: FloatingActionButton(
+                backgroundColor: Color(int.parse( _colorAppBar) ),
+                child: InkWell(
+                    onTap: (){
+                        if(_validarForm(context) ){
+                            _salvar();
+                        }else{
+                            print('ERRO NA TELA');
+                        }
+                    },
+                    child: Icon(Icons.save , color: Colors.black, size: 32,),
+                )
+            ),
             body: SafeArea(
                 child: SingleChildScrollView(
                     child: Container(
@@ -201,6 +242,66 @@ class _BancoEditTelaState extends State<BancoEditTela> {
                     )
                 ),
             ),
+        );
+    }
+
+    _validarForm(BuildContext context){
+        if( _conta.tipo == null) return false;
+        return true;
+    }
+
+    _salvar(){
+
+    }
+    _setarTipoConta(ContaBancariaTipoModel objeto){
+        if(objeto != null){
+            _contaTipoDescricaoSelecionada = objeto.descricao;
+            _conta.tipo = objeto;
+        }else{
+            // SETAR O PADRAO
+            _conta.tipo = null;
+        }
+
+        setState(() { _contaTipoDescricaoSelecionada; });
+
+    }
+ 
+    _cortinaTipoConta(BuildContext context){
+        return  showModalBottomSheet(
+            elevation: 0,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
+            context: context,
+            builder: (BuildContext context) {
+                return Container(
+                    // height: MediaQuery.of(context).size.height * .4,
+                    decoration: BoxDecoration(
+                        color: (_dados['modo'] == "normal")? Colors.white:Colors.grey,
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(20),
+                            topRight: Radius.circular(20),
+                        ),
+                    ),
+                    child: ListView(
+                        children: [
+                            for(ContaBancariaTipoModel objeto in _contaTipoLista) InkWell(
+                                onTap: (){ Navigator.pop(context , objeto); },
+                                child: Column(
+                                    children: [
+                                        Padding(
+                                            padding: EdgeInsets.fromLTRB(5, 15, 0, 15),
+                                            child: Text("${objeto.descricao}",style: TextStyle(color: Color(int.parse( _colorAppBar)), fontSize: 20.0) ),
+                                        ),
+                                        Visibility(
+                                            visible: (objeto.id != _contaTipoLista.last.id)? true:false,
+                                            child: Divider( color: Color(int.parse( _colorLetra)),),
+                                        )
+                                    ],
+                                )
+                            )
+                        ],
+                    ),
+                );
+            },
         );
     }
 }
