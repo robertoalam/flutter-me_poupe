@@ -97,7 +97,8 @@ class Configuracoes{
     {"icone":"luz-02" , "codigo": 0xf0e4f, "familia":"Material Design Icons" , "pacote":"material_design_icons_flutter"},
 
     {"icone":"mala-01" , "codigo": 0xf0587, "familia":"Material Design Icons" , "pacote":"material_design_icons_flutter"},
-    {"icone":"money-01" , "codigo": 0xe5c6, "familia":"MaterialIcons"""},
+    {"icone":"material-construcao-01" , "codigo": 0xe67a, "familia":"Icon" , "pacote":"MaterialIcons"},
+    {"icone":"money-01" , "codigo": 0xe5c6, "familia":"MaterialIcons","pacote":""},
     {"icone":"money-02" , "codigo": 0xf0116, "familia":"Material Design Icons" , "pacote":"material_design_icons_flutter"},
     {"icone":"money-03" , "codigo": 0xf067a, "familia":"Material Design Icons" , "pacote":"material_design_icons_flutter"},
 

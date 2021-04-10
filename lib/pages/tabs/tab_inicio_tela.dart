@@ -23,7 +23,7 @@ class _TabInicioTelaState extends State<TabInicioTela> {
 
 	BalanceteModel _balancete = new BalanceteModel();
     ContaModel _conta = new ContaModel();
-    List<CartaoModel> _contaLista = new List<CartaoModel>();
+    List<ContaModel> _contaLista = new List<ContaModel>();
 	CartaoModel _cartao = new CartaoModel();
 	List<CartaoModel> _cartaoLista = new List<CartaoModel>();
 
