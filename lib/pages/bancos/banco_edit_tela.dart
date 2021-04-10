@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:me_poupe/componentes/cortina_modal.dart';
 import 'package:me_poupe/helper/configuracoes_helper.dart';
 import 'package:me_poupe/helper/funcoes_helper.dart';
 import 'package:me_poupe/model/cad/cad_banco_model.dart';
 import 'package:me_poupe/model/configuracoes/configuracao_model.dart';
-import 'package:me_poupe/model/configuracoes/icone_cad_model.dart';
+// import 'package:me_poupe/model/configuracoes/icone_cad_model.dart';
 import 'package:me_poupe/model/conta/conta_model.dart';
 import 'package:me_poupe/model/conta/conta_tipo_model.dart';
 
@@ -35,12 +34,19 @@ class _BancoEditTelaState extends State<BancoEditTela> {
     // VARIAVEIS
     Widget _body;
     var _dados = null;
+    
+    // VALIDACAO
+    bool _flag;
+    List<bool> _listaFlag = [];
+
+
     BancoCadModel _banco = null;
     ContaModel _conta = new ContaModel();
       // TIPO DE CONTA
     ContaBancariaTipoModel _contaTipo = new ContaBancariaTipoModel();
     List<ContaBancariaTipoModel> _contaTipoLista = new List<ContaBancariaTipoModel>();
     String _contaTipoDescricaoSelecionada = "Clique aqui";
+    bool _contaTipoValidate = false;
 
     @override
     void initState() {
@@ -210,6 +216,10 @@ class _BancoEditTelaState extends State<BancoEditTela> {
                             ),
                         ),
                     ),
+                    Visibility(
+                        visible: _contaTipoValidate,
+                        child: Text("Campo obrigatório")
+                    ),
                 ],
             );
         }
@@ -223,7 +233,7 @@ class _BancoEditTelaState extends State<BancoEditTela> {
                 backgroundColor: Color(int.parse( _colorAppBar) ),
                 child: InkWell(
                     onTap: (){
-                        if(_validarForm(context) ){
+                        if(_validarForm() ){
                             _salvar();
                         }else{
                             print('ERRO NA TELA');
@@ -245,8 +255,22 @@ class _BancoEditTelaState extends State<BancoEditTela> {
         );
     }
 
-    _validarForm(BuildContext context){
-        if( _conta.tipo == null) return false;
+    _validarForm(){
+        print("ENTROU 1");
+        _flag = _validarTipoConta();
+        _listaFlag.add(_flag);
+
+        return (_listaFlag.contains(true))? true : false;
+    }
+
+    _validarTipoConta(){
+        if( _conta.tipo == null ) {
+            _contaTipoValidate = true;
+            print("CHEGOU ${_contaTipoValidate}");
+            setState(() { _contaTipoValidate; });
+            return false;
+        }
+
         return true;
     }
 

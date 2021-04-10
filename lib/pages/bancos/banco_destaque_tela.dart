@@ -3,8 +3,10 @@ import 'package:me_poupe/helper/configuracoes_helper.dart';
 import 'package:me_poupe/helper/funcoes_helper.dart';
 import 'package:me_poupe/model/cad/cad_banco_model.dart';
 import 'package:me_poupe/model/configuracoes/configuracao_model.dart';
+import 'package:me_poupe/model/conta/conta_model.dart';
 import 'package:me_poupe/pages/bancos/banco_edit_tela.dart';
 import 'package:me_poupe/pages/bancos/banco_list_tela.dart';
+import 'package:me_poupe/pages/conta/conta_edit_tela.dart';
 
 class BancoDestaqueTela extends StatefulWidget {
     @override
@@ -15,6 +17,7 @@ class _BancoDestaqueTelaState extends State<BancoDestaqueTela> {
 
 	BancoCadModel _banco = new BancoCadModel();
 	List<BancoCadModel> _bancoLista = new List<BancoCadModel>();
+    ContaModel _conta = new ContaModel();
 	var _dados;
 
 	// CORES TELA
@@ -121,24 +124,25 @@ class _BancoDestaqueTelaState extends State<BancoDestaqueTela> {
             child: Padding(
                 padding: EdgeInsets.all(20),
                 child: CircleAvatar(
-                backgroundColor:  Color(int.parse(color)),
-                radius: 30,
-                child: SizedBox(
-                    height: 50, width: 50,
-                    child: Image.asset(objeto.imageAsset),
-                ),
+                    backgroundColor:  Color(int.parse(color)),
+                    radius: 30,
+                    child: SizedBox(
+                        height: 50, width: 50,
+                        child: Image.asset(objeto.imageAsset),
+                    ),
                 ),
             ),
 		    onTap: (){ _navegar(objeto); },
 		);
   	}
 
-    _navegar(BancoCadModel objeto){
-		// SE FOR OUTROS
-		if(objeto.id == 54){
-			Navigator.push( context , MaterialPageRoute( builder: (context) => BancoListTela() ) );
-		}else{
-			Navigator.push( context , MaterialPageRoute( builder: (context) => BancoEditTela(banco: objeto,) ) );
-		}
+    _navegar(objeto){
+      // SE FOR OUTROS
+      if(objeto.id == 54){
+        Navigator.push( context , MaterialPageRoute( builder: (context) => BancoListTela() ) );
+      }else{
+              _conta.banco = objeto;
+        Navigator.push( context , MaterialPageRoute( builder: (context) => ContaEditTela(conta: _conta,) ) );
+      }
   	}    
 }

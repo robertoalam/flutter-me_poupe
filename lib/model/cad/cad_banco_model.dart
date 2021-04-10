@@ -36,7 +36,7 @@ class BancoCadModel{
 
   @override
   String toString() {
-    return "${this.corCartao}";
+    return "${this.descricao}";
   }
 
   factory BancoCadModel.fromJson(Map<String, dynamic> json) {
