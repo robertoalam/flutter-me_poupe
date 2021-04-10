@@ -49,6 +49,7 @@ class CategoriaDummy{
       CategoriaCadModel(id: 5005 , idPai: 50 , descricao: "Peças encanamento",icone:"eletro-01"),
       CategoriaCadModel(id: 5006 , idPai: 50 , descricao: "Peças hidraulica",icone:"eletro-01"),
       CategoriaCadModel(id: 5007 , idPai: 50 , descricao: "Torneira",icone:"eletro-01"),
+      CategoriaCadModel(id: 5008 , idPai: 50 , descricao: "Material construção",icone:"material-construcao-01"),
 
       //Educação
       CategoriaCadModel(id: 6001 , idPai: 60 , descricao: "Creche",icone:"pessoa-bebe-01"),

@@ -117,8 +117,19 @@ class LancamentosDummy{
       {'id_usuario':2,'id_lancamento_tipo':1,'descricao':'luisa - forma ovo de pascoa','id_categoria':1004,'dt_lancamento':'2021-03-29 17:57:45','id_pagamento_forma':2,'id_cartao':3,'id_frequencia':1,'id_frequencia_periodo':1,'no_quantidade':1,'vl_integral':9.90},
       {'id_usuario':2,'id_lancamento_tipo':1,'descricao':'supernick','id_categoria':1004,'dt_lancamento':'2021-03-29 18:57:45','id_pagamento_forma':2,'id_cartao':4,'id_frequencia':1,'id_frequencia_periodo':1,'no_quantidade':1,'vl_integral':68.17},
       {'id_usuario':2,'id_lancamento_tipo':1,'descricao':'supernick','id_categoria':1004,'dt_lancamento':'2021-03-31 08:07:45','id_pagamento_forma':2,'id_cartao':4,'id_frequencia':1,'id_frequencia_periodo':1,'no_quantidade':1,'vl_integral':18.17},
+      {'id_usuario':2,'id_lancamento_tipo':1,'descricao':'zaffari','id_categoria':1004,'dt_lancamento':'2021-03-31 11:52:45','id_pagamento_forma':2,'id_cartao':4,'id_frequencia':1,'id_frequencia_periodo':1,'no_quantidade':1,'vl_integral':68.87},      
       {'id_usuario':2,'id_lancamento_tipo':1,'descricao':'luisa-ovo de pascoa da cacau show','id_categoria':1005,'dt_lancamento':'2021-04-01 13:57:45','id_pagamento_forma':2,'id_cartao':3,'id_frequencia':1,'id_frequencia_periodo':1,'no_quantidade':1,'vl_integral':72.0},
       {'id_usuario':2,'id_lancamento_tipo':1,'descricao':'zaffari','id_categoria':1004,'dt_lancamento':'2021-04-01 15:27:45','id_pagamento_forma':2,'id_cartao':4,'id_frequencia':1,'id_frequencia_periodo':1,'no_quantidade':1,'vl_integral':256.0},
+      {'id_usuario':2,'id_lancamento_tipo':1,'descricao':'super nick','id_categoria':1004,'dt_lancamento':'2021-04-02 12:07:42','id_pagamento_forma':2,'id_cartao':4,'id_frequencia':1,'id_frequencia_periodo':1,'no_quantidade':1,'vl_integral':29.52},      
+      {'id_usuario':2,'id_lancamento_tipo':1,'descricao':'carrefour microondas','id_categoria':5004,'dt_lancamento':'2021-04-05 18:17:23','id_pagamento_forma':2,'id_cartao':4,'id_frequencia':1,'id_frequencia_periodo':1,'no_quantidade':1,'vl_integral':51.0},
+      {'id_usuario':2,'id_lancamento_tipo':1,'descricao':'super nick','id_categoria':1004,'dt_lancamento':'2021-04-05 20:17:45','id_pagamento_forma':2,'id_cartao':4,'id_frequencia':1,'id_frequencia_periodo':1,'no_quantidade':1,'vl_integral':51.0},
+      {'id_usuario':2,'id_lancamento_tipo':1,'descricao':'luisa - farmacia','id_categoria':2001,'dt_lancamento':'2021-04-06 18:55:19','id_pagamento_forma':2,'id_cartao':3,'id_frequencia':1,'id_frequencia_periodo':1,'no_quantidade':1,'vl_integral':19.84},
+      {'id_usuario':2,'id_lancamento_tipo':1,'descricao':'super nick','id_categoria':1004,'dt_lancamento':'2021-04-07 18:26:18','id_pagamento_forma':2,'id_cartao':4,'id_frequencia':1,'id_frequencia_periodo':1,'no_quantidade':1,'vl_integral':21.80},
+
+      {'id_usuario':2,'id_lancamento_tipo':1,'descricao':'gasolina - azevedo','id_categoria':7001,'dt_lancamento':'2021-04-08 19:55:34','id_pagamento_forma':2,'id_cartao':4,'id_frequencia':1,'id_frequencia_periodo':1,'no_quantidade':1,'vl_integral':164.00},
+      {'id_usuario':2,'id_lancamento_tipo':1,'descricao':'alegretche','id_categoria':1001,'dt_lancamento':'2021-04-09 12:22:05','id_pagamento_forma':2,'id_cartao':2,'id_frequencia':1,'id_frequencia_periodo':1,'no_quantidade':1,'vl_integral':53.0},
+      {'id_usuario':2,'id_lancamento_tipo':1,'descricao':'gasolina - ipiranga bento','id_categoria':7001,'dt_lancamento':'2021-04-09 12:15:07','id_pagamento_forma':2,'id_cartao':4,'id_frequencia':1,'id_frequencia_periodo':1,'no_quantidade':1,'vl_integral':164.00},
+      {'id_usuario':2,'id_lancamento_tipo':1,'descricao':'zaffari','id_categoria':1004,'dt_lancamento':'2021-04-09 18:43:45','id_pagamento_forma':2,'id_cartao':4,'id_frequencia':1,'id_frequencia_periodo':1,'no_quantidade':1,'vl_integral':86.67},
     ];
   }
 }
