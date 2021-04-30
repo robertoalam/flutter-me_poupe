@@ -25,21 +25,36 @@ class ContaModel{
 		);
 	}
 
-	factory ContaModel.fromDatabase(Map<String, dynamic> json) {
-		return ContaModel(
-			id: json['_id'],
+	fromDatabase(Map<String, dynamic> json) async {
+    BancoCadModel banco = new BancoCadModel();
+    banco = await banco.fetchById(json['id_banco']);
+
+    return ContaModel(
+			id: json['id'],
+      banco: banco,
 			descricao: json['descricao'],
-			banco: json['id_banco'],
 			tipo: json['id_conta_tipo'],
 			saldo: json['vl_saldo'],
 		);
 	}
 
+    Map database() {
+        var map = new Map<String, dynamic>();
+        map["id"] = id;
+        map["id_banco"] = banco.id;
+        map["id_conta_tipo"] = tipo.id;
+        map["descricao"] = descricao;
+        map["saldo"] = saldo;
+        return map;
+    }
+
 	fetchById(int id) async {
 		var linha;
 		if( id !=null || id.toString() != "" ) {
-			linha = await dbHelper.query(TABLE_NAME, where: "id = ?", whereArgs: [id]);
-			linha = linha.isNotEmpty ? ContaModel.fromDatabase(linha.first) : null;
+			linha = await dbHelper.query(TABLE_NAME, where: " id = ?", whereArgs: [id]);
+      ContaModel conta = new ContaModel();
+      // conta = conta.fromDatabase(linha);
+			linha = linha.isNotEmpty ? await conta.fromDatabase(linha) : null;
 		}
 		return linha;
 	}
@@ -48,9 +63,34 @@ class ContaModel{
 		final linhas = await dbHelper.queryAllRows(TABLE_NAME);
 		List<ContaModel> lista = List<ContaModel>();
 		for(var linha in linhas){
-			ContaModel objeto = new ContaModel.fromDatabase(linha);
+			ContaModel objeto = new ContaModel();
+      objeto = await objeto.fromDatabase(linha);
 			lista.add(objeto);
 		}
 		return lista;
-  	}
+  }
+
+    save() async {
+	    Map retorno = new Map();
+      if(this.id == null || this.id == 0){
+          //insert
+           var id = await dbHelper.insert(TABLE_NAME, this.database() );
+           if(id.runtimeType != int){
+             retorno['status'] = 500;
+             retorno['msg'] = "Erro ao tenar inserir";
+             return retorno;
+          }
+      }else{
+          //update
+          var id = await dbHelper.update(TABLE_NAME, "id", this.database() );
+          if(id.runtimeType != int){
+            retorno['status'] = 500;
+            retorno['msg'] = "Erro ao tenar editar";
+            return retorno;
+          }
+      }
+      retorno['status'] = 200;
+      retorno['msg'] = "Sucesso !!!";
+      return retorno;
+    }
 }

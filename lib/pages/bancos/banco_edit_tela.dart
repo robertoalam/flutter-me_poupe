@@ -20,8 +20,8 @@ class BancoEditTela extends StatefulWidget {
 
 class _BancoEditTelaState extends State<BancoEditTela> {
 
-    final _formKey = GlobalKey<FormState>();
-    final _scaffoldKey = GlobalKey<ScaffoldState>();
+    // final _formKey = GlobalKey<FormState>();
+    // final _scaffoldKey = GlobalKey<ScaffoldState>();
 
     // CORES TELA
     String _background = Funcoes.converterCorStringColor("#FFFFFF");
@@ -230,17 +230,16 @@ class _BancoEditTelaState extends State<BancoEditTela> {
                 backgroundColor: Color(int.parse(_colorAppBar) ),
             ),    
             floatingActionButton: FloatingActionButton(
+                onPressed: (){
+                    if(_validarForm() ){
+                        _salvar();
+                    }else{
+                        print('ERRO NA TELA');
+                    }
+                },
+
                 backgroundColor: Color(int.parse( _colorAppBar) ),
-                child: InkWell(
-                    onTap: (){
-                        if(_validarForm() ){
-                            _salvar();
-                        }else{
-                            print('ERRO NA TELA');
-                        }
-                    },
-                    child: Icon(Icons.save , color: Colors.black, size: 32,),
-                )
+                child: Icon(Icons.save , color: Colors.black, size: 32,),
             ),
             body: SafeArea(
                 child: SingleChildScrollView(
@@ -275,7 +274,7 @@ class _BancoEditTelaState extends State<BancoEditTela> {
     }
 
     _salvar(){
-
+        _conta.save();
     }
     _setarTipoConta(ContaBancariaTipoModel objeto){
         if(objeto != null){

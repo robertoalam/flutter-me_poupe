@@ -33,7 +33,10 @@ class DatabaseHelper {
         Directory documentsDirectory = await getApplicationDocumentsDirectory();
         String path = join(documentsDirectory.path, _databaseName);
 
-        await deleteDatabase(path);
+        if(false){
+          await deleteDatabase(path);
+        }
+
         return await openDatabase(path, version: _databaseVersion, onCreate: _onCreate);
     }
 
@@ -61,7 +64,7 @@ class DatabaseHelper {
 
         await contaBancariaTipoCadCriar(db);
         await contaBancariaTipoPopular(db);
-        await contaBancariaCadCriar(db);
+        await contaBancariaCriar(db);
         await categoriaCadCriar(db);
         await categoriaCadPopular(db);
         // LANCAMENTO
@@ -81,7 +84,7 @@ class DatabaseHelper {
         // await lancamentoFrequenciaCriar(db);
         // await usuarioTipoCadPopular(db);
 
-        // await seedTestes(db);
+        await seedTestes(db);
     }
 
   // usuarioTipoCadCriar(Database db) async {
@@ -143,7 +146,7 @@ class DatabaseHelper {
 		await db.execute(''' CREATE TABLE IF NOT EXISTS conta_bancaria_tipo_cad ( _id INTEGER PRIMARY KEY, descricao VARCHAR(70) ); ''');
 	}
 
-  contaBancariaCadCriar(Database db) async {
+  contaBancariaCriar(Database db) async {
 		await db.execute(''' CREATE TABLE IF NOT EXISTS conta_bancaria ( id INTEGER PRIMARY KEY, id_banco INTEGER , id_conta_tipo INTEGER , descricao VARCHAR(30) , saldo FLOAT ); ''');
 	}
 

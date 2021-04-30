@@ -11,7 +11,6 @@ import 'package:me_poupe/model/cad/cad_pagamento_forma.dart';
 import 'package:me_poupe/model/cartao_model.dart';
 import 'package:me_poupe/model/lancamento/lancamento_frequencia_detalhe_model.dart';
 import 'package:me_poupe/model/lancamento/lancamento_frequencia_model.dart';
-import 'package:me_poupe/model/lancamento/lancamento_frequencia_periodo_detalhe_model.dart';
 import 'package:me_poupe/model/lancamento/lancamento_pagamento_forma_model.dart';
 import 'package:me_poupe/model/usuario/usuario_model.dart';
 
@@ -129,9 +128,8 @@ class LancamentoModel{
   }
 
   fetchByYearAndMonth(int ano , int mes , {Map where , String order}) async {
-    print("WHERE: ${where}");
 
-    String ordenacao = (order == null)?" ORDER BY strftime('%d', lfd.dt_detalhe) " : " ${order} ";
+    String ordenacao = (order == null)?" ORDER BY strftime('%d', lfd.dt_detalhe) " : " ${order.toString()} ";
 
     String pesquisarWhere = "" ;
     String pesquisarLancamentoTipo = "";

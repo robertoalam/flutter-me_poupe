@@ -80,6 +80,7 @@ class _TabInicioTelaState extends State<TabInicioTela> {
 
    _getConta() async {
         _contaLista = await _conta.fetchByAll();
+        setState(() { _contaLista; });
     }
 
 	_setDataConfig() async {

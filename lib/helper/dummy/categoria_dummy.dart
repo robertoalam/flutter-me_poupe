@@ -5,7 +5,7 @@ class CategoriaDummy{
     return [
       CategoriaCadModel(id: 1 , idPai: 0 , descricao: "",icone: 'ajuda-01' ,order: 0),
       CategoriaCadModel(id: 10 , idPai: 0 , descricao: "Alimentação",icone: 'alimentar-01' ,order: 10),
-      CategoriaCadModel(id: 20 , idPai: 0 , descricao: "Saúde",icone: 'saude-pasta-01',order: 20),
+      CategoriaCadModel(id: 20 , idPai: 0 , descricao: "Saúde e Higiene",icone: 'saude-pasta-01',order: 20),
       CategoriaCadModel(id: 30 , idPai: 0 , descricao: "Lazer",icone: 'lazer-01',order: 30),
       CategoriaCadModel(id: 40 , idPai: 0 , descricao: "Compras",icone: 'comprar-01',order: 40),
       CategoriaCadModel(id: 50 , idPai: 0 , descricao: "Casa",icone: 'home-01',order: 50),
@@ -25,17 +25,20 @@ class CategoriaDummy{
       CategoriaCadModel(id: 1005 , idPai: 10 , descricao: "Doces",icone: 'doce-01'),
       CategoriaCadModel(id: 1006 , idPai: 10 , descricao: "Padaria",icone: 'pao-01'),
       CategoriaCadModel(id: 1007 , idPai: 10 , descricao: "Restaurante",icone: 'alimentar-01'),
+      CategoriaCadModel(id: 1008 , idPai: 10 , descricao: "Açougue",icone: 'acouge-01'),
 
       //SAUDE
       CategoriaCadModel(id: 2001 , idPai: 20 , descricao: "Remédio",icone:"saude-remedio-02"),
       CategoriaCadModel(id: 2002 , idPai: 20 , descricao: "Consulta",icone:"saude-pessoa-01"),
       CategoriaCadModel(id: 2003 , idPai: 20 , descricao: "Exame",icone:"saude-03"),
+      CategoriaCadModel(id: 2004 , idPai: 20 , descricao: "Cabelereiro",icone:"cabelereiro-01"),
 
       //LAZER
       CategoriaCadModel(id: 3001 , idPai: 30 , descricao: "Esportes",icone:"esporte-futebol-01"),
       CategoriaCadModel(id: 3002 , idPai: 30 , descricao: "Academia",icone:"esporte-academia-pessoa-01"),
       CategoriaCadModel(id: 3003 , idPai: 30 , descricao: "Viagem",icone:"mala-01"),
       CategoriaCadModel(id: 3004 , idPai: 30 , descricao: "Piscina",icone:"piscina-01"),
+      CategoriaCadModel(id: 3005 , idPai: 50 , descricao: "Eletronicos - Lazer",icone:"eletro-generico-01"),
 
       // COMPRAS
       CategoriaCadModel(id: 4001 , idPai: 40 , descricao: "Roupas",icone:"roupa-01"),
@@ -48,8 +51,10 @@ class CategoriaDummy{
       CategoriaCadModel(id: 5004 , idPai: 50 , descricao: "Eletrodoméstico",icone:"eletro-01"),
       CategoriaCadModel(id: 5005 , idPai: 50 , descricao: "Peças encanamento",icone:"eletro-01"),
       CategoriaCadModel(id: 5006 , idPai: 50 , descricao: "Peças hidraulica",icone:"eletro-01"),
-      CategoriaCadModel(id: 5007 , idPai: 50 , descricao: "Torneira",icone:"eletro-01"),
+      CategoriaCadModel(id: 5007 , idPai: 50 , descricao: "Torneira",icone:"torneira-01"),
       CategoriaCadModel(id: 5008 , idPai: 50 , descricao: "Material construção",icone:"material-construcao-01"),
+      CategoriaCadModel(id: 5009 , idPai: 50 , descricao: "Ventilador",icone:"ventilador-01"),
+      CategoriaCadModel(id: 5010 , idPai: 50 , descricao: "Eletronicos - Casa",icone:"eletro-generico-01"),
 
       //Educação
       CategoriaCadModel(id: 6001 , idPai: 60 , descricao: "Creche",icone:"pessoa-bebe-01"),
@@ -67,6 +72,11 @@ class CategoriaDummy{
       CategoriaCadModel(id: 7004 , idPai: 70 , descricao: "Passagem Aerea",icone:"transporte-03"),
       CategoriaCadModel(id: 7005 , idPai: 70 , descricao: "Estacionamento",icone:"estacionamento-01"),
       CategoriaCadModel(id: 7006 , idPai: 70 , descricao: "Lavagem",icone:"estacionamento-01"),
+      CategoriaCadModel(id: 7007 , idPai: 70 , descricao: "Lavagem",icone:"pedagio-01"),
+
+      // TRABALHO
+      CategoriaCadModel(id: 8001 , idPai: 80 , descricao: "Material de escritório",icone:"escritorio-01"),
+      CategoriaCadModel(id: 8002 , idPai: 80 , descricao: "Material de informatica",icone:"notebook-01"),
 
       //RECEITAS
       CategoriaCadModel(id: 10001 , idPai: 100 , descricao: "Salário",icone:"money-01"),

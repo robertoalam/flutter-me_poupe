@@ -26,6 +26,7 @@ class Configuracoes{
   // https://materialdesignicons.com/
   // https://fontawesome.com/icons?d=gallery&p=2
   static const icones = {
+    {"icone":"acougue-01" , "codigo":0xf146a, "familia":"Material Design Icons" , "pacote":"material_design_icons_flutter"},
     {"icone":"adicionar-01" , "codigo": 0xe567, "familia":"MaterialIcons"},
     {"icone":"adicionar-02" , "codigo": 0xf11ec, "familia":"Material Design Icons" , "pacote":"material_design_icons_flutter"},
     {"icone":"agua-01" , "codigo": 0xf058c, "familia":"Material Design Icons" , "pacote":"material_design_icons_flutter"},
@@ -42,6 +43,7 @@ class Configuracoes{
     {"icone":"bolo-01" , "codigo": 0xe621, "familia":"MaterialIcons"},
     {"icone":"bolo-02" , "codigo": 0xe0b5, "familia":"MaterialIcons"},
 
+    {"icone":"cabelereiro-01" , "codigo": 0xf10ef, "familia":"Material Design Icons" , "pacote":"material_design_icons_flutter"},
     {"icone":"calendario-01" , "codigo": 0xf00ed, "familia":"Material Design Icons" , "pacote":"material_design_icons_flutter"},
     {"icone":"carrinho-01" , "codigo": 0xf0110, "familia":"Material Design Icons" , "pacote":"material_design_icons_flutter"},
     {"icone":"carrinho-02" , "codigo": 0xf0111, "familia":"Material Design Icons" , "pacote":"material_design_icons_flutter"},
@@ -70,6 +72,8 @@ class Configuracoes{
 
     {"icone":"eletro-01" , "codigo": 0xf109f, "familia":"Material Design Icons" , "pacote":"material_design_icons_flutter"},
     {"icone":"eletro-02" , "codigo": 0xf072a, "familia":"Material Design Icons" , "pacote":"material_design_icons_flutter"},
+    {"icone":"eletro-generico-01" , "codigo": 0xe6f1, "familia":"MaterialIcons" },
+    {"icone":"escritorio-01" , "codigo": 0xf095f, "familia":"Material Design Icons" , "pacote":"material_design_icons_flutter"},
     {"icone":"esporte-academia-01" , "codigo": 0xf01e6, "familia":"Material Design Icons" , "pacote":"material_design_icons_flutter"},
     {"icone":"esporte-academia-pessoa-01" , "codigo": 0xf115d, "familia":"Material Design Icons" , "pacote":"material_design_icons_flutter"},
     {"icone":"esporte-futebol-01" , "codigo": 0xf04b8, "familia":"Material Design Icons" , "pacote":"material_design_icons_flutter"},
@@ -85,8 +89,8 @@ class Configuracoes{
     {"icone":"filtrar-01" , "codigo": 0xe73d, "familia":"MaterialIcons"},
     {"icone":"filtrar-02" , "codigo": 0xe1b6, "familia":"MaterialIcons"},
     
-    {"icone":"help-01" , "codigo": 0xe7b0, "familia":"MaterialIcons"""},
-    {"icone":"help-02" , "codigo": 0xe7b2, "familia":"MaterialIcons"""},
+    {"icone":"help-01" , "codigo": 0xe7b0, "familia":"MaterialIcons"},
+    {"icone":"help-02" , "codigo": 0xe7b2, "familia":"MaterialIcons"},
     {"icone":"home-01" , "codigo": 0xe7ba, "familia":"MaterialIcons"},
     {"icone":"home-02" , "codigo": 0xe59e, "familia":"MaterialIcons"},
     {"icone":"home-03" , "codigo": 0xf1159, "familia":"Material Design Icons" , "pacote":"material_design_icons_flutter"},
@@ -102,7 +106,10 @@ class Configuracoes{
     {"icone":"money-02" , "codigo": 0xf0116, "familia":"Material Design Icons" , "pacote":"material_design_icons_flutter"},
     {"icone":"money-03" , "codigo": 0xf067a, "familia":"Material Design Icons" , "pacote":"material_design_icons_flutter"},
 
+    {"icone":"notebook-01" , "codigo": 0xe7ff, "familia":"MaterialIcons"},
+
     {"icone":"pao-01" , "codigo": 0xf0f3e, "familia":"Material Design Icons" , "pacote":"material_design_icons_flutter"},
+    {"icone":"pedagio-01" , "codigo": 0xf0b6e, "familia":"Material Design Icons" , "pacote":"material_design_icons_flutter"},
     {"icone":"pessoa-saude-01" , "codigo": 0xf0a42, "familia":"Material Design Icons" , "pacote":"material_design_icons_flutter"},
     {"icone":"pessoa-bebe-01" , "codigo": 0xf138b, "familia":"Material Design Icons" , "pacote":"material_design_icons_flutter"},
     {"icone":"pessoa-professor-01" , "codigo": 0xf0890, "familia":"Material Design Icons" , "pacote":"material_design_icons_flutter"},
@@ -150,5 +157,9 @@ class Configuracoes{
     {"icone":"transporte-02" , "codigo": 0xf00e7, "familia":"Material Design Icons" , "pacote":"material_design_icons_flutter"},
     {"icone":"transporte-03" , "codigo": 0xf001d, "familia":"Material Design Icons" , "pacote":"material_design_icons_flutter"},
     {"icone":"televisao-01" , "codigo": 0xf07f4, "familia":"Material Design Icons" , "pacote":"material_design_icons_flutter"},
+    {"icone":"torneira-01" , "codigo": 0xe005, "familia":"Awesome" , "pacote":"font_awesome_flutter"},
+
+    {"icone":"ventilador-01" , "codigo": 0xf0210, "familia":"Material Design Icons" , "pacote":"material_design_icons_flutter"},
+
   };
 }

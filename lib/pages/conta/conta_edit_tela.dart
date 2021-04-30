@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:me_poupe/componentes/modal_aviso_simples_widget.dart';
 import 'package:me_poupe/helper/configuracoes_helper.dart';
 import 'package:me_poupe/helper/funcoes_helper.dart';
 import 'package:me_poupe/model/configuracoes/configuracao_model.dart';
@@ -38,7 +39,7 @@ class _ContaEditTelaState extends State<ContaEditTela> {
     String _descricaoAppBar = "";
     // BANCO
     String _bancoDescricao = "";
-
+    TextEditingController _controllerDescricao = new TextEditingController();
 
       // TIPO DE CONTA
     ContaBancariaTipoModel _contaTipo = new ContaBancariaTipoModel();
@@ -156,23 +157,24 @@ class _ContaEditTelaState extends State<ContaEditTela> {
                     ),
                     SizedBox(height: 10,),
                     TextField(
-                        enabled: true,
-                        decoration: InputDecoration(
-                            filled: true,
-                            fillColor: Color(int.parse( _colorContainerFundo ) ),
-                            hintText: 'Descrição',
-                            hintStyle: TextStyle( 
-                                color: Colors.grey,fontFamily: "Quicksand", 
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.all(Radius.circular(10)),
-                                borderSide: BorderSide(width: 2,color:  Color(int.parse( _colorLetra) ) ),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.all(Radius.circular(10)),
-                                borderSide: BorderSide(width: 2,color: Color(int.parse( _colorLetra) ) ),
-                            ),
-                        ),
+                      controller: _controllerDescricao,
+                      enabled: true,
+                      decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Color(int.parse( _colorContainerFundo ) ),
+                          hintText: 'Descrição',
+                          hintStyle: TextStyle(
+                              color: Colors.grey,fontFamily: "Quicksand",
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(10)),
+                              borderSide: BorderSide(width: 2,color:  Color(int.parse( _colorLetra) ) ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(10)),
+                              borderSide: BorderSide(width: 2,color: Color(int.parse( _colorLetra) ) ),
+                          ),
+                      ),
                     ),
                     SizedBox(height: 20,),
                     Divider( color: Color(int.parse( _colorLetra ) ) ),
@@ -231,17 +233,25 @@ class _ContaEditTelaState extends State<ContaEditTela> {
                 backgroundColor: Color(int.parse(_colorAppBar) ),
             ),    
             floatingActionButton: FloatingActionButton(
+                child: Icon(Icons.save , color: Colors.black, size: 32,),                
+                onPressed:() async {
+                    if(_validarForm(context) ){
+                      var retorno = await _salvar();
+                      if(retorno['status'] == 200){
+                        await _exibirAviso('','Inserido com sucesso !!!',null,'back');
+                      }else{
+                        await _exibirAviso('ERRO !','Falha ao inserir ou editar uma conta !!!',null,'back');
+                      }
+
+                      Navigator.pop(context);
+                    }else{
+                      var retorno = await _exibirAviso('Erro','Defina o tipo de conta',null,'stop');
+                      print("RETORNO 2: ${retorno}");
+                      // if(retorno == 'voltar') Navigator.pop(context);
+
+                    }
+                } ,
                 backgroundColor: Color(int.parse( _colorAppBar) ),
-                child: InkWell(
-                    onTap: (){
-                        if(_validarForm(context) ){
-                            _salvar();
-                        }else{
-                            print('ERRO NA TELA');
-                        }
-                    },
-                    child: Icon(Icons.save , color: Colors.black, size: 32,),
-                )
             ),
             body: SafeArea(
                 child: SingleChildScrollView(
@@ -255,22 +265,33 @@ class _ContaEditTelaState extends State<ContaEditTela> {
             ),
         );
     }
-
+    _exibirAviso(title,mensagem,botao,action) async {
+      return await showDialog(
+          context: context,
+          builder: (context) {
+            return ModalAvisoSimplesWidget(context,title,mensagem,action,textoBotao: (botao!=null)?botao.toString():null);
+          }
+      );
+      // await Navigator.push( context ,MaterialPageRoute( builder: (context) => ModalAvisoSimplesWidget('Erro','Defina o tipo de conta') ) );
+    }
     _validarForm(BuildContext context){
         if( _conta.tipo == null) return false;
         return true;
     }
 
-    _salvar(){
+    _salvar() async {
+        _conta.descricao = _controllerDescricao.text.toString();
+        return await _conta.save();
 
     }
     _setarTipoConta(ContaBancariaTipoModel objeto){
         if(objeto != null){
-            _contaTipoDescricaoSelecionada = "teste";
+            _contaTipoDescricaoSelecionada = objeto.descricao;
             _conta.tipo = objeto;
         }else{
             // SETAR O PADRAO
             _conta.tipo = null;
+            _contaTipoDescricaoSelecionada = "";
         }
 
         setState(() { _contaTipoDescricaoSelecionada; });
@@ -314,5 +335,12 @@ class _ContaEditTelaState extends State<ContaEditTela> {
                 );
             },
         );
+    }
+
+    _opcaoModal(String opcao){
+      print(opcao);
+      if(opcao == 'voltar'){
+        Navigator.pop(context);
+      }
     }
 }
