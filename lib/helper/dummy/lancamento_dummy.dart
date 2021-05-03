@@ -182,6 +182,7 @@ class LancamentosDummy{
         {'id_usuario':2,'id_lancamento_tipo':1,'descricao':'super nick','id_categoria':1004,'dt_lancamento':'2021-04-23 19:13:12','id_pagamento_forma':2,'id_cartao':4,'id_frequencia':1,'id_frequencia_periodo':1,'no_quantidade':1,'vl_integral':43.25},
         
         {'id_usuario':2,'id_lancamento_tipo':1,'descricao':'gasolina','id_categoria':7001,'dt_lancamento':'2021-04-24 14:00:11','id_pagamento_forma':2,'id_cartao':4,'id_frequencia':1,'id_frequencia_periodo':1,'no_quantidade':1,'vl_integral':100.0},
+        {'id_usuario':2,'id_lancamento_tipo':1,'descricao':'edson - marido de aluguel - 519 9901 8381','id_categoria':8003,'dt_lancamento':'2021-04-24 17:30:21','id_pagamento_forma':2,'id_cartao':4,'id_frequencia':1,'id_frequencia_periodo':1,'no_quantidade':1,'vl_integral':380.0},
 
         {'id_usuario':2,'id_lancamento_tipo':1,'descricao':'sams club','id_categoria':1004,'dt_lancamento':'2021-04-24 16:30:11','id_pagamento_forma':2,'id_cartao':4,'id_frequencia':1,'id_frequencia_periodo':1,'no_quantidade':1,'vl_integral':280.0},
         {'id_usuario':2,'id_lancamento_tipo':1,'descricao':'sams club - vitrola','id_categoria':5010,'dt_lancamento':'2021-04-24 16:30:12','id_pagamento_forma':2,'id_cartao':4,'id_frequencia':1,'id_frequencia_periodo':1,'no_quantidade':1,'vl_integral':1099.0},

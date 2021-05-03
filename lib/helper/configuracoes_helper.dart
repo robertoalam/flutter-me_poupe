@@ -131,16 +131,17 @@ class Configuracoes{
     {"icone":"saude-remedio-02" , "codigo": 0xf0402, "familia":"Material Design Icons" , "pacote":"material_design_icons_flutter"},
     {"icone":"saude-pasta-01" , "codigo": 0xf06ef, "familia":"Material Design Icons" , "pacote":"material_design_icons_flutter"},
     {"icone":"saude-pessoa-01" , "codigo": 0xf0a42, "familia":"Material Design Icons" , "pacote":"material_design_icons_flutter"},
+    {"icone":"servicos-01" , "codigo": 0xe6a8, "familia":"MaterialIcons"},
+
+    
     {"icone":"seta-baixo-01" , "codigo": 0xf0792, "familia":"Material Design Icons" , "pacote":"material_design_icons_flutter"},
     {"icone":"seta-baixo-02" , "codigo": 0xf0796, "familia":"Material Design Icons" , "pacote":"material_design_icons_flutter"},
     {"icone":"seta-cima-01" , "codigo": 0xf0795, "familia":"Material Design Icons" , "pacote":"material_design_icons_flutter"},
     {"icone":"seta-cima-02" , "codigo": 0xf0799, "familia":"Material Design Icons" , "pacote":"material_design_icons_flutter"},
-
     {"icone":"seta-menu-cima-01" , "codigo": 0xf0360, "familia":"Material Design Icons" , "pacote":"material_design_icons_flutter"},
     {"icone":"seta-menu-baixo-01" , "codigo": 0xf035d, "familia":"Material Design Icons" , "pacote":"material_design_icons_flutter"},
     {"icone":"seta-menu-esquerda-01" , "codigo": 0xf035e, "familia":"Material Design Icons" , "pacote":"material_design_icons_flutter"},
     {"icone":"seta-menu-direita-01" , "codigo": 0xf035f, "familia":"Material Design Icons" , "pacote":"material_design_icons_flutter"},
-
     {"icone":"school-01" , "codigo": 0xe9a8, "familia":"MaterialIcons"},
     {"icone":"school-02" , "codigo": 0xe3e6, "familia":"MaterialIcons"},
     {"icone":"school-03" , "codigo": 0xe789, "familia":"MaterialIcons"},

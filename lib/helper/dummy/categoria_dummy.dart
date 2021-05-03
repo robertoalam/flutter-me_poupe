@@ -11,7 +11,7 @@ class CategoriaDummy{
       CategoriaCadModel(id: 50 , idPai: 0 , descricao: "Casa",icone: 'home-01',order: 50),
       CategoriaCadModel(id: 60 , idPai: 0 , descricao: "Educação",icone: 'school-01' ,order: 60),
       CategoriaCadModel(id: 70 , idPai: 0 , descricao: "Transporte",icone:'transporte',order: 70),
-      CategoriaCadModel(id: 80 , idPai: 0 , descricao: "Trabalho",icone: 'trabalhar-01',order: 80),
+      CategoriaCadModel(id: 80 , idPai: 0 , descricao: "Trabalho e Serviços",icone: 'trabalhar-01',order: 80),
       CategoriaCadModel(id: 90 , idPai: 0 , descricao: "Outros",icone: 'help-01' ,order: 90),
       CategoriaCadModel(id: 100 , idPai: 0 , descricao: "Receitas",icone: 'money-01' ,order: 100),
       CategoriaCadModel(id: 110 , idPai: 0 , descricao: "Financeiro",icone: 'money-01' ,order: 100),
@@ -77,6 +77,7 @@ class CategoriaDummy{
       // TRABALHO
       CategoriaCadModel(id: 8001 , idPai: 80 , descricao: "Material de escritório",icone:"escritorio-01"),
       CategoriaCadModel(id: 8002 , idPai: 80 , descricao: "Material de informatica",icone:"notebook-01"),
+      CategoriaCadModel(id: 8003 , idPai: 80 , descricao: "Servicoes gerais",icone:"servicos-01"),
 
       //RECEITAS
       CategoriaCadModel(id: 10001 , idPai: 100 , descricao: "Salário",icone:"money-01"),
