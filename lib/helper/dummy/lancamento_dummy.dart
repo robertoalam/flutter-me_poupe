@@ -193,6 +193,10 @@ class LancamentosDummy{
         {'id_usuario':2,'id_lancamento_tipo':1,'descricao':'gasolina posto shell 5.75 ','id_categoria':7001,'dt_lancamento':'2021-04-29 19:25:31','id_pagamento_forma':2,'id_cartao':4,'id_frequencia':1,'id_frequencia_periodo':1,'no_quantidade':1,'vl_integral':100.0},
 
         {'id_usuario':2,'id_lancamento_tipo':1,'descricao':'almoco alegretche','id_categoria':1001,'dt_lancamento':'2021-04-30 12:10:13','id_pagamento_forma':2,'id_cartao':4,'id_frequencia':1,'id_frequencia_periodo':1,'no_quantidade':1,'vl_integral':66.0},
+
+        {'id_usuario':2,'id_lancamento_tipo':1,'descricao':'gelei','id_categoria':1004,'dt_lancamento':'2021-05-01 16:45:45','id_pagamento_forma':2,'id_cartao':4,'id_frequencia':1,'id_frequencia_periodo':1,'no_quantidade':1,'vl_integral':62.90},
+        {'id_usuario':2,'id_lancamento_tipo':1,'descricao':'acougue - henry casa de carnes','id_categoria':1008,'dt_lancamento':'2021-05-01 17:54:31','id_pagamento_forma':2,'id_cartao':4,'id_frequencia':1,'id_frequencia_periodo':1,'no_quantidade':1,'vl_integral':120.0},	  
+        {'id_usuario':2,'id_lancamento_tipo':1,'descricao':'gasolina - azeredo','id_categoria':7001,'dt_lancamento':'2021-05-02 09:00:11','id_pagamento_forma':2,'id_cartao':4,'id_frequencia':1,'id_frequencia_periodo':1,'no_quantidade':1,'vl_integral':150.0},        
     ];
   }
 }
