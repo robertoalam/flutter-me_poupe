@@ -26,6 +26,7 @@ class CategoriaDummy{
       CategoriaCadModel(id: 1006 , idPai: 10 , descricao: "Padaria",icone: 'pao-01'),
       CategoriaCadModel(id: 1007 , idPai: 10 , descricao: "Restaurante",icone: 'alimentar-01'),
       CategoriaCadModel(id: 1008 , idPai: 10 , descricao: "Açougue",icone: 'acouge-01'),
+      CategoriaCadModel(id: 1009 , idPai: 10 , descricao: "Feira",icone: 'feira-01'),
 
       //SAUDE
       CategoriaCadModel(id: 2001 , idPai: 20 , descricao: "Remédio",icone:"saude-remedio-02"),
@@ -91,6 +92,7 @@ class CategoriaDummy{
       CategoriaCadModel(id: 11003 , idPai: 110 , descricao: "Titulo de Capitalização",icone:"money-02"),
       CategoriaCadModel(id: 11004 , idPai: 110 , descricao: "Consórcio",icone:"money-03"),
       CategoriaCadModel(id: 11005 , idPai: 110 , descricao: "Mensalidade Cartao de Crédito",icone:"televisao-01"),
+      CategoriaCadModel(id: 11006 , idPai: 110 , descricao: "Mensalidade Cartao de Crédito",icone:"televisao-01"),
 
       CategoriaCadModel(id: 12001 , idPai: 120 , descricao: "Condominio",icone:"predio-01"),
       CategoriaCadModel(id: 12002 , idPai: 120 , descricao: "Conta de luz",icone:"luz-01"),
