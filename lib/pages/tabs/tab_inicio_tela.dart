@@ -28,7 +28,7 @@ class _TabInicioTelaState extends State<TabInicioTela> {
 	List<CartaoModel> _cartaoLista = new List<CartaoModel>();
 
 	Widget widgetTopo;
-    Widget widgetConta;
+  Widget widgetConta;
 	Widget widgetSaldo;
 	Widget widgetCartoes;
 
