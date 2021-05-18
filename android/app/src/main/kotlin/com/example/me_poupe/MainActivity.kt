@@ -1,4 +1,4 @@
-package com.example.me_poupe
+package br.com.vidaquadrada.me_poupe
 
 import io.flutter.embedding.android.FlutterActivity
 
