@@ -8,7 +8,8 @@ import 'package:me_poupe/model/cad/cad_frequencia_model.dart';
 import 'package:me_poupe/model/cad/cad_frequencia_periodo_model.dart';
 import 'package:me_poupe/model/cad/cad_lancamento_tipo_model.dart';
 import 'package:me_poupe/model/cad/cad_pagamento_forma.dart';
-import 'package:me_poupe/model/cartao_model.dart';
+import 'package:me_poupe/model/conta/conta_model.dart';
+import 'file:///D:/projetos-moveis/flutter/me_poupe/lib/model/conta/cartao_model.dart';
 import 'package:me_poupe/model/lancamento/lancamento_frequencia_detalhe_model.dart';
 import 'package:me_poupe/model/lancamento/lancamento_frequencia_model.dart';
 import 'package:me_poupe/model/lancamento/lancamento_pagamento_forma_model.dart';
@@ -200,15 +201,19 @@ class LancamentoModel{
         // CARTAO
         CartaoModel cartao ;
         if( linha['id_cartao'] != null ){
-          // BANCO
-          BancoCadModel bancoCad = new BancoCadModel();
-          bancoCad = await bancoCad.fetchById(linha['id_banco']);
+          // // BANCO
+          // BancoCadModel bancoCad = new BancoCadModel();
+          // bancoCad = await bancoCad.fetchById(linha['id_banco']);
+
+          ContaModel conta = new ContaModel();
+          conta = await conta.fetchById(linha['id_conta']);
+
           // CARTAO TIPO CAD
           CartaoTipoCadModel cartaoTipoCad = new CartaoTipoCadModel();
           cartaoTipoCad = await cartaoTipoCad.fetchById(linha['id_cartao_tipo']);
 
           cartao = new CartaoModel(
-            banco: bancoCad ,
+            conta: conta ,
             tipo: cartaoTipoCad
           );
         }

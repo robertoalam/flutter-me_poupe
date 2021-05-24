@@ -1,10 +1,11 @@
 import 'package:me_poupe/helper/database_helper.dart';
 import 'package:me_poupe/model/cad/cad_banco_model.dart';
 import 'package:me_poupe/model/cad/cad_cartao_tipo_model.dart';
+import 'package:me_poupe/model/conta/conta_model.dart';
 
 class CartaoModel{
   int id;
-  BancoCadModel banco;
+  ContaModel conta;
   CartaoTipoCadModel tipo;
   String descricao;
   double saldo;
@@ -14,7 +15,7 @@ class CartaoModel{
 
   CartaoModel({
     this.id,
-    this.banco,
+    this.conta,
     this.tipo,
     this.descricao,
     this.saldo,
@@ -24,11 +25,11 @@ class CartaoModel{
   });
 
   final dbHelper = DatabaseHelper.instance;
-  final String TABLE_NAME = "cartao";
+  final String tableName = "cartao";
 
   @override
   String toString() {
-    return 'CartaoModel{id: $id, banco: $banco}';
+    return 'CartaoModel{id: $id, conta: $conta}';
   }
 
   factory CartaoModel.fromJson(Map<String, dynamic> json) {
@@ -38,15 +39,16 @@ class CartaoModel{
   fromDatabase(Map<String, dynamic> linha) async {
     CartaoTipoCadModel tipo = new CartaoTipoCadModel();
     BancoCadModel banco = new BancoCadModel();
+    ContaModel conta = new ContaModel();
     banco = await banco.fetchById(int.parse( linha['id_banco'].toString() ) );
     tipo = await tipo.fetchById( int.parse( linha['id_cartao_tipo'].toString() ) );
-    return CartaoModel(id: linha['_id'] ,banco: banco, descricao: linha['descricao'] , tipo: tipo);
+    return CartaoModel(id: linha['id'] ,conta: conta, descricao: linha['descricao'] , tipo: tipo);
   }
 
   Map<String, dynamic> toDatabase() {
     return {
-      '_id': id,
-      'id_banco': banco.id,
+      'id': id,
+      'id_conta': conta.id,
       'id_cartao_tipo': tipo.id,
       'descricao': descricao,
       'vl_saldo': saldo,
@@ -58,8 +60,8 @@ class CartaoModel{
 
   Map<String, dynamic> toMap() {
     return {
-      '_id': id,
-      'id_banco': banco.id,
+      'id': id,
+      'id_conta': conta.id,
       'id_cartao_tipo': tipo.id,
       'descricao': descricao,
       'vl_saldo': saldo,
@@ -72,7 +74,7 @@ class CartaoModel{
   fetchById(int id) async {
     var linha;
     if( id !=null || id.toString() != "" ) {
-      linha = await dbHelper.query(TABLE_NAME, where: "_id = ?", whereArgs: [id]);
+      linha = await dbHelper.query(tableName, where: "id = ?", whereArgs: [id]);
       if (linha.isNotEmpty || linha != null) {
         CartaoModel cartao = new CartaoModel();
         return await cartao.fromDatabase(linha[0]);
@@ -85,7 +87,7 @@ class CartaoModel{
   }
 
   fetchByAll() async {
-    final linhas = await dbHelper.queryAllRows(TABLE_NAME);
+    final linhas = await dbHelper.queryAllRows(tableName);
     List<CartaoModel> lista = List<CartaoModel>();
     if(linhas.isNotEmpty) {
       for (int i = 0; i < linhas.length; i++) {
@@ -108,7 +110,7 @@ class CartaoModel{
       where = "1 = 1";
     }
 
-    final linhas = await dbHelper.query(TABLE_NAME, where: where, whereArgs: argumentos);
+    final linhas = await dbHelper.query(tableName, where: where, whereArgs: argumentos);
     List<CartaoModel> lista = List<CartaoModel>();
     if(linhas.isNotEmpty) {
       for (int i = 0; i < linhas.length; i++) {
@@ -122,12 +124,12 @@ class CartaoModel{
 
   Future<void> insert() async {
     this.id = null ;
-    await dbHelper.insert( TABLE_NAME , this.toDatabase()  );
+    await dbHelper.insert( tableName , this.toDatabase()  );
   }
 
   Future udpate() async {
     // var map = this.toMap();
-    return await dbHelper.update( TABLE_NAME , " _id " , this.toDatabase() );
+    return await dbHelper.update( tableName , " id " , this.toDatabase() );
   }
 
   save(){

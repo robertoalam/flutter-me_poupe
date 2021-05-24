@@ -3,10 +3,17 @@ import 'package:me_poupe/helper/configuracoes_helper.dart';
 import 'package:me_poupe/helper/funcoes_helper.dart';
 import 'package:me_poupe/model/cad/cad_banco_model.dart';
 import 'package:me_poupe/model/configuracoes/configuracao_model.dart';
+import 'package:me_poupe/pages/conta/conta_edit_tela.dart';
 
 import 'banco_edit_tela.dart';
 
 class BancoListTela extends StatefulWidget {
+
+  final String where;
+  final String order;
+
+  BancoListTela({this.where,this.order});
+
   @override
   _BancoListTelaState createState() => _BancoListTelaState();
 }
@@ -60,9 +67,17 @@ class _BancoListTelaState extends State<BancoListTela> {
     }
 
     _getData() async {
-        _lista = await _banco.fetchByDestaque2(0, notIn: 1);
-        _listaFiltrada = _lista;
-        setState(() { _listaFiltrada; });
+      String pesquisa = "";
+      if(widget.where != null){
+        pesquisa = widget.where;
+      }
+
+      if(widget.order != null){
+
+      }
+      _lista = await _banco.fetchByWhere(pesquisar: pesquisa);
+      _listaFiltrada = _lista;
+      setState(() { _listaFiltrada; });
     }
 
   @override
@@ -157,45 +172,47 @@ class _BancoListTelaState extends State<BancoListTela> {
             width: MediaQuery.of(context).size.width,
             padding: EdgeInsets.all(10),
             child: InkWell(
-                onTap: (){ Navigator.push( context , MaterialPageRoute( builder: (context) => BancoEditTela(banco: objeto,) ) ); },
-                child: Column(
-                    children: [
-                        Row(
-                            children: [
-                                Container(
-                                    width: MediaQuery.of(context).size.width * .15,
-                                    child: CircleAvatar( 
-                                        backgroundColor: Color(int.parse( (objeto.corSecundaria != null) ? Funcoes.converterCorStringColor(objeto.corSecundaria): Funcoes.converterCorStringColor("#FFFFFF"))),
-                                        child: Padding(
-                                        padding: EdgeInsets.all(5),
-                                        child: Image.asset(objeto.imageAsset),)
-                                    ), 
-                                ),
-                                Container(
-                                    padding: EdgeInsets.fromLTRB(15, 0, 5, 0),
-                                    width: MediaQuery.of(context).size.width * .60,
-                                    child: Text( objeto.descricao , style: TextStyle( 
-                                            fontSize: 22,
-                                            color: Color(int.parse( _colorLetra ) ) 
-                                        ), 
-                                    ),
-                                ),
-                                Container(
-                                    width: MediaQuery.of(context).size.width * .15,
-                                    child: Align(
-                                        alignment:Alignment.centerRight,
-                                        child: Icon(Icons.arrow_forward_ios , color: Color(int.parse( _colorLetra ) ) ),
-                                    ),
-                                ),
-                            ],
-                        ),
-                        Visibility(
-                            visible: (_listaFiltrada.last.id != objeto.id)? true : false ,
-                            child: Divider( color: Color( int.parse( _colorLetra) ), ),
-                        )
-                        
-                    ],
-                ),
+              onTap: (){
+                Navigator.push( context , MaterialPageRoute( builder: (context) => ContaEditTela(banco: objeto,) ) );
+              },
+              child: Column(
+                  children: [
+                      Row(
+                          children: [
+                              Container(
+                                  width: MediaQuery.of(context).size.width * .15,
+                                  child: CircleAvatar(
+                                      backgroundColor: Color(int.parse( (objeto.corSecundaria != null) ? Funcoes.converterCorStringColor(objeto.corSecundaria): Funcoes.converterCorStringColor("#FFFFFF"))),
+                                      child: Padding(
+                                      padding: EdgeInsets.all(5),
+                                      child: Image.asset(objeto.imageAsset),)
+                                  ),
+                              ),
+                              Container(
+                                  padding: EdgeInsets.fromLTRB(15, 0, 5, 0),
+                                  width: MediaQuery.of(context).size.width * .60,
+                                  child: Text( objeto.descricao , style: TextStyle(
+                                          fontSize: 22,
+                                          color: Color(int.parse( _colorLetra ) )
+                                      ),
+                                  ),
+                              ),
+                              Container(
+                                  width: MediaQuery.of(context).size.width * .15,
+                                  child: Align(
+                                      alignment:Alignment.centerRight,
+                                      child: Icon(Icons.arrow_forward_ios , color: Color(int.parse( _colorLetra ) ) ),
+                                  ),
+                              ),
+                          ],
+                      ),
+                      Visibility(
+                          visible: (_listaFiltrada.last.id != objeto.id)? true : false ,
+                          child: Divider( color: Color( int.parse( _colorLetra) ), ),
+                      )
+
+                  ],
+              ),
             ),
         );
     }

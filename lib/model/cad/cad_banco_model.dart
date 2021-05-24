@@ -77,6 +77,31 @@ class BancoCadModel{
     return lista;
   }
 
+  fetchByWhere({String pesquisar,String order}) async {
+    String where ="";
+    String ordenacao = "";
+    String query ;
+
+    if(pesquisar != null) {
+      where = pesquisar;
+    }
+
+    where = (where != null)? where : "";
+    ordenacao = (order != null)? order : " ORDER BY descricao ";
+
+    query = " SELECT * FROM "+TABLE_NAME+" WHERE 1=1 $where $ordenacao ";
+    var linhas;
+    List<BancoCadModel> lista = List<BancoCadModel>();
+    if( destaque !=null || destaque.toString() != "" ) {
+      linhas = await dbHelper.queryCustom(query);
+      for(int i=0;i < linhas.length ; i++){
+        BancoCadModel objeto = new BancoCadModel.fromJson(linhas[i]);
+        lista.add(objeto);
+      }
+    }
+    return lista;
+  }
+
   fetchByDestaque2(int destaque,{int notIn}) async {
     String where;
     var argumentos = [];

@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,13 +7,15 @@ import 'package:me_poupe/componentes/mascara_campos.dart';
 import 'package:me_poupe/helper/funcoes_helper.dart';
 import 'package:me_poupe/model/cad/cad_banco_model.dart';
 import 'package:me_poupe/model/cad/cad_cartao_tipo_model.dart';
-import 'package:me_poupe/model/cartao_model.dart';
+import 'package:me_poupe/model/conta/cartao_model.dart';
+import 'package:me_poupe/model/conta/conta_model.dart';
 
 class CartaoEditTela extends StatefulWidget {
 
   final BancoCadModel bancoModel;
+  final CartaoModel cartao;
 
-  CartaoEditTela({this.bancoModel});
+  CartaoEditTela({this.cartao, this.bancoModel});
 
   @override
   _CartaoEditTelaState createState() => _CartaoEditTelaState();
@@ -28,6 +29,10 @@ class _CartaoEditTelaState extends State<CartaoEditTela> {
   CartaoModel _cartao = new CartaoModel();
   CartaoTipoCadModel _cartaoTipo = new CartaoTipoCadModel();
   List<CartaoTipoCadModel> _listaCartaoTipo = new List<CartaoTipoCadModel>();
+
+  ContaModel conta = new ContaModel();
+  // CartaoTipoCadModel _cartaoTipo = new CartaoTipoCadModel();
+  // List<CartaoTipoCadModel> _listaCartaoTipo = new List<CartaoTipoCadModel>();
 
   String _color;
   String _imagem;
@@ -48,7 +53,7 @@ class _CartaoEditTelaState extends State<CartaoEditTela> {
     super.initState();
     cartaoTipoController = "Clique aqui";
     _carregarTipoCartao();
-    if(widget.bancoModel != null){
+    if(widget.cartao != null){
       _carregarBancoTela( widget.bancoModel );
     }
   }
@@ -359,7 +364,8 @@ class _CartaoEditTelaState extends State<CartaoEditTela> {
   }
   _salvar(){
     _cartao.id = null;
-    _cartao.banco = widget.bancoModel;
+    // _cartao.banco = widget.bancoModel;
+    // _cartao.conta = widget.conta;
     _cartao.descricao = _descricaoController.text;
     _cartao.tipo = _cartaoTipo;
     _cartao.saldo = ( _saldoController.text.toString().length > 0 ) ? double.parse( Funcoes.converterMoedaParaDatabase(_saldoController.text.toString() ) ) : null;

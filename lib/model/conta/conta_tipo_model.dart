@@ -32,7 +32,7 @@ class ContaBancariaTipoModel{
 	fetchById(int id) async {
 		var linha;
 		if( id !=null || id.toString() != "" ) {
-			linha = await dbHelper.query(TABLE_NAME, where: "id = ?", whereArgs: [id]);
+			linha = await dbHelper.query(TABLE_NAME, where: " _id = ?", whereArgs: [id]);
 			linha = linha.isNotEmpty ? ContaBancariaTipoModel.fromDatabase(linha.first) : null;
 		}
 		return linha;
