@@ -5,7 +5,7 @@ import 'package:me_poupe/helper/funcoes_helper.dart';
 import 'package:me_poupe/model/bloc_model.dart';
 import 'package:me_poupe/model/cad/cad_categoria_model.dart';
 import 'package:me_poupe/model/cad/cad_frequencia_periodo_model.dart';
-import 'package:me_poupe/model/cartao_model.dart';
+import 'file:///D:/projetos-moveis/flutter/me_poupe/lib/model/conta/cartao_model.dart';
 import 'package:me_poupe/model/configuracoes/configuracao_model.dart';
 import 'package:me_poupe/pages/lancamento/lancamento_despesa_tela.dart';
 import 'package:me_poupe/pages/lancamento/lancamento_receita_tela.dart';

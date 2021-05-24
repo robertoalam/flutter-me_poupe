@@ -11,7 +11,7 @@ import 'package:me_poupe/model/cad/cad_frequencia_model.dart';
 import 'package:me_poupe/model/cad/cad_frequencia_periodo_model.dart';
 import 'package:me_poupe/model/cad/cad_lancamento_tipo_model.dart';
 import 'package:me_poupe/model/cad/cad_pagamento_forma.dart';
-import 'package:me_poupe/model/cartao_model.dart';
+import 'file:///D:/projetos-moveis/flutter/me_poupe/lib/model/conta/cartao_model.dart';
 import 'package:me_poupe/model/configuracoes/configuracao_model.dart';
 import 'package:me_poupe/model/configuracoes/icone_cad_model.dart';
 import 'package:me_poupe/model/lancamento/lancamento_frequencia_model.dart';
@@ -630,14 +630,15 @@ class _LancamentoDespesaTelaState extends State<LancamentoDespesaTela> {
   }
 
   _modalCartao(BuildContext context) async {
-    if( widget.listaCartao.length > 0 ){
-      return await showDialog(
-          context: context,
-          builder: (context) {
-            return LancamentoModalCartao( widget.listaCartao );
-          }
-      );
-    }
+    // 20210524
+    // if( widget.listaCartao.length > 0 ){
+    //   return await showDialog(
+    //       context: context,
+    //       builder: (context) {
+    //         return LancamentoModalCartao( widget.listaCartao );
+    //       }
+    //   );
+    // }
     return;
   }
 
@@ -784,10 +785,11 @@ class _LancamentoDespesaTelaState extends State<LancamentoDespesaTela> {
 
   _setarCartao(CartaoModel objeto) async {
     if( objeto != null ){
-      cartaoIcone = objeto.banco.imageAsset;
-      _corCartaoInicial = Funcoes.converterCorStringColor( objeto.banco.corCartao );
-      _cartaoControllerDescricao = "${objeto.banco.descricao} - ${objeto.tipo.descricao}";
-      _lancamentoFormaPagamentocartao = objeto;
+      // 20210524
+      // cartaoIcone = objeto.banco.imageAsset;
+      // _corCartaoInicial = Funcoes.converterCorStringColor( objeto.banco.corCartao );
+      // _cartaoControllerDescricao = "${objeto.banco.descricao} - ${objeto.tipo.descricao}";
+      // _lancamentoFormaPagamentocartao = objeto;
     }
 
     setState(() {

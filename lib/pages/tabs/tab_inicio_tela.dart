@@ -7,12 +7,15 @@ import 'package:me_poupe/componentes/label_quicksand.dart';
 import 'package:me_poupe/helper/configuracoes_helper.dart';
 import 'package:me_poupe/helper/funcoes_helper.dart';
 import 'package:me_poupe/model/balancete_model.dart';
-import 'package:me_poupe/model/cartao_model.dart';
+import 'file:///D:/projetos-moveis/flutter/me_poupe/lib/model/conta/cartao_model.dart';
 import 'package:me_poupe/model/configuracoes/configuracao_model.dart';
 import 'package:me_poupe/model/conta/conta_model.dart';
 import 'package:me_poupe/pages/bancos/banco_destaque_tela.dart';
+import 'package:me_poupe/pages/bancos/banco_edit_tela.dart';
 import 'package:me_poupe/pages/cartao/cartao_index_tela.dart';
 import 'package:me_poupe/pages/configuracoes/configuracoes_index_tela.dart';
+import 'package:me_poupe/pages/conta/conta_edit_tela.dart';
+import 'package:me_poupe/pages/conta/conta_list_tela.dart';
 
 class TabInicioTela extends StatefulWidget {
   @override
@@ -55,11 +58,11 @@ class _TabInicioTelaState extends State<TabInicioTela> {
     }
 
   _start() async {
-        await _getDataConfig();
-        await _setDataConfig();
-        await _getConta();
-        await _getBalanceteGeral();
-        await _getCartao();
+      await _getDataConfig();
+      await _setDataConfig();
+      await _getBalanceteGeral();
+      await _getConta();
+      await _getCartao();
     }
 
 	_getCartao() async {
@@ -71,11 +74,14 @@ class _TabInicioTelaState extends State<TabInicioTela> {
 
 	_getBalanceteGeral() async {
 		_balancete = await _balancete.balancoGeral(periodo: null);
-		setState(() { 
-			_saldoGeralNumeroCaracteres = _balancete.diferenca.toStringAsFixed(2).length;
-			_flagExibirSaldo = (_dados['exibir_saldo'] == "true")?true : false;
-			_saldoGeral = (_dados['exibir_saldo'] == "true")? _balancete.diferenca.toStringAsFixed(2) :"------"; 
-		});
+		if( _balancete.receita != null && _balancete.despesa != null && _balancete.diferenca != null ){
+      setState(() {
+        _saldoGeralNumeroCaracteres = _balancete.diferenca.toStringAsFixed(2).length;
+        _flagExibirSaldo = (_dados['exibir_saldo'] == "true")?true : false;
+        _saldoGeral = (_dados['exibir_saldo'] == "true")? _balancete.diferenca.toStringAsFixed(2) :"------";
+      });
+    }
+
 	}
 
    _getConta() async {
@@ -154,7 +160,78 @@ class _TabInicioTelaState extends State<TabInicioTela> {
         )
       );
     
- 
+    // SALDOS
+    if( _balancete.receita == null || _balancete.despesa == null || _balancete.diferenca == null ){
+      widgetSaldo = Text('');
+    }else{
+      widgetSaldo = Container(
+        padding: EdgeInsets.all(15),
+        child: Container(
+          padding: EdgeInsets.all(10),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color:  Color(int.parse(_colorContainerFundo)),
+              border: Border.all(color: Color(int.parse(_colorContainerBorda)))
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text("Saldo Atual "),
+                  LabelOpensans(" R\$ ${_saldoGeral}",bold: true,),
+                ],
+              ),
+              Padding(
+                padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                child: LabelOpensans("Balancete",bold: true,tamanho: 25),
+              ),
+              ListTile(
+                  leading: CircleAvatar(
+                    backgroundColor: Color(int.parse(_colorLetra)),
+                    child: Icon(Icons.person, color: Color(int.parse(_colorContainerFundo)),),
+                  ),
+                  title: LabelOpensans("Conta padrão"),
+                  subtitle: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("Geral"),
+                      Text("R\$ ${_saldoGeral}")
+                    ],
+                  )
+              ),
+              Divider(),
+              ListTile(
+                  leading: CircleAvatar(
+                    backgroundColor: Color(int.parse(_colorLetra)),
+                    child: Icon(Icons.person, color: Color(int.parse(_colorContainerFundo)),),
+                  ),
+                  title: Text("Poupança"),
+                  subtitle: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("Banco do Brasil"),
+                      Text("R\$ 2.500,00")
+                    ],
+                  )
+              ),
+              Divider(),
+              Container(
+                width: double.infinity,
+                padding: EdgeInsets.fromLTRB(25, 0, 25, 0),
+                child: RaisedButton(
+                  child: Text("Ajustar Balanço"),
+                ),
+              ),
+
+            ],
+          ),
+        ),
+      );
+    }
+
+
 
     // SALDO
     if(_contaLista.length == 0 || _contaLista == null){
@@ -174,11 +251,11 @@ class _TabInicioTelaState extends State<TabInicioTela> {
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text("Contas",style: TextStyle(
-						fontWeight: FontWeight.bold,
-						fontSize: 18 ,
-						color: Color(int.parse( _colorLetra) ),
-					), 
-				),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18 ,
+                    color: Color(int.parse( _colorLetra) ),
+                  ),
+                ),
               ),
               SizedBox( height: 15, ),
               Align(
@@ -191,104 +268,42 @@ class _TabInicioTelaState extends State<TabInicioTela> {
               SizedBox( height: 20, ),
               Align(
                 child:Text("Escolha a instituição financeira de sua preferência" , style: TextStyle(
-						color: Color(int.parse( _colorLetra) ),
-					),
-				),
+                  color: Color(int.parse( _colorLetra) ),
+                ),
+              ),
                 alignment: Alignment.centerLeft,
               ),
               Align(
                 child:Text("NÃO é necessário dados pessoais!", style: TextStyle(
-						color: Color(int.parse( _colorLetra) ),
-					),
-				),
+                  color: Color(int.parse( _colorLetra) ),
+                ),
+              ),
                 alignment: Alignment.centerLeft,
               ),              
               SizedBox( height: 20, ),
               Align(
                 alignment: Alignment.bottomRight,
                 child: BotaoAdptavelWidget(
-					label: "Adicionar conta" , onPressed: _contaAdicionar, 
-					cor: Color(int.parse( _background )),
-				),
+                  label: "Adicionar conta" , onPressed: _contaAdicionar,
+                  cor: Color(int.parse( _background )),
+                ),
               ),
             ],
           ),
         ),
       );
-              
-       
-    }else{
-
-        widgetConta = Container(
-            padding: EdgeInsets.all(15),
-            child: Container(
-                padding: EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color:  Color(int.parse(_colorContainerFundo)),
-                border: Border.all(color: Color(int.parse(_colorContainerBorda)))
-                ),
-                child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                    Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                        Text("Saldo Atual "),
-                        LabelOpensans(" R\$ ${_saldoGeral}",bold: true,),
-                    ],
-                    ),
-                    Padding(
-                    padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                    child: LabelOpensans("Balancete",bold: true,tamanho: 25),
-                    ),
-                    ListTile(
-                    leading: CircleAvatar(
-                        backgroundColor: Color(int.parse(_colorLetra)),
-                        child: Icon(Icons.person, color: Color(int.parse(_colorContainerFundo)),),
-                    ),
-                    title: LabelOpensans("Conta padrão"),
-                        subtitle: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                            Text("Geral"),
-                            Text("R\$ ${_saldoGeral}")
-                        ],
-                        )
-                    ),
-                    Divider(),
-                    ListTile(
-                    leading: CircleAvatar(
-                        backgroundColor: Color(int.parse(_colorLetra)),
-                        child: Icon(Icons.person, color: Color(int.parse(_colorContainerFundo)),),
-                    ),
-                    title: Text("Poupança"),
-                    subtitle: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                        Text("Banco do Brasil"),
-                        Text("R\$ 2.500,00")
-                        ],
-                    )
-                    ),
-                    Divider(),
-                    Container(
-                    width: double.infinity,
-                    padding: EdgeInsets.fromLTRB(25, 0, 25, 0),
-                    child: RaisedButton(
-                        child: Text("Ajustar Balanço"),
-                    ),
-                    ),
-
-                ],
-                ),
-            ),
-        );
-
     }
 
 	// CARTOES
     if(_cartaoLista.length == 0){
+      // SE AINDA NAO EXISTIR CONTA
+      String cartaoDescricao ;
+      if(_contaLista.length == 0){
+        cartaoDescricao = "Para criar cartões é necessário primeiramente criar uma conta, para isso clique no botão acima";
+      }else{
+        cartaoDescricao = "Tenha facilmente um longo histórico das suas faturas dos seus cartões de crédito em um só lugar";
+      }
+
       widgetCartoes = Container(
         padding: EdgeInsets.all(15),
         child: Container(
@@ -323,13 +338,18 @@ class _TabInicioTelaState extends State<TabInicioTela> {
                 height: 15,
               ),
               Align(
-                child: Text("Tenha facilmente um longo histórico das suas faturas dos seus cartões de crédito em um só lugar"),
+                child: Text(cartaoDescricao),
                 alignment: Alignment.topCenter,
               ),
-              Align(
-                child: BotaoAdptavelWidget(label: "Adicionar cartão" , onPressed: _cartaoAdicionar, ),
-                alignment: Alignment.topCenter,
+
+              Visibility(
+                visible: (_contaLista.length > 0)?true:false,
+                child:Align(
+                  child: BotaoAdptavelWidget(label: "Adicionar cartão" , onPressed: _cartaoAdicionar, ),
+                  alignment: Alignment.topCenter,
+                ),
               ),
+
             ],
           ),
         ),
@@ -402,6 +422,7 @@ class _TabInicioTelaState extends State<TabInicioTela> {
         child: Column(
           children: [
             widgetTopo,
+            widgetSaldo,
             widgetConta,
             widgetCartoes,
           ],
@@ -438,54 +459,56 @@ class _TabInicioTelaState extends State<TabInicioTela> {
 	}
 
   Widget cartaoList(BuildContext context , CartaoModel objeto , int index){
-    if( objeto.banco.corCartao != null ){
-      _colorFundo = Funcoes.converterCorStringColor( objeto.banco.corCartao );
-    }else if( (objeto.banco.corTerciaria != null) && (objeto.banco.corTerciaria != "#FFFFFF") ){
-      _colorFundo = Funcoes.converterCorStringColor( objeto.banco.corTerciaria );
-    }else if( (objeto.banco.corTerciaria != null) && (objeto.banco.corSecundaria != "#FFFFFF") && (objeto.banco.corTerciaria == "#FFFFFF") ){
-      _colorFundo = Funcoes.converterCorStringColor( objeto.banco.corSecundaria );
-    }
-    _colorLetra = Funcoes.converterCorStringColor( "#000000" );
-    _imagem = "assets/images/bancos/logo/${objeto.banco.id.toString()}.png";
-    double valor = index * 10.0 * -1;
-
-    return Container(
-      transform: Matrix4.translationValues(0.0, valor, 0.0),
-          // transform: Matrix4.translationValues(0.0, -20.0, 0.0),
-          width: MediaQuery.of(context).size.width,
-          height: 80,
-          padding: EdgeInsets.all(10),
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              stops: [ 0.8, 0.95, 1.0 ],
-              colors: [ Color(int.parse(_colorFundo)) , Color(int.parse(_colorFundo))  , Colors.black]
-            ),
-            borderRadius: BorderRadius.only( topRight: Radius.circular(10) , topLeft: Radius.circular(10) ),
-            boxShadow: [ BoxShadow(color: Colors.black, blurRadius: 5.0), ],
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  SizedBox(
-                    height: 24, width: 24,
-                    child: Image.asset(_imagem),
-                  ),
-                  SizedBox(width: 10,),
-                  LabelOpensans(objeto.banco.descricao,tamanho: 22,cor: Color(int.parse(_colorLetra) ),bold: true,),
-                ],
-              ),
-              LabelOpensans("Cartão tipo ${objeto.tipo.descricao}",cor: Color(int.parse(_colorLetra) ),bold: true,),
-            ],
-          ),
-        );
+    // 20210524
+    // if( objeto.banco.corCartao != null ){
+    //   _colorFundo = Funcoes.converterCorStringColor( objeto.banco.corCartao );
+    // }else if( (objeto.banco.corTerciaria != null) && (objeto.banco.corTerciaria != "#FFFFFF") ){
+    //   _colorFundo = Funcoes.converterCorStringColor( objeto.banco.corTerciaria );
+    // }else if( (objeto.banco.corTerciaria != null) && (objeto.banco.corSecundaria != "#FFFFFF") && (objeto.banco.corTerciaria == "#FFFFFF") ){
+    //   _colorFundo = Funcoes.converterCorStringColor( objeto.banco.corSecundaria );
+    // }
+    // _colorLetra = Funcoes.converterCorStringColor( "#000000" );
+    // _imagem = "assets/images/bancos/logo/${objeto.banco.id.toString()}.png";
+    // double valor = index * 10.0 * -1;
+    //
+    // return Container(
+    //   transform: Matrix4.translationValues(0.0, valor, 0.0),
+    //       // transform: Matrix4.translationValues(0.0, -20.0, 0.0),
+    //       width: MediaQuery.of(context).size.width,
+    //       height: 80,
+    //       padding: EdgeInsets.all(10),
+    //       decoration: BoxDecoration(
+    //         gradient: LinearGradient(
+    //           begin: Alignment.topCenter,
+    //           end: Alignment.bottomCenter,
+    //           stops: [ 0.8, 0.95, 1.0 ],
+    //           colors: [ Color(int.parse(_colorFundo)) , Color(int.parse(_colorFundo))  , Colors.black]
+    //         ),
+    //         borderRadius: BorderRadius.only( topRight: Radius.circular(10) , topLeft: Radius.circular(10) ),
+    //         boxShadow: [ BoxShadow(color: Colors.black, blurRadius: 5.0), ],
+    //       ),
+    //       child: Column(
+    //         crossAxisAlignment: CrossAxisAlignment.start,
+    //         children: [
+    //           Row(
+    //             children: [
+    //               SizedBox(
+    //                 height: 24, width: 24,
+    //                 child: Image.asset(_imagem),
+    //               ),
+    //               SizedBox(width: 10,),
+    //               LabelOpensans(objeto.banco.descricao,tamanho: 22,cor: Color(int.parse(_colorLetra) ),bold: true,),
+    //             ],
+    //           ),
+    //           LabelOpensans("Cartão tipo ${objeto.tipo.descricao}",cor: Color(int.parse(_colorLetra) ),bold: true,),
+    //         ],
+    //       ),
+    //     );
   }
 
   _contaAdicionar(){
-    Navigator.push( context , MaterialPageRoute( builder: (context) => BancoDestaqueTela() ) );
+    // Navigator.push( context , MaterialPageRoute( builder: (context) => BancoDestaqueTela() ) );
+    Navigator.push( context , MaterialPageRoute( builder: (context) => ContaListTela() ) );
   }
 
   _cartaoAdicionar(){

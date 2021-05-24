@@ -4,6 +4,7 @@ import 'package:me_poupe/helper/dummy/categoria_dummy.dart';
 import 'package:me_poupe/helper/dummy/lancamento_dummy.dart';
 import 'package:me_poupe/model/cad/cad_banco_model.dart';
 import 'package:me_poupe/model/cad/cad_categoria_model.dart';
+import 'package:me_poupe/model/conta/conta_model.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
@@ -56,15 +57,18 @@ class DatabaseHelper {
         await pagamentoStatusCadCriar(db);
         await pagamentoStatusCadPopular(db);
 
+        await contaBancariaTipoCadCriar(db);
+        await contaBancariaTipoPopular(db);
+        await contaCriar(db);
+        // await contaBancariaCriar(db);
+
         await cartaoTipoCadCriar(db);
         await cartaoTipoCadPopular(db);
 
-        await carteiraCriar(db);
-        await carteiraPopular(db);
+        // await carteiraCriar(db);
+        // await carteiraPopular(db);
 
-        await contaBancariaTipoCadCriar(db);
-        await contaBancariaTipoPopular(db);
-        await contaBancariaCriar(db);
+
         await categoriaCadCriar(db);
         await categoriaCadPopular(db);
         // LANCAMENTO
@@ -146,9 +150,13 @@ class DatabaseHelper {
 		await db.execute(''' CREATE TABLE IF NOT EXISTS conta_bancaria_tipo_cad ( _id INTEGER PRIMARY KEY, descricao VARCHAR(70) ); ''');
 	}
 
-  contaBancariaCriar(Database db) async {
-		await db.execute(''' CREATE TABLE IF NOT EXISTS conta_bancaria ( id INTEGER PRIMARY KEY, id_banco INTEGER , id_conta_tipo INTEGER , descricao VARCHAR(30) , saldo FLOAT ); ''');
-	}
+  contaCriar(Database db) async {
+    await db.execute(" CREATE TABLE IF NOT EXISTS "+ContaModel.tableName+" ( id INTEGER PRIMARY KEY, id_banco INTEGER , id_conta_tipo INTEGER , descricao VARCHAR(30) , saldo FLOAT , dt_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP); ");
+  }
+
+  // contaBancariaCriar(Database db) async {
+	// 	await db.execute(''' CREATE TABLE IF NOT EXISTS conta_bancaria ( id INTEGER PRIMARY KEY, id_banco INTEGER , id_conta_tipo INTEGER , descricao VARCHAR(30) , saldo FLOAT ); ''');
+	// }
 
 	categoriaCadCriar(Database db) async {
     await db.execute(''' CREATE TABLE IF NOT EXISTS categoria_cad ( _id INTEGER PRIMARY KEY, id_pai INTEGER , descricao VARCHAR(50) , icone VARCHAR(40) , ordem INTEGER); ''');
@@ -294,29 +302,29 @@ class DatabaseHelper {
     await db.execute(''' INSERT INTO conta_bancaria_tipo_cad (descricao) VALUES ('familiar');  ''');
   }
 
-  contaBancariaPopular(Database db) async {
-    await db.execute(''' INSERT INTO conta (id_banco , id_cartao_tipo , descricao , vl_saldo , vl_limite , dia_fechamento , dia_vencimento) VALUES ('cc');  ''');
-  }
+  // contaBancariaPopular(Database db) async {
+  //   await db.execute(''' INSERT INTO conta (id_banco , id_cartao_tipo , descricao , vl_saldo , vl_limite , dia_fechamento , dia_vencimento) VALUES ('cc');  ''');
+  // }
 
   seedTestes(Database db) async {
-    await seedPopularContas(db);
-    await seedPopularCarteiras(db);
-    await seedPopularLancamentos(db);
+    // await seedPopularContas(db);
+    // await seedPopularCarteiras(db);
+    // await seedPopularLancamentos(db);
   }
 
    seedPopularContas(Database db) async {
-    // await db.execute(''' INSERT INTO cartao (id_banco , id_cartao_tipo , descricao , vl_saldo , vl_limite , dia_fechamento , dia_vencimento, st_protected) VALUES (1,1,'',null,null,0,0,1);  ''');
-    await db.execute(''' INSERT INTO cartao (id_banco , id_cartao_tipo , descricao , vl_saldo , vl_limite , dia_fechamento , dia_vencimento, st_protected) VALUES (52,2,'',null,null,26,6,0);  ''');
-    await db.execute(''' INSERT INTO cartao (id_banco , id_cartao_tipo , descricao , vl_saldo , vl_limite , dia_fechamento , dia_vencimento, st_protected) VALUES (22,2,'',null,null,26,5,0);  ''');
-    await db.execute(''' INSERT INTO cartao (id_banco , id_cartao_tipo , descricao , vl_saldo , vl_limite , dia_fechamento , dia_vencimento, st_protected) VALUES (22,3,'',5000.0,null,0,0,0);  ''');
-    await db.execute(''' INSERT INTO cartao (id_banco , id_cartao_tipo , descricao , vl_saldo , vl_limite , dia_fechamento , dia_vencimento, st_protected) VALUES (46,3,'',10000.0,null,0,0,0);  ''');
-    await db.execute(''' INSERT INTO cartao (id_banco , id_cartao_tipo , descricao , vl_saldo , vl_limite , dia_fechamento , dia_vencimento, st_protected) VALUES (16,3,'',10000.0,null,0,0,0);  ''');
+    // await db.execute(''' INSERT INTO cartao (id_banco , id_cartao_tipo , descricao , vl_saldo , vl_limite , dia_fechamento , dia_vencimento, st_protected) VALUES (1,1,'',null,null,0,0,1);  ");
+    await db.execute(" INSERT INTO "+ContaModel.tableName+" (id_conta , id_cartao_tipo , descricao , vl_saldo , vl_limite , dia_fechamento , dia_vencimento, st_protected) VALUES (52,2,'',null,null,26,6,0);  ");
+    await db.execute(" INSERT INTO "+ContaModel.tableName+" (id_conta , id_cartao_tipo , descricao , vl_saldo , vl_limite , dia_fechamento , dia_vencimento, st_protected) VALUES (22,2,'',null,null,26,5,0);  ");
+    await db.execute(" INSERT INTO "+ContaModel.tableName+" (id_conta , id_cartao_tipo , descricao , vl_saldo , vl_limite , dia_fechamento , dia_vencimento, st_protected) VALUES (22,3,'',5000.0,null,0,0,0);  ");
+    await db.execute(" INSERT INTO "+ContaModel.tableName+" (id_conta , id_cartao_tipo , descricao , vl_saldo , vl_limite , dia_fechamento , dia_vencimento, st_protected) VALUES (46,3,'',10000.0,null,0,0,0);  ");
+    await db.execute(" INSERT INTO "+ContaModel.tableName+" (id_conta , id_cartao_tipo , descricao , vl_saldo , vl_limite , dia_fechamento , dia_vencimento, st_protected) VALUES (16,3,'',10000.0,null,0,0,0);  ");
   }
 
-  seedPopularCarteiras(Database db) async {
-    await db.execute(''' INSERT INTO carteira (id , id_cartao, descricao, st_protected) VALUES (2,3,'Banri',0);  ''');
-    await db.execute(''' INSERT INTO carteira (id , id_cartao, descricao, st_protected) VALUES (3,4,'Banri',0);  ''');
-  }
+  // seedPopularCarteiras(Database db) async {
+  //   await db.execute(''' INSERT INTO carteira (id , id_cartao, descricao, st_protected) VALUES (2,3,'Banri',0);  ''');
+  //   await db.execute(''' INSERT INTO carteira (id , id_cartao, descricao, st_protected) VALUES (3,4,'Banri',0);  ''');
+  // }
 
   seedPopularLancamentos(Database db) async {
     LancamentosDummy dummy = new LancamentosDummy();

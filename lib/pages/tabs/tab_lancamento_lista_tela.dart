@@ -240,7 +240,8 @@ class _TabLancamentoListaTelaState extends State<TabLancamentoListaTela> {
     if(item.pagamento.cartao == null){
       pagamentoLabel = item.pagamento.pagamentoForma.descricao;
     }else{
-      pagamentoLabel = "${item.pagamento.cartao.banco.descricao} - ${item.pagamento.pagamentoForma.descricao} ${item.pagamento.cartao.tipo.descricao}";
+      // 20210524
+      // pagamentoLabel = "${item.pagamento.cartao.banco.descricao} - ${item.pagamento.pagamentoForma.descricao} ${item.pagamento.cartao.tipo.descricao}";
     }
 
     return Container(

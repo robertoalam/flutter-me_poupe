@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:me_poupe/componentes/label_opensans.dart';
 import 'package:me_poupe/componentes/label_quicksand.dart';
 import 'package:me_poupe/helper/funcoes_helper.dart';
-import 'package:me_poupe/model/cartao_model.dart';
+import 'package:me_poupe/model/conta/cartao_model.dart';
+
 class LancamentoModalCartao extends StatefulWidget {
 
   List<CartaoModel> lista;
@@ -64,22 +65,23 @@ class _LancamentoModalCartaoState extends State<LancamentoModalCartao> {
   }
 
   thumb(CartaoModel objeto){
-    return Card(
-      color: Color(int.parse( Funcoes.converterCorStringColor("#CCCCCC") ) ),
-      child: Container(
-        padding: EdgeInsets.fromLTRB(0, 1, 2, 1),
-        child: ListTile(
-          leading: CircleAvatar(
-              backgroundColor: Color(int.parse( (objeto.banco.corSecundaria != null ) ? Funcoes.converterCorStringColor( objeto.banco.corSecundaria ) :  Funcoes.converterCorStringColor( "#FFFFFF" ) ) ),
-              child: Padding(
-                padding: EdgeInsets.all(5),
-                child: Image.asset(objeto.banco.imageAsset),
-              )
-          ),
-          title: LabelOpensans("${objeto.banco.descricao}"),
-          subtitle: LabelQuicksand("${objeto.tipo.descricao}"),
-        ),
-      ),
-    );
+    // 20210524
+    // return Card(
+    //   color: Color(int.parse( Funcoes.converterCorStringColor("#CCCCCC") ) ),
+    //   child: Container(
+    //     padding: EdgeInsets.fromLTRB(0, 1, 2, 1),
+    //     child: ListTile(
+    //       leading: CircleAvatar(
+    //           backgroundColor: Color(int.parse( (objeto.banco.corSecundaria != null ) ? Funcoes.converterCorStringColor( objeto.banco.corSecundaria ) :  Funcoes.converterCorStringColor( "#FFFFFF" ) ) ),
+    //           child: Padding(
+    //             padding: EdgeInsets.all(5),
+    //             child: Image.asset(objeto.banco.imageAsset),
+    //           )
+    //       ),
+    //       title: LabelOpensans("${objeto.banco.descricao}"),
+    //       subtitle: LabelQuicksand("${objeto.tipo.descricao}"),
+    //     ),
+    //   ),
+    // );
   }
 }
