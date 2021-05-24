@@ -26,9 +26,9 @@ class _SplashTelaState extends State<SplashTela> {
   @override
   Widget build(BuildContext context) {
 	return Container(
-    color: Colors.black54,
+    color: Colors.grey,
       child: Center(
-        child: Image.asset("assets/images/plugue.png"),
+        child: Image.asset("assets/images/vida_quadrada.png"),
       ),
 	   );
   }
