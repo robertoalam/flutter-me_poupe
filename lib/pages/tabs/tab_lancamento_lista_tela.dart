@@ -12,6 +12,7 @@ import 'package:me_poupe/pages/tabs/modal/modal_tab_lancamento_lista_filtro_tela
 import 'package:me_poupe/pages/tabs/modal/modal_tab_lancamento_lista_ordenacao_tela.dart';
 
 class TabLancamentoListaTela extends StatefulWidget {
+  const TabLancamentoListaTela();
   @override
   _TabLancamentoListaTelaState createState() => _TabLancamentoListaTelaState();
 }

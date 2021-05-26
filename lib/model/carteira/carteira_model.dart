@@ -1,5 +1,5 @@
 import 'package:me_poupe/helper/database_helper.dart';
-import 'file:///D:/projetos-moveis/flutter/me_poupe/lib/model/conta/cartao_model.dart';
+import 'package:me_poupe/model/conta/cartao_model.dart';
 
 class CarteiraModel{
 	int id;

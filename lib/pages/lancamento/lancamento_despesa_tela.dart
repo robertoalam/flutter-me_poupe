@@ -11,13 +11,12 @@ import 'package:me_poupe/model/cad/cad_frequencia_model.dart';
 import 'package:me_poupe/model/cad/cad_frequencia_periodo_model.dart';
 import 'package:me_poupe/model/cad/cad_lancamento_tipo_model.dart';
 import 'package:me_poupe/model/cad/cad_pagamento_forma.dart';
-import 'file:///D:/projetos-moveis/flutter/me_poupe/lib/model/conta/cartao_model.dart';
 import 'package:me_poupe/model/configuracoes/configuracao_model.dart';
 import 'package:me_poupe/model/configuracoes/icone_cad_model.dart';
+import 'package:me_poupe/model/conta/cartao_model.dart';
 import 'package:me_poupe/model/lancamento/lancamento_frequencia_model.dart';
 import 'package:me_poupe/model/lancamento/lancamento_model.dart';
 import 'package:me_poupe/model/lancamento/lancamento_pagamento_forma_model.dart';
-import 'package:me_poupe/pages/lancamento/modal/lancamento_modal_cartao.dart';
 import 'package:me_poupe/pages/lancamento/modal/lancamento_modal_categoria.dart';
 import 'package:me_poupe/pages/lancamento/modal/lancamento_modal_frequencia.dart';
 

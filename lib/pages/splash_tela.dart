@@ -34,14 +34,11 @@ class _SplashTelaState extends State<SplashTela> {
   }
 
 	void _init() async {
-//		final allRows = await dbHelper.queryAllRows('usuario');
-//		print('query all rows:');
-//		allRows.forEach((row) => print(row));
     ConfiguracaoModel.incrementAbertura();
 
 		Timer( Duration(seconds: 2) , ()=>
 //        Navigator.pushReplacement( context,  MaterialPageRoute( builder: (context) => HomeTela() ) ),
-      Navigator.pushReplacement( context,  MaterialPageRoute( builder: (context) => TabsTela(title: 'BottomAppBar with FAB') ) ),
+      Navigator.pushReplacement( context,  MaterialPageRoute( builder: (context) => TabsTela() ) ),
 		);
   }
 }

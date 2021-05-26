@@ -7,17 +7,15 @@ import 'package:me_poupe/componentes/label_quicksand.dart';
 import 'package:me_poupe/helper/configuracoes_helper.dart';
 import 'package:me_poupe/helper/funcoes_helper.dart';
 import 'package:me_poupe/model/balancete_model.dart';
-import 'file:///D:/projetos-moveis/flutter/me_poupe/lib/model/conta/cartao_model.dart';
 import 'package:me_poupe/model/configuracoes/configuracao_model.dart';
+import 'package:me_poupe/model/conta/cartao_model.dart';
 import 'package:me_poupe/model/conta/conta_model.dart';
-import 'package:me_poupe/pages/bancos/banco_destaque_tela.dart';
-import 'package:me_poupe/pages/bancos/banco_edit_tela.dart';
 import 'package:me_poupe/pages/cartao/cartao_index_tela.dart';
 import 'package:me_poupe/pages/configuracoes/configuracoes_index_tela.dart';
-import 'package:me_poupe/pages/conta/conta_edit_tela.dart';
 import 'package:me_poupe/pages/conta/conta_list_tela.dart';
 
 class TabInicioTela extends StatefulWidget {
+  const TabInicioTela();
   @override
   _TabInicioTelaState createState() => _TabInicioTelaState();
 }

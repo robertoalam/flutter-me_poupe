@@ -52,8 +52,9 @@ class LoginTela extends StatelessWidget {
 					gradient: LinearGradient(
 						begin: Alignment.topLeft,
 						end: Alignment.bottomRight,
-						stops: [0.2,1],
-						colors: [Color(0XFFF58524),Color(0XFFF92B7F)],
+
+						// stops: [0.2,1],
+						// colors: [Color(0XFFF58524),Color(0XFFF92B7F)],
 					),
 					borderRadius: BorderRadius.all( Radius.circular(5)),
 				),

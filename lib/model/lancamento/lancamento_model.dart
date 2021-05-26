@@ -1,15 +1,14 @@
 import 'package:me_poupe/helper/arquivo_helper.dart';
 import 'package:me_poupe/helper/database_helper.dart';
 import 'package:me_poupe/helper/funcoes_helper.dart';
-import 'package:me_poupe/model/cad/cad_banco_model.dart';
 import 'package:me_poupe/model/cad/cad_cartao_tipo_model.dart';
 import 'package:me_poupe/model/cad/cad_categoria_model.dart';
 import 'package:me_poupe/model/cad/cad_frequencia_model.dart';
 import 'package:me_poupe/model/cad/cad_frequencia_periodo_model.dart';
 import 'package:me_poupe/model/cad/cad_lancamento_tipo_model.dart';
 import 'package:me_poupe/model/cad/cad_pagamento_forma.dart';
+import 'package:me_poupe/model/conta/cartao_model.dart';
 import 'package:me_poupe/model/conta/conta_model.dart';
-import 'file:///D:/projetos-moveis/flutter/me_poupe/lib/model/conta/cartao_model.dart';
 import 'package:me_poupe/model/lancamento/lancamento_frequencia_detalhe_model.dart';
 import 'package:me_poupe/model/lancamento/lancamento_frequencia_model.dart';
 import 'package:me_poupe/model/lancamento/lancamento_pagamento_forma_model.dart';
