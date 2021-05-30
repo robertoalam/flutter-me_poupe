@@ -457,51 +457,51 @@ class _TabInicioTelaState extends State<TabInicioTela> {
 	}
 
   Widget cartaoList(BuildContext context , CartaoModel objeto , int index){
-    // 20210524
-    // if( objeto.banco.corCartao != null ){
-    //   _colorFundo = Funcoes.converterCorStringColor( objeto.banco.corCartao );
-    // }else if( (objeto.banco.corTerciaria != null) && (objeto.banco.corTerciaria != "#FFFFFF") ){
-    //   _colorFundo = Funcoes.converterCorStringColor( objeto.banco.corTerciaria );
-    // }else if( (objeto.banco.corTerciaria != null) && (objeto.banco.corSecundaria != "#FFFFFF") && (objeto.banco.corTerciaria == "#FFFFFF") ){
-    //   _colorFundo = Funcoes.converterCorStringColor( objeto.banco.corSecundaria );
-    // }
-    // _colorLetra = Funcoes.converterCorStringColor( "#000000" );
-    // _imagem = "assets/images/bancos/logo/${objeto.banco.id.toString()}.png";
-    // double valor = index * 10.0 * -1;
-    //
-    // return Container(
-    //   transform: Matrix4.translationValues(0.0, valor, 0.0),
-    //       // transform: Matrix4.translationValues(0.0, -20.0, 0.0),
-    //       width: MediaQuery.of(context).size.width,
-    //       height: 80,
-    //       padding: EdgeInsets.all(10),
-    //       decoration: BoxDecoration(
-    //         gradient: LinearGradient(
-    //           begin: Alignment.topCenter,
-    //           end: Alignment.bottomCenter,
-    //           stops: [ 0.8, 0.95, 1.0 ],
-    //           colors: [ Color(int.parse(_colorFundo)) , Color(int.parse(_colorFundo))  , Colors.black]
-    //         ),
-    //         borderRadius: BorderRadius.only( topRight: Radius.circular(10) , topLeft: Radius.circular(10) ),
-    //         boxShadow: [ BoxShadow(color: Colors.black, blurRadius: 5.0), ],
-    //       ),
-    //       child: Column(
-    //         crossAxisAlignment: CrossAxisAlignment.start,
-    //         children: [
-    //           Row(
-    //             children: [
-    //               SizedBox(
-    //                 height: 24, width: 24,
-    //                 child: Image.asset(_imagem),
-    //               ),
-    //               SizedBox(width: 10,),
-    //               LabelOpensans(objeto.banco.descricao,tamanho: 22,cor: Color(int.parse(_colorLetra) ),bold: true,),
-    //             ],
-    //           ),
-    //           LabelOpensans("Cartão tipo ${objeto.tipo.descricao}",cor: Color(int.parse(_colorLetra) ),bold: true,),
-    //         ],
-    //       ),
-    //     );
+
+    if( objeto.conta.banco.corCartao != null ){
+      _colorFundo = Funcoes.converterCorStringColor( objeto.conta.banco.corCartao );
+    }else if( (objeto.conta.banco.corTerciaria != null) && (objeto.conta.banco.corTerciaria != "#FFFFFF") ){
+      _colorFundo = Funcoes.converterCorStringColor( objeto.conta.banco.corTerciaria );
+    }else if( (objeto.conta.banco.corTerciaria != null) && (objeto.conta.banco.corSecundaria != "#FFFFFF") && (objeto.conta.banco.corTerciaria == "#FFFFFF") ){
+      _colorFundo = Funcoes.converterCorStringColor( objeto.conta.banco.corSecundaria );
+    }
+    _colorLetra = Funcoes.converterCorStringColor( "#000000" );
+    _imagem = "assets/images/bancos/logo/${objeto.conta.banco.id.toString()}.png";
+    double valor = index * 10.0 * -1;
+
+    return Container(
+      transform: Matrix4.translationValues(0.0, valor, 0.0),
+          // transform: Matrix4.translationValues(0.0, -20.0, 0.0),
+          width: MediaQuery.of(context).size.width,
+          height: 80,
+          padding: EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              stops: [ 0.8, 0.95, 1.0 ],
+              colors: [ Color(int.parse(_colorFundo)) , Color(int.parse(_colorFundo))  , Colors.black]
+            ),
+            borderRadius: BorderRadius.only( topRight: Radius.circular(10) , topLeft: Radius.circular(10) ),
+            boxShadow: [ BoxShadow(color: Colors.black, blurRadius: 5.0), ],
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  SizedBox(
+                    height: 24, width: 24,
+                    child: Image.asset(_imagem),
+                  ),
+                  SizedBox(width: 10,),
+                  LabelOpensans(objeto.conta.banco.descricao,tamanho: 22,cor: Color(int.parse(_colorLetra) ),bold: true,),
+                ],
+              ),
+              LabelOpensans("Cartão tipo ${objeto.tipo.descricao}",cor: Color(int.parse(_colorLetra) ),bold: true,),
+            ],
+          ),
+        );
   }
 
   _contaAdicionar(){

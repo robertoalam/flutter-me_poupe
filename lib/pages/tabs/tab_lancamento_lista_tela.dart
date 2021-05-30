@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:me_poupe/componentes/calendario_horizontal_widget.dart';
 import 'package:me_poupe/componentes/icone_gambiarra.dart';
@@ -82,9 +81,6 @@ class _TabLancamentoListaTelaState extends State<TabLancamentoListaTela> {
     });
     return;
   }
-
-
-
 
 
   @override
@@ -242,13 +238,13 @@ class _TabLancamentoListaTelaState extends State<TabLancamentoListaTela> {
       pagamentoLabel = item.pagamento.pagamentoForma.descricao;
     }else{
       // 20210524
-      // pagamentoLabel = "${item.pagamento.cartao.banco.descricao} - ${item.pagamento.pagamentoForma.descricao} ${item.pagamento.cartao.tipo.descricao}";
+      pagamentoLabel = "${item.pagamento.cartao.conta.banco.descricao} - ${item.pagamento.pagamentoForma.descricao} ${item.pagamento.cartao.tipo.descricao}";
     }
 
     return Container(
         padding: EdgeInsets.all(10),
         width: MediaQuery.of(context).size.width,
-        height: 105,
+        // height: 105,
         child: Column(
           children: [
             Align(
@@ -274,21 +270,30 @@ class _TabLancamentoListaTelaState extends State<TabLancamentoListaTela> {
                 ),
 
                 // DESCRICAO E CONTA
-                Container(
-                  width: MediaQuery.of(context).size.width * .6,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                        child: Text(descricao ),
+                Flex(
+                  direction: Axis.vertical,
+                  children: [
+                    Container(
+                      width: MediaQuery.of(context).size.width * .6,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                            child: Text(
+                              descricao ,
+                              overflow: TextOverflow.ellipsis,softWrap: false,maxLines: 5,
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                            child: Text("${pagamentoLabel}"),
+                          ),
+                        ],
                       ),
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                        child: Text("${pagamentoLabel}"),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
 
                 // VALOR E STATUS
