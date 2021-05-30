@@ -66,22 +66,22 @@ class _LancamentoModalCartaoState extends State<LancamentoModalCartao> {
 
   thumb(CartaoModel objeto){
     // 20210524
-    // return Card(
-    //   color: Color(int.parse( Funcoes.converterCorStringColor("#CCCCCC") ) ),
-    //   child: Container(
-    //     padding: EdgeInsets.fromLTRB(0, 1, 2, 1),
-    //     child: ListTile(
-    //       leading: CircleAvatar(
-    //           backgroundColor: Color(int.parse( (objeto.banco.corSecundaria != null ) ? Funcoes.converterCorStringColor( objeto.banco.corSecundaria ) :  Funcoes.converterCorStringColor( "#FFFFFF" ) ) ),
-    //           child: Padding(
-    //             padding: EdgeInsets.all(5),
-    //             child: Image.asset(objeto.banco.imageAsset),
-    //           )
-    //       ),
-    //       title: LabelOpensans("${objeto.banco.descricao}"),
-    //       subtitle: LabelQuicksand("${objeto.tipo.descricao}"),
-    //     ),
-    //   ),
-    // );
+    return Card(
+      color: Color(int.parse( Funcoes.converterCorStringColor("#CCCCCC") ) ),
+      child: Container(
+        padding: EdgeInsets.fromLTRB(0, 1, 2, 1),
+        child: ListTile(
+          leading: CircleAvatar(
+              backgroundColor: Color(int.parse( (objeto.conta.banco.corSecundaria != null ) ? Funcoes.converterCorStringColor( objeto.conta.banco.corSecundaria ) :  Funcoes.converterCorStringColor( "#FFFFFF" ) ) ),
+              child: Padding(
+                padding: EdgeInsets.all(5),
+                child: Image.asset(objeto.conta.banco.imageAsset),
+              )
+          ),
+          title: LabelOpensans("${objeto.conta.banco.descricao}"),
+          subtitle: LabelQuicksand("${objeto.tipo.descricao}"),
+        ),
+      ),
+    );
   }
 }

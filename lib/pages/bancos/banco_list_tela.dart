@@ -3,7 +3,6 @@ import 'package:me_poupe/helper/configuracoes_helper.dart';
 import 'package:me_poupe/helper/funcoes_helper.dart';
 import 'package:me_poupe/model/cad/cad_banco_model.dart';
 import 'package:me_poupe/model/configuracoes/configuracao_model.dart';
-import 'package:me_poupe/pages/conta/conta_edit_tela.dart';
 
 import 'banco_edit_tela.dart';
 
@@ -173,7 +172,7 @@ class _BancoListTelaState extends State<BancoListTela> {
             padding: EdgeInsets.all(10),
             child: InkWell(
               onTap: (){
-                Navigator.push( context , MaterialPageRoute( builder: (context) => ContaEditTela(banco: objeto,) ) );
+                // Navigator.push( context , MaterialPageRoute( builder: (context) => ContaEditTela(banco: objeto,) ) );
               },
               child: Column(
                   children: [

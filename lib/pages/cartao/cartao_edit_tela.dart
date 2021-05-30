@@ -72,12 +72,13 @@ class _CartaoEditTelaState extends State<CartaoEditTela> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
         title: Text("Novo Cartão"),
-
       ),
+
       floatingActionButton: Visibility(
         visible: cartaoSemDefinicao,
         child: FloatingActionButton(
@@ -89,6 +90,7 @@ class _CartaoEditTelaState extends State<CartaoEditTela> {
           child: Icon(Icons.save , size: 40, color: Colors.white,),
         ),
       ),
+
       body: SafeArea(
 
         child: Padding(

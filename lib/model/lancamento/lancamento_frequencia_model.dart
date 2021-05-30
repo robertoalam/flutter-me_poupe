@@ -16,7 +16,7 @@ class FrequenciaModel{
   List<FrequenciaDetalheModel> lista;
 
 
-  final String TABLE_NAME = "lancamento_frequencia";
+  static final String TABLE_NAME = "lancamento_frequencia";
   final dbHelper = DatabaseHelper.instance;
 
   FrequenciaModel({

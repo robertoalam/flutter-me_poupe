@@ -43,8 +43,8 @@ class _BancoEditTelaState extends State<BancoEditTela> {
     BancoCadModel _banco = null;
     ContaModel _conta = new ContaModel();
       // TIPO DE CONTA
-    ContaBancariaTipoModel _contaTipo = new ContaBancariaTipoModel();
-    List<ContaBancariaTipoModel> _contaTipoLista = new List<ContaBancariaTipoModel>();
+    ContaTipoModel _contaTipo = new ContaTipoModel();
+    List<ContaTipoModel> _contaTipoLista = new List<ContaTipoModel>();
     String _contaTipoDescricaoSelecionada = "Clique aqui";
     bool _contaTipoValidate = false;
 
@@ -84,6 +84,7 @@ class _BancoEditTelaState extends State<BancoEditTela> {
 
     @override
     Widget build(BuildContext context) {
+
 
         if( _contaTipoLista == null){
             _body = Center(
@@ -224,11 +225,14 @@ class _BancoEditTelaState extends State<BancoEditTela> {
             );
         }
 
+        final appBar = AppBar(
+            title: Text("Banco"),
+            backgroundColor: Color(int.parse(_colorAppBar) ),
+        );
+        final alturaDisponivel = MediaQuery.of(context).size.height - appBar.preferredSize.height;
+
         return Scaffold(
-            appBar: AppBar(
-                title: Text('Banco'),
-                backgroundColor: Color(int.parse(_colorAppBar) ),
-            ),    
+            appBar: appBar,
             floatingActionButton: FloatingActionButton(
                 onPressed: (){
                     if(_validarForm() ){
@@ -237,7 +241,6 @@ class _BancoEditTelaState extends State<BancoEditTela> {
                         print('ERRO NA TELA');
                     }
                 },
-
                 backgroundColor: Color(int.parse( _colorAppBar) ),
                 child: Icon(Icons.save , color: Colors.black, size: 32,),
             ),
@@ -245,7 +248,7 @@ class _BancoEditTelaState extends State<BancoEditTela> {
                 child: SingleChildScrollView(
                     child: Container(
                         color: Color( int.parse(_colorContainerFundo ) ),
-                        height: MediaQuery.of(context).size.height,
+                        height: alturaDisponivel,
                         padding: EdgeInsets.fromLTRB(10, 20, 10, 20),
                         child: _body,
                     )
@@ -276,7 +279,7 @@ class _BancoEditTelaState extends State<BancoEditTela> {
     _salvar(){
         _conta.save();
     }
-    _setarTipoConta(ContaBancariaTipoModel objeto){
+    _setarTipoConta(ContaTipoModel objeto){
         if(objeto != null){
             _contaTipoDescricaoSelecionada = objeto.descricao;
             _conta.tipo = objeto;
@@ -306,7 +309,7 @@ class _BancoEditTelaState extends State<BancoEditTela> {
                     ),
                     child: ListView(
                         children: [
-                            for(ContaBancariaTipoModel objeto in _contaTipoLista) InkWell(
+                            for(ContaTipoModel objeto in _contaTipoLista) InkWell(
                                 onTap: (){ Navigator.pop(context , objeto); },
                                 child: Column(
                                     children: [

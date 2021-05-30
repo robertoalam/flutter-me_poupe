@@ -1,6 +1,7 @@
 import 'package:me_poupe/helper/arquivo_helper.dart';
 import 'package:me_poupe/helper/database_helper.dart';
 import 'package:me_poupe/helper/funcoes_helper.dart';
+import 'package:me_poupe/model/cad/cad_banco_model.dart';
 import 'package:me_poupe/model/cad/cad_cartao_tipo_model.dart';
 import 'package:me_poupe/model/cad/cad_categoria_model.dart';
 import 'package:me_poupe/model/cad/cad_frequencia_model.dart';
@@ -150,20 +151,21 @@ class LancamentoModel{
       " l.* , "+
       " lp.id_pagamento_forma , lp.id_cartao ,"+
       " pfc.descricao AS 'ds_pagamento_forma',"+
-      " c.descricao AS 'ds_cartao',"+
+      " "+CartaoModel.tableName+".id_conta  , "+CartaoModel.tableName+".descricao AS 'ds_cartao',"+
       " ctc._id AS 'id_cartao_tipo',ctc.descricao AS 'ds_cartao_tipo',"+
       " bc._id AS 'id_banco',bc.descricao AS 'ds_banco',"+
       " lf.id_frequencia,  lf.id_frequencia_periodo,  lf.no_quantidade,  lf.vl_integral,"+
       " lfd.no_frequencia,  lfd.dt_detalhe,  lfd.dt_mes,  lfd.dt_ano,  lfd.vl_valor,"+
       " 1=1 "+
-    " FROM lancamento_frequencia_detalhe lfd "+
-    " LEFT JOIN lancamento_frequencia lf ON (lfd.id_lancamento = lf.id_lancamento AND lfd.st_chave_unica = lf.st_chave_unica) "+
-    " LEFT JOIN lancamento l ON (l.id = lfd.id_lancamento AND l.st_chave_unica = lfd.st_chave_unica) "+
+    " FROM "+FrequenciaDetalheModel.TABLE_NAME+" lfd "+
+    " LEFT JOIN "+FrequenciaModel.TABLE_NAME+" lf ON (lfd.id_lancamento = lf.id_lancamento AND lfd.st_chave_unica = lf.st_chave_unica) "+
+    " LEFT JOIN "+LancamentoModel.TABLE_NAME+" l ON (l.id = lfd.id_lancamento AND l.st_chave_unica = lfd.st_chave_unica) "+
     " LEFT JOIN lancamento_pagamento lp ON (l.id = lp.id_lancamento AND l.st_chave_unica = lp.st_chave_unica) "+
     " LEFT JOIN pagamento_forma_cad pfc ON lp.id_pagamento_forma = pfc._id "+
-    " LEFT JOIN cartao c ON c._id = lp.id_cartao "+
-    " LEFT JOIN cartao_tipo_cad ctc ON ctc._id = c.id_cartao_tipo "+
-    " LEFT JOIN banco_cad bc ON bc._id = c.id_banco "+
+    " LEFT JOIN "+CartaoModel.tableName+" ON  "+CartaoModel.tableName+".id = lp.id_cartao "+
+    " LEFT JOIN cartao_tipo_cad ctc ON ctc._id =  "+CartaoModel.tableName+".id_cartao_tipo "+
+    " LEFT JOIN "+ContaModel.tableName+" ON "+ContaModel.tableName+".id = cartao.id_conta "+
+    " LEFT JOIN "+BancoCadModel.TABLE_NAME+" bc ON bc._id = "+ContaModel.tableName+".id_banco "+
     " LEFT JOIN categoria_cad cc ON l.id_categoria = cc._id "+
     " WHERE lfd.dt_ano = "+ano.toString()+" AND lfd.dt_mes = "+mes.toString()+" " +
     " ${pesquisarWhere} " +
@@ -172,9 +174,10 @@ class LancamentoModel{
     ArquivoHelper gravar = new ArquivoHelper(nomeArquivo: "teste");
     gravar.writeFile( query.toString() );
 
-//     print("QUERY: ${query}");
+    // print("QUERY: ${query}");
 
     final linhas = await dbHelper.executarQuery(query);
+
     List<LancamentoModel> lista = new List<LancamentoModel>();
     for(var linha in linhas){
 

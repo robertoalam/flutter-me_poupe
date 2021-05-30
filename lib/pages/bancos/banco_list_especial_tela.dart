@@ -156,7 +156,7 @@ class _BancoListEspecialTelaState extends State<BancoListEspecialTela> {
     if(objeto.id == 54){
       Navigator.push( context , MaterialPageRoute( builder: (context) => BancoListTela( where: " AND destaque = 0" ) ) );
     }else{
-      Navigator.push( context , MaterialPageRoute( builder: (context) => ContaEditTela(banco: objeto,) ) );
+      // Navigator.push( context , MaterialPageRoute( builder: (context) => ContaEditTela(banco: objeto,) ) );
     }
   }
 }

@@ -1,20 +1,7 @@
 name: me_poupe
-description: A new Flutter project.
+description: aplicacao financeira
 
-# The following line prevents the package from being accidentally published to
-# pub.dev using `pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
-
-# The following defines the version and build number for your application.
-# A version number is three numbers separated by dots, like 1.2.43
-# followed by an optional build number separated by a +.
-# Both the version and the builder number may be overridden in flutter
-# build by specifying --build-name and --build-number, respectively.
-# In Android, build-name is used as versionName while build-number used as versionCode.
-# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
-# In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
-# Read more about iOS versioning at
-# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 version: 1.0.0+1
 
 environment:
@@ -32,11 +19,11 @@ dependencies:
     sdk: flutter
   # image
   image_picker: ^0.6.0+3
-  
+
   # icones
   material_design_icons_flutter: ^4.0.5755
   font_awesome_flutter: ^8.2.0
-  
+
   # campos mascarados
   brasil_fields: ^0.4.0
 
@@ -83,7 +70,7 @@ flutter:
     - assets/images/cofre_escuro.png
 
     - assets/images/bancos/logo/00.png
-#    - assets/images/bancos/logo/01.png
+    #    - assets/images/bancos/logo/01.png
     - assets/images/bancos/logo/01.png
     - assets/images/bancos/logo/02.png
     - assets/images/bancos/logo/03.png
