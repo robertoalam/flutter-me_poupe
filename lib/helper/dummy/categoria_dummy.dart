@@ -40,6 +40,7 @@ class CategoriaDummy{
       CategoriaCadModel(id: 3003 , idPai: 30 , descricao: "Viagem",icone:"mala-01"),
       CategoriaCadModel(id: 3004 , idPai: 30 , descricao: "Piscina",icone:"piscina-01"),
       CategoriaCadModel(id: 3005 , idPai: 50 , descricao: "Eletronicos - Lazer",icone:"eletro-generico-01"),
+      CategoriaCadModel(id: 3006 , idPai: 50 , descricao: "Tatoo",icone:"eletro-generico-01"),
 
       // COMPRAS
       CategoriaCadModel(id: 4001 , idPai: 40 , descricao: "Roupas",icone:"roupa-01"),
@@ -93,6 +94,7 @@ class CategoriaDummy{
       CategoriaCadModel(id: 11004 , idPai: 110 , descricao: "Consórcio",icone:"money-03"),
       CategoriaCadModel(id: 11005 , idPai: 110 , descricao: "Mensalidade Cartao de Crédito",icone:"televisao-01"),
       CategoriaCadModel(id: 11006 , idPai: 110 , descricao: "Mensalidade Cartao de Crédito",icone:"televisao-01"),
+      CategoriaCadModel(id: 11007 , idPai: 110 , descricao: "Aluguel",icone:"home-01"),
 
       CategoriaCadModel(id: 12001 , idPai: 120 , descricao: "Condominio",icone:"predio-01"),
       CategoriaCadModel(id: 12002 , idPai: 120 , descricao: "Conta de luz",icone:"luz-01"),

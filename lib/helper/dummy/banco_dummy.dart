@@ -9,7 +9,7 @@ class BancoDummy{
       BancoCadModel( id: 3, descricao:"AgiBank" , imageAsset: "assets/images/bancos/logo/04.png"),
       BancoCadModel( id: 4, descricao:"Amazonia" , imageAsset: "assets/images/bancos/logo/05.png"),
       BancoCadModel( id: 5, descricao:"American Express" ,corPrimaria: "#FFFFFF", corSecundaria: "#016FD0",imageAsset: "assets/images/bancos/logo/05.png"),
-      BancoCadModel( id: 6, descricao:"Americanas" , corPrimaria: "#FFFFFF" , corSecundaria: "#E70017",imageAsset: "assets/images/bancos/logo/06.png"),
+      BancoCadModel( id: 6, descricao:"Americanas" ,corCartao:"#E70017" , corPrimaria: "#FFFFFF" , corSecundaria: "#E70017",imageAsset: "assets/images/bancos/logo/06.png"),
       BancoCadModel( id: 7, descricao:"Aura" ,imageAsset: "assets/images/bancos/logo/07.png" ),
       BancoCadModel( id: 8, descricao:"BMG" ,corSecundaria: "#FF6300",imageAsset: "assets/images/bancos/logo/08.png" ),
       BancoCadModel( id: 9, descricao:"BRB" ,imageAsset: "assets/images/bancos/logo/09.png" ),
