@@ -25,11 +25,11 @@ class CartaoModel{
   });
 
   final dbHelper = DatabaseHelper.instance;
-  final String tableName = "cartao";
+  static final String tableName = "cartao";
 
   @override
   String toString() {
-    return 'CartaoModel{id: $id, conta: $conta}';
+    return 'CartaoModel{id: $id, conta: $conta , descricao ${descricao}';
   }
 
   factory CartaoModel.fromJson(Map<String, dynamic> json) {
@@ -38,9 +38,8 @@ class CartaoModel{
 
   fromDatabase(Map<String, dynamic> linha) async {
     CartaoTipoCadModel tipo = new CartaoTipoCadModel();
-    BancoCadModel banco = new BancoCadModel();
     ContaModel conta = new ContaModel();
-    banco = await banco.fetchById(int.parse( linha['id_banco'].toString() ) );
+    conta = await conta.fetchById(int.parse( linha['id_conta'].toString() ) );
     tipo = await tipo.fetchById( int.parse( linha['id_cartao_tipo'].toString() ) );
     return CartaoModel(id: linha['id'] ,conta: conta, descricao: linha['descricao'] , tipo: tipo);
   }

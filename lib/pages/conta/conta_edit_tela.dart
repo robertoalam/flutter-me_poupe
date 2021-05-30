@@ -1,23 +1,25 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:me_poupe/componentes/modal_aviso_simples_widget.dart';
-import 'package:me_poupe/componentes/modal_mensagem_simples_widget.dart';
 import 'package:me_poupe/helper/configuracoes_helper.dart';
 import 'package:me_poupe/helper/funcoes_helper.dart';
 import 'package:me_poupe/model/cad/cad_banco_model.dart';
 import 'package:me_poupe/model/configuracoes/configuracao_model.dart';
+import 'package:me_poupe/model/conta/cartao_model.dart';
 import 'package:me_poupe/model/conta/conta_model.dart';
 import 'package:me_poupe/model/conta/conta_tipo_model.dart';
-import 'package:me_poupe/pages/conta/conta_list_tela.dart';
+import 'package:me_poupe/pages/conta/edit/telas/conta_edit_banco_tela.dart';
+import 'package:me_poupe/pages/conta/edit/telas/conta_edit_cartao_tela.dart';
+import 'package:me_poupe/pages/conta/edit/telas/conta_edit_tipo_tela.dart';
+
+import 'edit/telas/conta_edit_descricao_tela.dart';
 
 class ContaEditTela extends StatefulWidget {
 
     final ContaModel conta;
-    final BancoCadModel banco;
-    ContaEditTela({this.conta , this.banco});
+    ContaEditTela({this.conta});
 
     @override
     _ContaEditTelaState createState() => _ContaEditTelaState();
@@ -40,22 +42,33 @@ class _ContaEditTelaState extends State<ContaEditTela> {
     // VARIAVEIS
     Widget _body;
     var _dados = null;
+    bool _flagDadosCompletos = false;
 
+    // CONTA
     ContaModel _conta = new ContaModel();
     String _descricaoAppBar = "";
 
     // BANCO
-    BancoCadModel _bancoCad = BancoCadModel();
-    List<BancoCadModel> _bancoCadLista = List<BancoCadModel>();
-    String _bancoDescricao = "Clique aqui para selecionar";
-    TextEditingController _controllerDescricao = new TextEditingController();
-    bool _bancoValidate = false;
+    final String _bancoTitulo = "Instituição financeira";
+    String _bancoDescricao;
+    bool _bancoFlagConcluido;
 
-      // TIPO DE CONTA
-    ContaBancariaTipoModel _contaTipo = new ContaBancariaTipoModel();
-    List<ContaBancariaTipoModel> _contaTipoLista = new List<ContaBancariaTipoModel>();
-    String _contaTipoDescricaoSelecionada = "Clique aqui";
-    bool _contaTipoValidate = false;
+    // DESCRICAO
+    final String _descricaoTitulo = "Descrição para conta";
+    String _descricao;
+    bool _descricaoFlagConcluido;
+
+    // TIPO
+    final String _tipoTitulo = "Tipo de conta";
+    String _tipoDescricao = "Clique aqui para selecionar";
+    bool _tipoFlagConcluido = false;
+
+    // CARTAO
+    List<CartaoModel> _cartaoLista = new List<CartaoModel>();
+    final String _cartaoTitulo = "Cartões";
+    bool _cartaoControleRota = false;
+    String _cartaoDescricao = "Clique aqui para selecionar";
+    bool _cartaoFlagConcluido = false;
 
     @override
     void initState() {
@@ -64,34 +77,31 @@ class _ContaEditTelaState extends State<ContaEditTela> {
     }
 
     _start() async{
-        // _banco = widget.banco;
       if( widget.conta != null){
-        _bancoCadLista = _bancoCad.fetchById(widget.conta.banco.id);
+        // _bancoCadLista = _bancoCad.fetchById(widget.conta.banco.id);
         _descricaoAppBar = "Editar conta";
       }else{
         _descricaoAppBar = "Nova conta";
-      }
 
-      // _descricaoAppBar = (widget.conta.id == null)? "Nova conta" : "Editar conta";
+        _limparVariaveisBanco();
+        _limparVariaveisDescricao();
+        _limparVariaveisTipo();
+
+      }
 
       await _getDataConfig();
       await _setDataConfig();
       await _getData();
-      await _atualizar();
+
+      setState(() { _flagDadosCompletos = true; });
+      return ;
     }
-    _atualizar(){
-      _bancoDescricao;
-    }
+
     _getData() async {
         if(widget.conta != null){
             _conta = widget.conta;
         }
-        if(widget.conta == null && widget.banco !=null){
-          _conta.banco = widget.banco;
-          _bancoDescricao = widget.banco.descricao;
-        }
 
-        _contaTipoLista = await _contaTipo.fetchByAll();
     }
 
     _setDataConfig() async {
@@ -111,16 +121,21 @@ class _ContaEditTelaState extends State<ContaEditTela> {
         return;
     }
 
-
     @override
     Widget build(BuildContext context) {
 
-       var styleTextError = TextStyle(
+      final TextStyle styleTextError = TextStyle(
         fontWeight: FontWeight.bold ,
         color: Colors.red,
       );
 
-      if( _contaTipoLista == null){
+      final appBar = AppBar(
+        title: Text("${_descricaoAppBar}"),
+        backgroundColor: Colors.indigo,
+      );
+      final alturaDisponivel = MediaQuery.of(context).size.height - appBar.preferredSize.height;
+
+      if( !_flagDadosCompletos){
         _body = Center(
           child: CircularProgressIndicator(),
         );
@@ -128,138 +143,11 @@ class _ContaEditTelaState extends State<ContaEditTela> {
         _body = ListView(
           children: [
             // BANCO
-            Row(
-              children: [
-                Container(
-                  padding: EdgeInsets.all(10),
-                  child: Icon(MdiIcons.bank , color: Color(int.parse( _colorFundo) ) ),
-                  decoration: BoxDecoration(
-                    color: Colors.black,
-                    borderRadius: BorderRadius.circular(50) ,
-                  ),
-                ),
-                SizedBox( width: 10,),
-                Text('Banco', style: TextStyle(
-                    fontSize: 22 , color: Color(int.parse( _colorLetra) ) ,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(height: 10,),
-            Container(
-              width: MediaQuery.of(context).size.width,
-              padding: EdgeInsets.fromLTRB(10, 15, 10, 15),
-              decoration: BoxDecoration(
-                  border: Border.all( width: 2, color: Color(int.parse( _colorLetra) ) ),
-                  borderRadius: BorderRadius.circular(10)
-              ),
-              child: Text("${_bancoDescricao}" ,style: TextStyle(
-                  color: Color( int.parse( _colorLetra) ),
-                  fontSize: 18,
-                  fontFamily: "Quicksand"
-                ),
-              ),
-            ),
-            Visibility(
-              visible: _bancoValidate,
-              child: Text('Insira o banco' , style: styleTextError),
-            ),
-            SizedBox(height: 20,),
-            Divider( color: Color(int.parse( _colorLetra ) ) ),
-
-            // DESCRICAO
-            SizedBox(height: 20,),
-            Row(
-              children: [
-                Container(
-                  padding: EdgeInsets.all(10),
-                  child: Icon(Icons.edit , color: Color(int.parse( _colorFundo) ) ),
-                  decoration: BoxDecoration(
-                    color: Colors.black,
-                    borderRadius: BorderRadius.circular(50) ,
-                  ),
-                ),
-                SizedBox( width: 10,),
-                Text('Descrição', style: TextStyle(
-                  fontSize: 22 , color: Color(int.parse( _colorLetra) ) ,
-                  fontWeight: FontWeight.bold,
-                ),
-                ),
-              ],
-            ),
-            SizedBox(height: 10,),
-            TextField(
-              enabled: true,
-              controller: _controllerDescricao,
-              decoration: InputDecoration(
-                filled: true,
-                fillColor: Color(int.parse( _colorContainerFundo ) ),
-                hintText: 'Descrição',
-                hintStyle: TextStyle(
-                  color: Colors.grey,fontFamily: "Quicksand",
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                  borderSide: BorderSide(width: 2,color:  Color(int.parse( _colorLetra) ) ),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                  borderSide: BorderSide(width: 2,color: Color(int.parse( _colorLetra) ) ),
-                ),
-              ),
-            ),
-            SizedBox(height: 20,),
-            Divider( color: Color(int.parse( _colorLetra ) ) ),
-
-            // TIPO CONTA
-            SizedBox(height: 20,),
-            Row(
-              children: [
-                Container(
-                  padding: EdgeInsets.all(10),
-                  child: Icon( FontAwesomeIcons.piggyBank , color: Color(int.parse( _colorFundo) ) ),
-                  decoration: BoxDecoration(
-                    color: Colors.black,
-                    borderRadius: BorderRadius.circular(50) ,
-                  ),
-                ),
-                SizedBox( width: 10,),
-                Text('Tipo de Conta', style: TextStyle(
-                  fontFamily: "OpenSans",
-                  fontSize: 22 , color: Color(int.parse( _colorLetra) ) ,
-                  fontWeight: FontWeight.bold,
-                ),
-                ),
-              ],
-            ),
-            SizedBox(height: 10,),
-            InkWell(
-              onTap: () async {
-                var retorno = await _cortinaTipoConta( context );
-                if(retorno != null){
-                  _setarTipoConta(retorno);
-                }
-              },
-              child:  Container(
-                width: MediaQuery.of(context).size.width,
-                padding: EdgeInsets.fromLTRB(10, 15, 10, 15),
-                decoration: BoxDecoration(
-                    border: Border.all( width: 2, color: Color(int.parse( _colorLetra) ) ),
-                    borderRadius: BorderRadius.circular(10)
-                ),
-                child: Text("${_contaTipoDescricaoSelecionada}" ,style: TextStyle(
-                    color: Color( int.parse( _colorLetra) ),
-                    fontSize: 18,
-                    fontFamily: "Quicksand"
-                ),
-                ),
-              ),
-            ),
-            Visibility(
-                visible: _contaTipoValidate,
-                child: Text("Campo obrigatório")
-            ),
+            _linha(context , MdiIcons.bankOutline ,_bancoTitulo,_bancoDescricao , ContaBancoEditTela( _setarBanco , (_conta.banco != null)?_conta.banco:null ) , true ),
+            _linha(context , Icons.edit ,_descricaoTitulo, _descricao , ContaEditDescricaoTela( _setarDescricao , (_conta.descricao != null)?_conta.descricao:null ) , true ),
+            _linha(context , FontAwesomeIcons.piggyBank , _tipoTitulo, _tipoDescricao , ContaEditTipoTela( _setarTipo , (_conta.tipo != null)?_conta.tipo:null ) , true ),
+            // _linha(context , FontAwesomeIcons.creditCard , _cartaoTitulo, _cartaoDescricao , ContaEditCartaoTela( _setarCartao , (_conta.cartoes != null)?_conta.cartoes:null ) , true ),
+            _linhaCartoes(context , FontAwesomeIcons.creditCard , _cartaoTitulo, _cartaoDescricao , ContaEditCartaoTela( _setarCartao ) , _cartaoControleRota ),
           ],
         );
       }
@@ -270,35 +158,34 @@ class _ContaEditTelaState extends State<ContaEditTela> {
           title: Text(_descricaoAppBar),
           backgroundColor: Color(int.parse(_colorAppBar) ),
         ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () async {
-            if(_validarForm( context ) ){
-              print('entrou 1');
-              var retorno = await _salvar();
-              // await _showDialog(context , retorno);
-              var retornoModal = await showDialog(
-                context: context,
-                builder: (context) {
-                  return ModalMensagemSimplesWidget(
-                    context: context,
-                    mensagem: retorno['msg'],
-                    action: null,
-                    onSubmit: null,
-                    botaoTexto: null,
-                    botaoCor: null,
-                  );
-                }
-              );
-              Navigator.push( context ,MaterialPageRoute( builder: (context) => ContaListTela() ) );
-            }else{
-              print('entrou 2');
-              print('ERRO NA TELA');
-            }
-          },
-
-          backgroundColor: Color(int.parse( _colorAppBar) ),
-          child: Icon(Icons.save , color: Colors.black, size: 32,),
-        ),
+        // floatingActionButton: FloatingActionButton(
+        //   onPressed: () async {
+        //     if(_validarForm( context ) ){
+        //       var retorno = await _salvar();
+        //       // await _showDialog(context , retorno);
+        //       var retornoModal = await showDialog(
+        //         context: context,
+        //         builder: (context) {
+        //           return ModalMensagemSimplesWidget(
+        //             context: context,
+        //             mensagem: retorno['msg'],
+        //             action: null,
+        //             onSubmit: null,
+        //             botaoTexto: null,
+        //             botaoCor: null,
+        //           );
+        //         }
+        //       );
+        //       Navigator.push( context ,MaterialPageRoute( builder: (context) => ContaListTela() ) );
+        //     }else{
+        //       print('entrou 2');
+        //       print('ERRO NA TELA');
+        //     }
+        //   },
+        //
+        //   backgroundColor: Color(int.parse( _colorAppBar) ),
+        //   child: Icon(Icons.save , color: Colors.black, size: 32,),
+        // ),
         body: SafeArea(
           child: SingleChildScrollView(
               child: Container(
@@ -312,88 +199,333 @@ class _ContaEditTelaState extends State<ContaEditTela> {
       );
     }
 
-    _exibirAviso(title,mensagem,botao,action) async {
-      return await showDialog(
-          context: context,
-          builder: (context) {
-            return ModalAvisoSimplesWidget(context,title,mensagem,action,textoBotao: (botao!=null)?botao.toString():null);
+    Widget _linha(BuildContext context ,IconData icone ,String titulo , String label , rota , bool rotaLiberada){
+      return InkWell(
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  Container(
+                    width: MediaQuery.of(context).size.width * .15,
+                    child: Icon(icone , size: 35,),
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width * .75,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "${titulo}" ,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 22,
+                          ),
+                        ),
+                        Text(
+                          "${label}",
+                          style: TextStyle(
+                              fontSize: 18,
+                              color: Colors.grey
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width * .05,
+                    child: Icon(Icons.arrow_forward_ios),
+                  ),
+                ],
+              ),
+              SizedBox( height: 10,),
+              Divider( color: Colors.black87)
+            ],
+          ),
+        ),
+        onTap: () async {
+          if(rotaLiberada){
+            var retorno = await Navigator.push( context ,MaterialPageRoute( builder: (context) => rota ) );
+            if( rota.toString() == 'ContaBancoEditTela'){
+              if(retorno == null) {
+                // PERGUNTAR ANTES SE DESEJA LIMPAR O OBJETO
+                _limparVariaveisBanco();
+              }
+            }
+
+            if( rota.toString() == 'ContaEditCartaoTela'){
+              if(retorno != null) {
+                print('ENTROU');
+                // PERGUNTAR ANTES SE DESEJA LIMPAR O OBJETO
+                // _limparVariaveisBanco();
+              }
+            }
           }
+        },
       );
-      // await Navigator.push( context ,MaterialPageRoute( builder: (context) => ModalAvisoSimplesWidget('Erro','Defina o tipo de conta') ) );
     }
+
+    Widget _linhaCartoes( BuildContext context ,IconData icone ,String titulo , String label , rota , bool rotaLiberada ){
+      return Container(
+        width: MediaQuery.of(context).size.width,
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Container(
+                  width: MediaQuery.of(context).size.width * .15,
+                  child: Icon(
+                    icone , size: 35,
+                    color: (rotaLiberada)?Colors.black: Colors.grey,
+                  ),
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width * .75,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "${titulo}" ,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 22,
+                          color: (rotaLiberada)?Colors.black: Colors.grey,
+                        ),
+                      ),
+                      Text(
+                        "${label}",
+                        style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.grey,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            SizedBox( height: 20,),
+            RaisedButton(
+              color: Colors.purple,
+              onPressed: () async {
+                if( rotaLiberada ){
+                  CartaoModel cartaoRetorno = await Navigator.push( context ,MaterialPageRoute( builder: (context) => rota ) );
+                  if(cartaoRetorno != null){
+                    await _setarCartao(cartaoRetorno);
+                  }
+                }
+              },
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(Icons.add , color: Colors.white,),
+                  Text(
+                    'Adicionar Cartão' ,
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: Container(
+                // height: 200,
+                child:ListView(
+                  shrinkWrap: true,
+                  scrollDirection: Axis.vertical,
+                  children: [
+                    for(CartaoModel item in _cartaoLista) Container(
+                      padding: EdgeInsets.all(5),
+                      child: Card(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(3),
+                            color: Color( int.parse( Funcoes.converterCorStringColor( _conta.banco.corCartao ) ) ),
+                          ),
+                          padding: EdgeInsets.all(10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                width: MediaQuery.of(context).size.width * .1,
+                                child: Image.asset( _conta.banco.imageAsset.toString() ),
+                              ),
+                              Container(
+                                width: MediaQuery.of(context).size.width * .65,
+                                padding: EdgeInsets.fromLTRB(10, 0, 01, 0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      item.tipo.descricao , style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold
+                                      ),
+                                    ),
+                                    Text( item.descricao != null ? item.descricao : "-"),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                width: MediaQuery.of(context).size.width * .05,
+                                child: Icon( Icons.arrow_forward_ios , color: Colors.black,),
+                              ),
+
+                            ],
+                          ),
+                        )
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Divider( color: Colors.black87)
+          ],
+        ),
+      );
+    }
+
+    _setarBanco(BancoCadModel objeto){
+      if( objeto != null){
+        setState(() {
+          _conta.banco = objeto;
+          _bancoDescricao = objeto.descricao;
+          _bancoFlagConcluido = true;
+          _cartaoControleRota = true;
+        });
+      }
+    }
+
+    _limparVariaveisBanco(){
+      setState(() {
+        _conta.banco = null;
+        _bancoDescricao = "Clique aqui para selecionar";
+        _bancoFlagConcluido = false;
+      });
+      return;
+    }
+
+    _setarDescricao(String objeto){
+      if( objeto != null){
+        setState(() {
+          _conta.descricao = objeto.toString();
+          _descricao = "Definido";
+          _descricaoFlagConcluido = true;
+        });
+      }
+    }
+    _limparVariaveisDescricao(){
+      setState(() {
+        _conta.descricao = "";
+        _descricao = "Clique aqui";
+      });
+      return;
+    }
+
+    _setarTipo(ContaTipoModel objeto){
+      if( objeto != null ){
+        setState(() {
+          _conta.tipo = objeto;
+          _tipoDescricao = objeto.descricao.toString();
+          _tipoFlagConcluido = true;
+        });
+      }
+    }
+
+    _limparVariaveisTipo(){
+      setState(() {
+        // TIPO
+        _tipoDescricao = "Clique aqui para selecionar";
+        _tipoFlagConcluido = false;
+      });
+    }
+
+    _setarCartao(CartaoModel cartao){
+      _cartaoLista.add(cartao);
+      setState(() { _cartaoLista; });
+      print("CARTAO :${_cartaoLista.last.descricao}");
+      print("TAMNAHO :${_cartaoLista.length}");
+    }
+
     _validarForm(BuildContext context){
       bool error = false;
       if( _conta.banco == null) {
         error = true;
-        _bancoValidate = true;
+        _bancoFlagConcluido = true;
       }
-      if( _conta.tipo == null){
-        error = true;
-        _contaTipoValidate = true;
-      }
-      setState(() {
-        _bancoValidate ; _contaTipoValidate;
-      });
+
+      // if( _conta.tipo == null){
+      //   error = true;
+      //   _contaTipoValidate = true;
+      // }
+      // setState(() {
+      //   _bancoFlagConcluido ; _contaTipoValidate;
+      // });
       return !error;
     }
 
     _salvar() async {
-        _conta.descricao = _controllerDescricao.text.toString();
         return await _conta.save();
-
-    }
-    _setarTipoConta(ContaBancariaTipoModel objeto){
-        if(objeto != null){
-            _contaTipoDescricaoSelecionada = objeto.descricao;
-            _conta.tipo = objeto;
-        }else{
-            // SETAR O PADRAO
-            _conta.tipo = null;
-            _contaTipoDescricaoSelecionada = "";
-        }
-
-        setState(() { _contaTipoDescricaoSelecionada; });
-
     }
 
-    _cortinaTipoConta(BuildContext context){
-        return  showModalBottomSheet(
-            elevation: 0,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
-            context: context,
-            builder: (BuildContext context) {
-                return Container(
-                    // height: MediaQuery.of(context).size.height * .4,
-                    decoration: BoxDecoration(
-                        color: (_dados['modo'] == "normal")? Colors.white:Colors.grey,
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(20),
-                            topRight: Radius.circular(20),
-                        ),
-                    ),
-                    child: ListView(
-                        children: [
-                            for(ContaBancariaTipoModel objeto in _contaTipoLista) InkWell(
-                                onTap: (){ Navigator.pop(context , objeto); },
-                                child: Column(
-                                    children: [
-                                        Padding(
-                                            padding: EdgeInsets.fromLTRB(5, 15, 0, 15),
-                                            child: Text("${objeto.descricao}",style: TextStyle(color: Color(int.parse( _colorAppBar)), fontSize: 20.0) ),
-                                        ),
-                                        Visibility(
-                                            visible: (objeto.id != _contaTipoLista.last.id)? true:false,
-                                            child: Divider( color: Color(int.parse( _colorLetra)),),
-                                        )
-                                    ],
-                                )
-                            )
-                        ],
-                    ),
-                );
-            },
-        );
-    }
+    // _setarTipoConta(ContaBancariaTipoModel objeto){
+    //     if(objeto != null){
+    //         _contaTipoDescricaoSelecionada = objeto.descricao;
+    //         _conta.tipo = objeto;
+    //     }else{
+    //         // SETAR O PADRAO
+    //         _conta.tipo = null;
+    //         _contaTipoDescricaoSelecionada = "";
+    //     }
+    //
+    //     setState(() { _contaTipoDescricaoSelecionada; });
+    //
+    // }
+
+    // _cortinaTipoConta(BuildContext context){
+    //     return  showModalBottomSheet(
+    //         elevation: 0,
+    //         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
+    //         context: context,
+    //         builder: (BuildContext context) {
+    //             return Container(
+    //                 // height: MediaQuery.of(context).size.height * .4,
+    //                 decoration: BoxDecoration(
+    //                     color: (_dados['modo'] == "normal")? Colors.white:Colors.grey,
+    //                     borderRadius: BorderRadius.only(
+    //                         topLeft: Radius.circular(20),
+    //                         topRight: Radius.circular(20),
+    //                     ),
+    //                 ),
+    //                 child: ListView(
+    //                     children: [
+    //                         for(ContaBancariaTipoModel objeto in _contaTipoLista) InkWell(
+    //                             onTap: (){ Navigator.pop(context , objeto); },
+    //                             child: Column(
+    //                                 children: [
+    //                                     Padding(
+    //                                         padding: EdgeInsets.fromLTRB(5, 15, 0, 15),
+    //                                         child: Text("${objeto.descricao}",style: TextStyle(color: Color(int.parse( _colorAppBar)), fontSize: 20.0) ),
+    //                                     ),
+    //                                     Visibility(
+    //                                         visible: (objeto.id != _contaTipoLista.last.id)? true:false,
+    //                                         child: Divider( color: Color(int.parse( _colorLetra)),),
+    //                                     )
+    //                                 ],
+    //                             )
+    //                         )
+    //                     ],
+    //                 ),
+    //             );
+    //         },
+    //     );
+    // }
 
     _opcaoModal(String opcao){
       print(opcao);
@@ -411,4 +543,15 @@ class _ContaEditTelaState extends State<ContaEditTela> {
         );
       }
     }
+
+    _exibirAviso(title,mensagem,botao,action) async {
+      return await showDialog(
+          context: context,
+          builder: (context) {
+            return ModalAvisoSimplesWidget(context,title,mensagem,action,textoBotao: (botao!=null)?botao.toString():null);
+          }
+      );
+      // await Navigator.push( context ,MaterialPageRoute( builder: (context) => ModalAvisoSimplesWidget('Erro','Defina o tipo de conta') ) );
+    }
+
 }

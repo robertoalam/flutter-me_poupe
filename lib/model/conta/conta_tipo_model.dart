@@ -1,29 +1,29 @@
 import 'package:me_poupe/helper/database_helper.dart';
 
-class ContaBancariaTipoModel{
+class ContaTipoModel{
 	int id;
 	String descricao;
 
 	final dbHelper = DatabaseHelper.instance;
 
-	static final String TABLE_NAME = "conta_bancaria_tipo_cad";
+	static final String TABLE_NAME = "conta_tipo_cad";
 
-	ContaBancariaTipoModel({this.id, this.descricao});
+	ContaTipoModel({this.id, this.descricao});
 
   @override
   toString(){
     return "${this.id} ${this.descricao}";
   }
 
-	factory ContaBancariaTipoModel.fromJson(Map<String, dynamic> json) {
-		return ContaBancariaTipoModel(
+	factory ContaTipoModel.fromJson(Map<String, dynamic> json) {
+		return ContaTipoModel(
 			id: json['id'],
 			descricao: json['descricao'],
 		);
 	}
 
-	factory ContaBancariaTipoModel.fromDatabase(Map<String, dynamic> json) {
-		return ContaBancariaTipoModel(
+	factory ContaTipoModel.fromDatabase(Map<String, dynamic> json) {
+		return ContaTipoModel(
 			id: json['_id'],
 			descricao: json['descricao'],
 		);
@@ -33,16 +33,16 @@ class ContaBancariaTipoModel{
 		var linha;
 		if( id !=null || id.toString() != "" ) {
 			linha = await dbHelper.query(TABLE_NAME, where: " _id = ?", whereArgs: [id]);
-			linha = linha.isNotEmpty ? ContaBancariaTipoModel.fromDatabase(linha.first) : null;
+			linha = linha.isNotEmpty ? ContaTipoModel.fromDatabase(linha.first) : null;
 		}
 		return linha;
 	}
 
   fetchByAll() async {
 		final linhas = await dbHelper.queryAllRows(TABLE_NAME);
-		List<ContaBancariaTipoModel> lista = List<ContaBancariaTipoModel>();
+		List<ContaTipoModel> lista = List<ContaTipoModel>();
 		for(var linha in linhas){
-			ContaBancariaTipoModel objeto = new ContaBancariaTipoModel.fromDatabase(linha);
+			ContaTipoModel objeto = new ContaTipoModel.fromDatabase(linha);
 			lista.add(objeto);
 		}
 		return lista;

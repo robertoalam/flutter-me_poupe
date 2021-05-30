@@ -1,13 +1,15 @@
 import 'package:me_poupe/helper/database_helper.dart';
 import 'package:me_poupe/model/cad/cad_banco_model.dart';
+import 'package:me_poupe/model/conta/cartao_model.dart';
 import 'package:me_poupe/model/conta/conta_tipo_model.dart';
 
 class ContaModel{
 	int id;
 	String descricao;
 	BancoCadModel banco;
-	ContaBancariaTipoModel tipo;
+	ContaTipoModel tipo;
 	double saldo;
+	List<CartaoModel> cartoes;
 
 	final dbHelper = DatabaseHelper.instance;
 
@@ -29,7 +31,7 @@ class ContaModel{
     BancoCadModel banco = new BancoCadModel();
     banco = await banco.fetchById(json['id_banco']);
 
-    ContaBancariaTipoModel contaTipo = new ContaBancariaTipoModel();
+		ContaTipoModel contaTipo = new ContaTipoModel();
     contaTipo = await contaTipo.fetchById(json['id_conta_tipo']);
 
     return ContaModel(
@@ -52,12 +54,13 @@ class ContaModel{
     }
 
 	fetchById(int id) async {
-		var linha;
+		var linha ;
+		linha = null;
 		if( id !=null || id.toString() != "" ) {
 			linha = await dbHelper.query(tableName, where: " id = ?", whereArgs: [id]);
       ContaModel conta = new ContaModel();
       // conta = conta.fromDatabase(linha);
-			linha = linha.isNotEmpty ? await conta.fromDatabase(linha) : null;
+			linha = linha.isNotEmpty ? await conta.fromDatabase(linha.first) : null;
 		}
 		return linha;
 	}

@@ -4,7 +4,7 @@ class CartaoTipoCadModel{
   int id;
   String descricao;
 
-  final String TABLE_NAME = "cartao_tipo_cad";
+  static final String TABLE_NAME = "cartao_tipo_cad";
   final dbHelper = DatabaseHelper.instance;
 
   CartaoTipoCadModel({this.id, this.descricao});

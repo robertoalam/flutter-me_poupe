@@ -3,8 +3,17 @@ import 'package:me_poupe/helper/dummy/banco_dummy.dart';
 import 'package:me_poupe/helper/dummy/categoria_dummy.dart';
 import 'package:me_poupe/helper/dummy/lancamento_dummy.dart';
 import 'package:me_poupe/model/cad/cad_banco_model.dart';
+import 'package:me_poupe/model/cad/cad_cartao_tipo_model.dart';
 import 'package:me_poupe/model/cad/cad_categoria_model.dart';
+import 'package:me_poupe/model/cad/cad_frequencia_model.dart';
+import 'package:me_poupe/model/cad/cad_frequencia_periodo_model.dart';
+import 'package:me_poupe/model/configuracoes/configuracao_model.dart';
+import 'package:me_poupe/model/conta/cartao_model.dart';
 import 'package:me_poupe/model/conta/conta_model.dart';
+import 'package:me_poupe/model/conta/conta_tipo_model.dart';
+import 'package:me_poupe/model/lancamento/lancamento_frequencia_detalhe_model.dart';
+import 'package:me_poupe/model/lancamento/lancamento_frequencia_model.dart';
+import 'package:me_poupe/model/lancamento/lancamento_model.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
@@ -34,7 +43,7 @@ class DatabaseHelper {
         Directory documentsDirectory = await getApplicationDocumentsDirectory();
         String path = join(documentsDirectory.path, _databaseName);
 
-        if(false){
+        if(true){
           await deleteDatabase(path);
         }
 
@@ -57,13 +66,16 @@ class DatabaseHelper {
         await pagamentoStatusCadCriar(db);
         await pagamentoStatusCadPopular(db);
 
-        await contaBancariaTipoCadCriar(db);
-        await contaBancariaTipoPopular(db);
-        await contaCriar(db);
-        // await contaBancariaCriar(db);
+        await contaTipoCadCriar(db);
+        await contaTipoPopular(db);
 
         await cartaoTipoCadCriar(db);
         await cartaoTipoCadPopular(db);
+
+        await contaCriar(db);
+        // await contaBancariaCriar(db);
+
+
 
         // await carteiraCriar(db);
         // await carteiraPopular(db);
@@ -71,13 +83,13 @@ class DatabaseHelper {
 
         await categoriaCadCriar(db);
         await categoriaCadPopular(db);
-        // LANCAMENTO
+        // LANCAMENTO CAD
         await lancamentoTipoCadCriar(db);
         await lancamentoFrequenciaCadCriar(db);
         await lancamentoFrequenciaPeriodoCadCriar(db);
         await cartaoCriar(db);
 
-        //LANCAMENTO
+        //LANCAMENTO POPULAR
         await lancamentoTipoCadPopular(db);
         await lancamentoFrequenciaCadPopular(db);
         await lancamentoFrequenciaPeriodoCadPopular(db);
@@ -92,95 +104,95 @@ class DatabaseHelper {
     }
 
   // usuarioTipoCadCriar(Database db) async {
-  //   await db.execute(''' CREATE TABLE IF NOT EXISTS usuario_tipo_cad ( id INTEGER PRIMARY KEY, descricao VARCHAR(70) ); ''');
+  //   await db.execute(" CREATE TABLE IF NOT EXISTS usuario_tipo_cad ( id INTEGER PRIMARY KEY, descricao VARCHAR(70) ); ");
   // }
 
   configuracoesCadCriar(Database db) async {
-    await db.execute(''' CREATE TABLE IF NOT EXISTS configuracoes ( chave TEXT , valor TEXT ); ''');
+    await db.execute(" CREATE TABLE IF NOT EXISTS "+ConfiguracaoModel.TABLE_NAME+" ( chave TEXT , valor TEXT ); ");
   }
 
   iconesCadCriar(Database db) async {
-    await db.execute(''' CREATE TABLE IF NOT EXISTS icone_cad ( _id INTEGER PRIMARY KEY , codigo VARCHAR(20) , familia VARCHAR(70) , tags TEXT); ''');
+    await db.execute(" CREATE TABLE IF NOT EXISTS icone_cad ( _id INTEGER PRIMARY KEY , codigo VARCHAR(20) , familia VARCHAR(70) , tags TEXT); ");
   }
 
   usuarioCadCriar(Database db) async {
-    await db.execute(''' CREATE TABLE IF NOT EXISTS usuario ( id INTEGER ,id_usuario_pai INTEGER ,email TEXT, password TEXT, descricao VARCHAR(70) , imagem blob , dt_update DATETIME ); ''');
+    await db.execute(" CREATE TABLE IF NOT EXISTS usuario ( id INTEGER ,id_usuario_pai INTEGER ,email TEXT, password TEXT, descricao VARCHAR(70) , imagem blob , dt_update DATETIME ); ");
   }
   bancoCadCriar(Database db) async {
-    await db.execute(''' CREATE TABLE IF NOT EXISTS banco_cad ( _id INTEGER PRIMARY KEY, descricao VARCHAR(70), apelido VARCHAR(30), cor_primaria VARCHAR(20), cor_secundaria VARCHAR(20) , cor_terciaria VARCHAR(20), cor_cartao VARCHAR(20) ,image_asset TEXT , image_url TEXT , image blob ,destaque BOOL , ordem_destaque INTEGER ); ''');
+    await db.execute(" CREATE TABLE IF NOT EXISTS "+BancoCadModel.TABLE_NAME+" ( _id INTEGER PRIMARY KEY, descricao VARCHAR(70), apelido VARCHAR(30), cor_primaria VARCHAR(20), cor_secundaria VARCHAR(20) , cor_terciaria VARCHAR(20), cor_cartao VARCHAR(20) ,image_asset TEXT , image_url TEXT , image blob ,destaque BOOL , ordem_destaque INTEGER ); ");
   }
 
   cartaoTipoCadCriar(Database db) async {
-    await db.execute(''' CREATE TABLE IF NOT EXISTS cartao_tipo_cad ( _id INTEGER PRIMARY KEY, descricao VARCHAR(70) ); ''');
+    await db.execute(" CREATE TABLE IF NOT EXISTS "+CartaoTipoCadModel.TABLE_NAME+" ( _id INTEGER PRIMARY KEY, descricao VARCHAR(70) ); ");
   }
 
   pagamentoFormaCadCriar(Database db) async {
-    await db.execute(''' CREATE TABLE IF NOT EXISTS pagamento_forma_cad ( _id INTEGER PRIMARY KEY, descricao VARCHAR(70), icone VARCGAR(50) , ordem INTEGER ); ''');
+    await db.execute(" CREATE TABLE IF NOT EXISTS pagamento_forma_cad ( _id INTEGER PRIMARY KEY, descricao VARCHAR(70), icone VARCGAR(50) , ordem INTEGER ); ");
   }
 
   pagamentoStatusCadCriar(Database db) async {
-    await db.execute(''' CREATE TABLE IF NOT EXISTS pagamento_status_cad ( _id INTEGER PRIMARY KEY, descricao VARCHAR(70), ordem INTEGER  ); ''');
+    await db.execute(" CREATE TABLE IF NOT EXISTS pagamento_status_cad ( _id INTEGER PRIMARY KEY, descricao VARCHAR(70), ordem INTEGER  ); ");
   }
 
   cartaoCriar(Database db) async {
-    await db.execute(''' CREATE TABLE IF NOT EXISTS cartao ( _id INTEGER PRIMARY KEY, id_banco INTEGER ,id_cartao_tipo INTEGER, descricao VARCHAR(100) , vl_saldo FLOAT , vl_limite FLOAT , dia_fechamento INTEGER , dia_vencimento INTEGER , st_protected INTEGER, dt_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP); ''');
+    await db.execute(" CREATE TABLE IF NOT EXISTS "+CartaoModel.tableName+" ( id INTEGER PRIMARY KEY, id_conta INTEGER ,id_cartao_tipo INTEGER, descricao VARCHAR(100) , vl_saldo FLOAT , vl_limite FLOAT , dia_fechamento INTEGER , dia_vencimento INTEGER , st_protected INTEGER, dt_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP); ");
   }
 
   lancamentoCriarTable(Database db) async {
-    await db.execute(''' CREATE TABLE IF NOT EXISTS lancamento ( id INTEGER PRIMARY KEY, st_chave_unica VARCHAR(24), id_lancamento_tipo INTEGER,id_usuario INTEGER, descricao VARCHAR(70), id_categoria INTEGER, dt_lancamento Datetime, st_protected INTEGER, dt_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP , dt_delete DEFAULT null ); ''');
+    await db.execute(" CREATE TABLE IF NOT EXISTS "+LancamentoModel.TABLE_NAME+" ( id INTEGER PRIMARY KEY, st_chave_unica VARCHAR(24), id_lancamento_tipo INTEGER,id_usuario INTEGER, descricao VARCHAR(70), id_categoria INTEGER, dt_lancamento Datetime, st_protected INTEGER, dt_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP , dt_delete DEFAULT null ); ");
   }
 
   lancamentoPagamentoCriarTable(Database db) async {
-    await db.execute(''' CREATE TABLE IF NOT EXISTS lancamento_pagamento ( _id INTEGER PRIMARY KEY, id_lancamento INTEGER, st_chave_unica VARCHAR(24), id_pagamento_forma INTEGER, id_cartao INTEGER); ''');
+    await db.execute(" CREATE TABLE IF NOT EXISTS lancamento_pagamento ( _id INTEGER PRIMARY KEY, id_lancamento INTEGER, st_chave_unica VARCHAR(24), id_pagamento_forma INTEGER, id_cartao INTEGER); ");
   }
 
   lancamentoFrequenciaCriarTable(Database db) async {
-    await db.execute(''' CREATE TABLE IF NOT EXISTS lancamento_frequencia ( _id INTEGER PRIMARY KEY, id_lancamento INTEGER, st_chave_unica VARCHAR(24), id_frequencia INTEGER, id_frequencia_periodo INTEGER, no_quantidade INTEGER, vl_integral FLOAT); ''');
+    await db.execute(" CREATE TABLE IF NOT EXISTS "+FrequenciaModel.TABLE_NAME+" ( _id INTEGER PRIMARY KEY, id_lancamento INTEGER, st_chave_unica VARCHAR(24), id_frequencia INTEGER, id_frequencia_periodo INTEGER, no_quantidade INTEGER, vl_integral FLOAT); ");
   }
 
   lancamentoFrequenciaDetalheCriarTable(Database db) async {
-    await db.execute(''' CREATE TABLE IF NOT EXISTS lancamento_frequencia_detalhe ( _id INTEGER PRIMARY KEY, id_lancamento INTEGER, st_chave_unica VARCHAR(24), id_lancamento_frequencia INTEGER, no_frequencia INTEGER, dt_detalhe Datetime, dt_mes INTEGER, dt_ano INTEGER, vl_valor FLOAT); ''');
+    await db.execute(" CREATE TABLE IF NOT EXISTS "+FrequenciaDetalheModel.TABLE_NAME+" ( _id INTEGER PRIMARY KEY, id_lancamento INTEGER, st_chave_unica VARCHAR(24), id_lancamento_frequencia INTEGER, no_frequencia INTEGER, dt_detalhe Datetime, dt_mes INTEGER, dt_ano INTEGER, vl_valor FLOAT); ");
   }
 
   carteiraCriar(Database db) async {
-    await db.execute(''' CREATE TABLE IF NOT EXISTS carteira ( id INTEGER PRIMARY KEY, id_cartao INTEGER, descricao VARCHAR(70), st_protected INTEGER); ''');
+    await db.execute(" CREATE TABLE IF NOT EXISTS carteira ( id INTEGER PRIMARY KEY, id_cartao INTEGER, descricao VARCHAR(70), st_protected INTEGER); ");
   }
 
-	contaBancariaTipoCadCriar(Database db) async {
-		await db.execute(''' CREATE TABLE IF NOT EXISTS conta_bancaria_tipo_cad ( _id INTEGER PRIMARY KEY, descricao VARCHAR(70) ); ''');
+	contaTipoCadCriar(Database db) async {
+		await db.execute(" CREATE TABLE IF NOT EXISTS "+ContaTipoModel.TABLE_NAME+" ( _id INTEGER PRIMARY KEY, descricao VARCHAR(70) ); ");
 	}
 
   contaCriar(Database db) async {
-    await db.execute(" CREATE TABLE IF NOT EXISTS "+ContaModel.tableName+" ( id INTEGER PRIMARY KEY, id_banco INTEGER , id_conta_tipo INTEGER , descricao VARCHAR(30) , saldo FLOAT , dt_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP); ");
+    await db.execute(" CREATE TABLE IF NOT EXISTS "+ContaModel.tableName+" ( id INTEGER PRIMARY KEY, id_banco INTEGER , id_conta_tipo INTEGER , descricao VARCHAR(30) , vl_saldo FLOAT , dt_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP); ");
   }
 
   // contaBancariaCriar(Database db) async {
-	// 	await db.execute(''' CREATE TABLE IF NOT EXISTS conta_bancaria ( id INTEGER PRIMARY KEY, id_banco INTEGER , id_conta_tipo INTEGER , descricao VARCHAR(30) , saldo FLOAT ); ''');
+	// 	await db.execute(" CREATE TABLE IF NOT EXISTS conta_bancaria ( id INTEGER PRIMARY KEY, id_banco INTEGER , id_conta_tipo INTEGER , descricao VARCHAR(30) , saldo FLOAT ); ");
 	// }
 
 	categoriaCadCriar(Database db) async {
-    await db.execute(''' CREATE TABLE IF NOT EXISTS categoria_cad ( _id INTEGER PRIMARY KEY, id_pai INTEGER , descricao VARCHAR(50) , icone VARCHAR(40) , ordem INTEGER); ''');
+    await db.execute(" CREATE TABLE IF NOT EXISTS "+CategoriaCadModel.TABLE_NAME+" ( _id INTEGER PRIMARY KEY, id_pai INTEGER , descricao VARCHAR(50) , icone VARCHAR(40) , ordem INTEGER); ");
   }
 
   lancamentoTipoCadCriar(Database db) async {
-    await db.execute(''' CREATE TABLE IF NOT EXISTS lancamento_tipo_cad ( _id INTEGER PRIMARY KEY , descricao VARCHAR(50) ); ''');
+    await db.execute(" CREATE TABLE IF NOT EXISTS lancamento_tipo_cad ( _id INTEGER PRIMARY KEY , descricao VARCHAR(50) ); ");
   }
 
   lancamentoFrequenciaCadCriar(Database db) async {
-    await db.execute(''' CREATE TABLE IF NOT EXISTS frequencia_cad ( _id INTEGER PRIMARY KEY , descricao VARCHAR(50) ); ''');
+    await db.execute(" CREATE TABLE IF NOT EXISTS "+FrequenciaCadModel.TABLE_NAME+" ( _id INTEGER PRIMARY KEY , descricao VARCHAR(50) ); ");
   }
 
   lancamentoFrequenciaPeriodoCadCriar(Database db) async {
-    await db.execute(''' CREATE TABLE IF NOT EXISTS frequencia_periodo_cad ( _id INTEGER PRIMARY KEY , descricao VARCHAR(50) , dias INTEGER , st_exibir INTEGER); ''');
+    await db.execute(" CREATE TABLE IF NOT EXISTS "+FrequenciaPeriodoCadModel.TABLE_NAME+" ( _id INTEGER PRIMARY KEY , descricao VARCHAR(50) , dias INTEGER , st_exibir INTEGER); ");
   }
   // POPULAR
   configuracoesPopular(Database db) async {
     // VERSAO
-    await db.execute(''' INSERT INTO configuracoes VALUES ('no_version','${_versionAPP}' );  ''');
-    await db.execute(''' INSERT INTO configuracoes VALUES ('no_aberturas','0' );  ''');
+    await db.execute(" INSERT INTO configuracoes VALUES ('no_version','${_versionAPP}' );  ");
+    await db.execute(" INSERT INTO configuracoes VALUES ('no_aberturas','0' );  ");
     // NORMAL / NOTURNO
-    await db.execute(''' INSERT INTO configuracoes VALUES ('exibir_saldo','true' );  ''');
-    await db.execute(''' INSERT INTO configuracoes VALUES ('modo','normal' );  ''');
+    await db.execute(" INSERT INTO configuracoes VALUES ('exibir_saldo','true' );  ");
+    await db.execute(" INSERT INTO configuracoes VALUES ('modo','normal' );  ");
     return 1;
   }
 
@@ -202,23 +214,23 @@ class DatabaseHelper {
 
 	usuarioPopular(Database db) async {
 		// String senha = md5("flamengo");
-    await db.execute(''' INSERT INTO usuario (id,id_usuario_pai,email,password,descricao,dt_update) VALUES (1,0,'admin@vidabugada.net','Flamengo+1981+App','admin', date('now') );  ''');
-    await db.execute(''' INSERT INTO usuario (id,id_usuario_pai,email,password,descricao,dt_update) VALUES (2,0,'scarapa@gmail.com','flamengo','Roberto', date('now') );  ''');
-    await db.execute(''' INSERT INTO usuario (id,id_usuario_pai,email,password,descricao,dt_update) VALUES (3,1,'tonialcf@gmail.com','luisa','Tonia', date('now') );  ''');
+    await db.execute(" INSERT INTO usuario (id,id_usuario_pai,email,password,descricao,dt_update) VALUES (1,0,'admin@vidabugada.net','Flamengo+1981+App','admin', date('now') );  ");
+    await db.execute(" INSERT INTO usuario (id,id_usuario_pai,email,password,descricao,dt_update) VALUES (2,0,'scarapa@gmail.com','flamengo','Roberto', date('now') );  ");
+    await db.execute(" INSERT INTO usuario (id,id_usuario_pai,email,password,descricao,dt_update) VALUES (3,1,'tonialcf@gmail.com','luisa','Tonia', date('now') );  ");
 		return 1;
   }
 
   pagamentoFormaCadPopular(Database db) async {
-    await db.execute(''' INSERT INTO pagamento_forma_cad  (descricao,icone,ordem) VALUES ('Dinheiro','dinheiro-01',10 );  ''');
-    await db.execute(''' INSERT INTO pagamento_forma_cad  (descricao,icone,ordem) VALUES ('Cartão','cartao-credito-01',20 );  ''');
-    await db.execute(''' INSERT INTO pagamento_forma_cad  (descricao,icone,ordem) VALUES ('Cheque','cheque-01',30 );  ''');
+    await db.execute(" INSERT INTO pagamento_forma_cad  (descricao,icone,ordem) VALUES ('Dinheiro','dinheiro-01',10 );  ");
+    await db.execute(" INSERT INTO pagamento_forma_cad  (descricao,icone,ordem) VALUES ('Cartão','cartao-credito-01',20 );  ");
+    await db.execute(" INSERT INTO pagamento_forma_cad  (descricao,icone,ordem) VALUES ('Cheque','cheque-01',30 );  ");
     return 1;
   }
 
   pagamentoStatusCadPopular(Database db) async {
-    await db.execute(''' INSERT INTO pagamento_status_cad (descricao,ordem) VALUES ('A pagar',10 );  ''');
-    await db.execute(''' INSERT INTO pagamento_status_cad (descricao,ordem) VALUES ('Vencida',20 );  ''');
-    await db.execute(''' INSERT INTO pagamento_status_cad (descricao,ordem) VALUES ('Pago',30 );  ''');
+    await db.execute(" INSERT INTO pagamento_status_cad (descricao,ordem) VALUES ('A pagar',10 );  ");
+    await db.execute(" INSERT INTO pagamento_status_cad (descricao,ordem) VALUES ('Vencida',20 );  ");
+    await db.execute(" INSERT INTO pagamento_status_cad (descricao,ordem) VALUES ('Pago',30 );  ");
     return 1;
   }
 
@@ -251,79 +263,88 @@ class DatabaseHelper {
       String descricao = objeto.descricao;
       String icone = objeto.icone.toString();
       int ordem = objeto.order;
-      String query = "INSERT INTO categoria_cad ( _id , id_pai , descricao , icone , ordem) VALUES ("+id.toString()+" ,"+id_pai.toString()+", '"+descricao+"' , '"+icone.toString()+"',"+ordem.toString()+");";
+      String query = "INSERT INTO "+CategoriaCadModel.TABLE_NAME+" ( _id , id_pai , descricao , icone , ordem) VALUES ("+id.toString()+" ,"+id_pai.toString()+", '"+descricao+"' , '"+icone.toString()+"',"+ordem.toString()+");";
       await db.execute(query);
     }).toList();
   }
 
   carteiraPopular(Database db) async {
-    await db.execute(''' INSERT INTO carteira (id, id_cartao, descricao, st_protected) VALUES (1,null,'Minha Carteira',1);  ''');
+    await db.execute(" INSERT INTO carteira (id, id_cartao, descricao, st_protected) VALUES (1,null,'Minha Carteira',1);  ");
     return 1;
   }
 
   lancamentoTipoCadPopular(Database db) async {
-    await db.execute(''' INSERT INTO lancamento_tipo_cad (descricao) VALUES ('Despesa');  ''');
-    await db.execute(''' INSERT INTO lancamento_tipo_cad (descricao) VALUES ('Receita');  ''');
+    await db.execute(" INSERT INTO lancamento_tipo_cad (descricao) VALUES ('Despesa');  ");
+    await db.execute(" INSERT INTO lancamento_tipo_cad (descricao) VALUES ('Receita');  ");
     return 1;
   }
 
   lancamentoFrequenciaCadPopular(Database db) async {
-    await db.execute(''' INSERT INTO frequencia_cad (descricao) VALUES ('Única');  ''');
-    await db.execute(''' INSERT INTO frequencia_cad (descricao) VALUES ('Fixa');  ''');
-    await db.execute(''' INSERT INTO frequencia_cad (descricao) VALUES ('Parcelada');  ''');
+    await db.execute(" INSERT INTO "+FrequenciaCadModel.TABLE_NAME+" (descricao) VALUES ('Única');  ");
+    await db.execute(" INSERT INTO "+FrequenciaCadModel.TABLE_NAME+" (descricao) VALUES ('Fixa');  ");
+    await db.execute(" INSERT INTO "+FrequenciaCadModel.TABLE_NAME+" (descricao) VALUES ('Parcelada');  ");
     return 1;
   }
 
   lancamentoFrequenciaPeriodoCadPopular(Database db) async {
-    await db.execute(''' INSERT INTO frequencia_periodo_cad (descricao,dias,st_exibir) VALUES ('Diária',1,1);''');
-    await db.execute(''' INSERT INTO frequencia_periodo_cad (descricao,dias,st_exibir) VALUES ('Semanal',7,1);''');
-    await db.execute(''' INSERT INTO frequencia_periodo_cad (descricao,dias,st_exibir) VALUES ('Quinzenal',15,0);''');
-    await db.execute(''' INSERT INTO frequencia_periodo_cad (descricao,dias,st_exibir) VALUES ('Mensal',30,1);''');
-    await db.execute(''' INSERT INTO frequencia_periodo_cad (descricao,dias,st_exibir) VALUES ('Bimestral',60,0);''');
-    await db.execute(''' INSERT INTO frequencia_periodo_cad (descricao,dias,st_exibir) VALUES ('Trimestral',90,0);''');
-    await db.execute(''' INSERT INTO frequencia_periodo_cad (descricao,dias,st_exibir) VALUES ('Quadrimestral',120,0);''');
-    await db.execute(''' INSERT INTO frequencia_periodo_cad (descricao,dias,st_exibir) VALUES ('Semestral',180,0);''');
-    await db.execute(''' INSERT INTO frequencia_periodo_cad (descricao,dias,st_exibir) VALUES ('Anual',365,1);''');
+    await db.execute(" INSERT INTO "+FrequenciaPeriodoCadModel.TABLE_NAME+" (descricao,dias,st_exibir) VALUES ('Diária',1,1);");
+    await db.execute(" INSERT INTO "+FrequenciaPeriodoCadModel.TABLE_NAME+" (descricao,dias,st_exibir) VALUES ('Semanal',7,1);");
+    await db.execute(" INSERT INTO "+FrequenciaPeriodoCadModel.TABLE_NAME+" (descricao,dias,st_exibir) VALUES ('Quinzenal',15,0);");
+    await db.execute(" INSERT INTO "+FrequenciaPeriodoCadModel.TABLE_NAME+" (descricao,dias,st_exibir) VALUES ('Mensal',30,1);");
+    await db.execute(" INSERT INTO "+FrequenciaPeriodoCadModel.TABLE_NAME+" (descricao,dias,st_exibir) VALUES ('Bimestral',60,0);");
+    await db.execute(" INSERT INTO "+FrequenciaPeriodoCadModel.TABLE_NAME+" (descricao,dias,st_exibir) VALUES ('Trimestral',90,0);");
+    await db.execute(" INSERT INTO "+FrequenciaPeriodoCadModel.TABLE_NAME+" (descricao,dias,st_exibir) VALUES ('Quadrimestral',120,0);");
+    await db.execute(" INSERT INTO "+FrequenciaPeriodoCadModel.TABLE_NAME+" (descricao,dias,st_exibir) VALUES ('Semestral',180,0);");
+    await db.execute(" INSERT INTO "+FrequenciaPeriodoCadModel.TABLE_NAME+" (descricao,dias,st_exibir) VALUES ('Anual',365,1);");
     return 1;
   }
 
   cartaoTipoCadPopular(Database db) async {
-    await db.execute(''' INSERT INTO cartao_tipo_cad (descricao) VALUES ('padrao');  ''');
-    await db.execute(''' INSERT INTO cartao_tipo_cad (descricao) VALUES ('credito');  ''');
-    await db.execute(''' INSERT INTO cartao_tipo_cad (descricao) VALUES ('debito');  ''');
+    await db.execute(" INSERT INTO cartao_tipo_cad (descricao) VALUES ('outros');  ");
+    await db.execute(" INSERT INTO cartao_tipo_cad (descricao) VALUES ('cartão de crédito');  ");
+    await db.execute(" INSERT INTO cartao_tipo_cad (descricao) VALUES ('cartão de débito');  ");
+    await db.execute(" INSERT INTO cartao_tipo_cad (descricao) VALUES ('cartão vale-alimentação');  ");
+    await db.execute(" INSERT INTO cartao_tipo_cad (descricao) VALUES ('cartão vale-refeição');  ");
     return 1;
   }
 
-  contaBancariaTipoPopular(Database db) async {
-    await db.execute(''' INSERT INTO conta_bancaria_tipo_cad (descricao) VALUES ('cc');  ''');
-    await db.execute(''' INSERT INTO conta_bancaria_tipo_cad (descricao) VALUES ('poupanca');  ''');
-    await db.execute(''' INSERT INTO conta_bancaria_tipo_cad (descricao) VALUES ('salario');  ''');
-    await db.execute(''' INSERT INTO conta_bancaria_tipo_cad (descricao) VALUES ('conjunta');  ''');
-    await db.execute(''' INSERT INTO conta_bancaria_tipo_cad (descricao) VALUES ('familiar');  ''');
+  contaTipoPopular(Database db) async {
+    await db.execute(" INSERT INTO "+ContaTipoModel.TABLE_NAME+" (descricao) VALUES ('conta corrente');  ");
+    await db.execute(" INSERT INTO "+ContaTipoModel.TABLE_NAME+" (descricao) VALUES ('poupanca');  ");
+    await db.execute(" INSERT INTO "+ContaTipoModel.TABLE_NAME+" (descricao) VALUES ('salário');  ");
+    await db.execute(" INSERT INTO "+ContaTipoModel.TABLE_NAME+" (descricao) VALUES ('conjunta');  ");
+    await db.execute(" INSERT INTO "+ContaTipoModel.TABLE_NAME+" (descricao) VALUES ('familiar');  ");
   }
 
   // contaBancariaPopular(Database db) async {
-  //   await db.execute(''' INSERT INTO conta (id_banco , id_cartao_tipo , descricao , vl_saldo , vl_limite , dia_fechamento , dia_vencimento) VALUES ('cc');  ''');
+  //   await db.execute(" INSERT INTO conta (id_banco , id_cartao_tipo , descricao , vl_saldo , vl_limite , dia_fechamento , dia_vencimento) VALUES ('cc');  ");
   // }
 
   seedTestes(Database db) async {
-    // await seedPopularContas(db);
+    await seedPopularConta(db);
+    await seedPopularCartao(db);
+    await seedPopularLancamentos(db);
     // await seedPopularCarteiras(db);
-    // await seedPopularLancamentos(db);
+
   }
 
-   seedPopularContas(Database db) async {
-    // await db.execute(''' INSERT INTO cartao (id_banco , id_cartao_tipo , descricao , vl_saldo , vl_limite , dia_fechamento , dia_vencimento, st_protected) VALUES (1,1,'',null,null,0,0,1);  ");
-    await db.execute(" INSERT INTO "+ContaModel.tableName+" (id_conta , id_cartao_tipo , descricao , vl_saldo , vl_limite , dia_fechamento , dia_vencimento, st_protected) VALUES (52,2,'',null,null,26,6,0);  ");
-    await db.execute(" INSERT INTO "+ContaModel.tableName+" (id_conta , id_cartao_tipo , descricao , vl_saldo , vl_limite , dia_fechamento , dia_vencimento, st_protected) VALUES (22,2,'',null,null,26,5,0);  ");
-    await db.execute(" INSERT INTO "+ContaModel.tableName+" (id_conta , id_cartao_tipo , descricao , vl_saldo , vl_limite , dia_fechamento , dia_vencimento, st_protected) VALUES (22,3,'',5000.0,null,0,0,0);  ");
-    await db.execute(" INSERT INTO "+ContaModel.tableName+" (id_conta , id_cartao_tipo , descricao , vl_saldo , vl_limite , dia_fechamento , dia_vencimento, st_protected) VALUES (46,3,'',10000.0,null,0,0,0);  ");
-    await db.execute(" INSERT INTO "+ContaModel.tableName+" (id_conta , id_cartao_tipo , descricao , vl_saldo , vl_limite , dia_fechamento , dia_vencimento, st_protected) VALUES (16,3,'',10000.0,null,0,0,0);  ");
+
+  seedPopularConta(Database db) async {
+    // await db.execute(" INSERT INTO cartao (id_banco , id_cartao_tipo , descricao , vl_saldo , vl_limite , dia_fechamento , dia_vencimento, st_protected) VALUES (1,1,'',null,null,0,0,1);  ");
+    await db.execute(" INSERT INTO "+ContaModel.tableName+" ( id_banco, id_conta_tipo , descricao , vl_saldo ) VALUES (22,1,'banri',null);  ");
+    await db.execute(" INSERT INTO "+ContaModel.tableName+" ( id_banco, id_conta_tipo , descricao , vl_saldo ) VALUES (52,1,'roxinho',null);  ");
+    await db.execute(" INSERT INTO "+ContaModel.tableName+" ( id_banco, id_conta_tipo , descricao , vl_saldo ) VALUES (44,1,'itau pai',null);  ");
+  }
+   seedPopularCartao(Database db) async {
+    await db.execute(" INSERT INTO "+CartaoModel.tableName+" (id_conta , id_cartao_tipo , descricao , vl_saldo , vl_limite , dia_fechamento , dia_vencimento, st_protected) VALUES (1,3,'debito',null,null,null,null,0);  ");
+    await db.execute(" INSERT INTO "+CartaoModel.tableName+" (id_conta , id_cartao_tipo , descricao , vl_saldo , vl_limite , dia_fechamento , dia_vencimento, st_protected) VALUES (1,2,'credito',null,7000.0,26,6,0);  ");
+    await db.execute(" INSERT INTO "+CartaoModel.tableName+" (id_conta , id_cartao_tipo , descricao , vl_saldo , vl_limite , dia_fechamento , dia_vencimento, st_protected) VALUES (2,2,'credito',2500.0,null,25,5,0);  ");
+    await db.execute(" INSERT INTO "+CartaoModel.tableName+" (id_conta , id_cartao_tipo , descricao , vl_saldo , vl_limite , dia_fechamento , dia_vencimento, st_protected) VALUES (3,3,'debito',10000.0,null,0,0,0);  ");
   }
 
   // seedPopularCarteiras(Database db) async {
-  //   await db.execute(''' INSERT INTO carteira (id , id_cartao, descricao, st_protected) VALUES (2,3,'Banri',0);  ''');
-  //   await db.execute(''' INSERT INTO carteira (id , id_cartao, descricao, st_protected) VALUES (3,4,'Banri',0);  ''');
+  //   await db.execute(" INSERT INTO carteira (id , id_cartao, descricao, st_protected) VALUES (2,3,'Banri',0);  ");
+  //   await db.execute(" INSERT INTO carteira (id , id_cartao, descricao, st_protected) VALUES (3,4,'Banri',0);  ");
   // }
 
   seedPopularLancamentos(Database db) async {

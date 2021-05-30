@@ -5,6 +5,7 @@ import 'package:me_poupe/model/cad/cad_banco_model.dart';
 import 'package:me_poupe/model/configuracoes/configuracao_model.dart';
 import 'package:me_poupe/model/conta/conta_model.dart';
 import 'package:me_poupe/pages/bancos/banco_list_especial_tela.dart';
+import 'package:me_poupe/pages/conta/conta_edit_tela.dart';
 
 class ContaListTela extends StatefulWidget {
   @override
@@ -116,8 +117,7 @@ class _ContaListTelaState extends State<ContaListTela> {
       appBar: appBar,
       floatingActionButton: InkWell(
         onTap: (){
-          // Navigator.push( context ,MaterialPageRoute( builder: (context) => BancoListTela() ) );
-          Navigator.push( context ,MaterialPageRoute( builder: (context) => BancoListEspecialTela() ) );
+          Navigator.push( context ,MaterialPageRoute( builder: (context) => ContaEditTela() ) );
         },
         child: Container(
             padding: EdgeInsets.all(8),
