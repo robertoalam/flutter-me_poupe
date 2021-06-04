@@ -5,15 +5,17 @@ class ModalAvisoSimplesWidget extends StatelessWidget {
   final String titulo;
   final String mensagem;
   final String textoBotao;
-  final String action;
-  void Function(String) onSubmit;
+  // final String action;
+  final void Function(bool) onSubmit;
+  final bool exibirBotaoCancelar;
 
-  ModalAvisoSimplesWidget(this.context, this.titulo,this.mensagem,this.action,{this.textoBotao});
+  ModalAvisoSimplesWidget(this.context, this.titulo,this.mensagem,this.onSubmit,{this.textoBotao , this.exibirBotaoCancelar});
 
   @override
   Widget build(BuildContext context) {
 
     String botaoTexto = (this.textoBotao == null)? "OK":this.textoBotao;
+    bool botaoCancelar = (this.exibirBotaoCancelar != null) ? this.exibirBotaoCancelar : false;
 
     return Scaffold(
       backgroundColor: Colors.black12,
@@ -38,10 +40,30 @@ class ModalAvisoSimplesWidget extends StatelessWidget {
                 SizedBox(height: 10,),
                 Align(
                   alignment: Alignment.bottomRight,
-                  child: RaisedButton(
-                    color: Theme.of(context).primaryColor,
-                    onPressed: ()=> Navigator.pop(this.context , this.action),
-                    child: Text("${botaoTexto}" , style: TextStyle(color: Colors.white , fontWeight: FontWeight.bold),),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Visibility(
+                        visible: ( botaoCancelar ) ,
+                        child: RaisedButton(
+                          onPressed: (){
+                            this.onSubmit(false);
+                            Navigator.pop(this.context , false);
+                          },
+                          child: Text("cancelar" , style: TextStyle(color: Theme.of(context).primaryColor , fontWeight: FontWeight.bold),),
+                        ),
+                      ),
+
+                      SizedBox(width: 20,),
+                      RaisedButton(
+                        color: Theme.of(context).primaryColor,
+                        onPressed: (){
+                          this.onSubmit(true);
+                          Navigator.pop(this.context , true);
+                        } ,
+                        child: Text("${botaoTexto}" , style: TextStyle(color: Colors.white , fontWeight: FontWeight.bold),),
+                      ),
+                    ],
                   ),
                 ),
               ],
