@@ -88,6 +88,8 @@ flutter:
     - assets/images/bancos/logo/46.png
     - assets/images/bancos/logo/52.png
     - assets/images/bancos/logo/54.png
+    - assets/images/bancos/logo/67.png
+    - assets/images/bancos/logo/80.png
     # - assets/images/porco_02.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
