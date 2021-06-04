@@ -4,7 +4,6 @@ import 'package:me_poupe/helper/funcoes_helper.dart';
 import 'package:me_poupe/model/cad/cad_banco_model.dart';
 import 'package:me_poupe/model/configuracoes/configuracao_model.dart';
 import 'package:me_poupe/model/conta/conta_model.dart';
-import 'package:me_poupe/pages/bancos/banco_list_especial_tela.dart';
 import 'package:me_poupe/pages/conta/conta_edit_tela.dart';
 
 class ContaListTela extends StatefulWidget {
@@ -52,7 +51,6 @@ class _ContaListTelaState extends State<ContaListTela> {
 
   _getData() async {
     _contaLista = await _conta.fetchByAll();
-    // _bancoCadLista = await _bancoCad.fetchByAll();
     _atualizar();
   }
 
@@ -84,7 +82,6 @@ class _ContaListTelaState extends State<ContaListTela> {
 
     if( _contaLista == null && _dados != null) {
       modo = _dados['modo'].toString();
-      print("modo: ${modo}");
       _body = Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -158,44 +155,63 @@ class _ContaListTelaState extends State<ContaListTela> {
   }
 
   _thumb(BuildContext context , ContaModel objeto){
-
     String color;
-    if (objeto.banco.corPrimaria != null && objeto.banco.corPrimaria == "#FFFFFF"){
+    if( objeto.banco.corCartao == null){
+      color = Funcoes.converterCorStringColor( "#C1C1C1" ) ;
+    } else if( objeto.banco.corCartao != null){
+      color = Funcoes.converterCorStringColor( objeto.banco.corCartao ) ;
+    }else if (objeto.banco.corCartao == objeto.banco.corPrimaria){
       color = Funcoes.converterCorStringColor( objeto.banco.corSecundaria ) ;
-    }else if( objeto.banco.corSecundaria != null && objeto.banco.corSecundaria == "#FFFFFF" ){
-      color = Funcoes.converterCorStringColor( objeto.banco.corTerciaria );
-    }else if( objeto.banco.corTerciaria != null && objeto.banco.corTerciaria == "#FFFFFF" ){
-      color = Funcoes.converterCorStringColor( "#EEEEEE" );
     }else{
       color = Funcoes.converterCorStringColor( "#C1C1C1" );
     }
-    color = Funcoes.converterCorStringColor( objeto.banco.corCartao ) ;
 
     return Container(
-      child: InkWell(
-        onTap: (){},
+      child: GestureDetector(
+        onTap: (){
+          Navigator.push( context ,MaterialPageRoute( builder: (context) => ContaEditTela( conta: objeto, ) ) );
+        },
         child: Card(
           child: Container(
             decoration: BoxDecoration(
-              color: Color(int.parse(color)),
+              color: Color(int.parse( Funcoes.converterCorStringColor( color ) )),
             ),
             padding: EdgeInsets.all(10),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
               children: [
-                Text(
-                  objeto.banco.descricao ,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 22 ,
-                    color: Color( int.parse( Funcoes.converterCorStringColor( objeto.banco.corPrimaria.toString() ) ) ),
+                Container(
+                  width: MediaQuery.of(context).size.width * .1,
+                  child: Image.asset( objeto.banco.imageAsset ),
+                ),
+                Container(
+                  padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
+                  width: MediaQuery.of(context).size.width * .7,
+                  child:Text(
+                    objeto.banco.descricao ,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 22 ,
+                      color: Color( int.parse( Funcoes.converterCorStringColor( objeto.banco.corPrimaria.toString()) ) ),
+                      shadows: [
+                        Shadow(
+                          color:  Colors.black.withOpacity( 1.0 ),
+                          offset: Offset(1.0, 1.0),
+                          blurRadius: 1.0,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-                Icon(
-                  Icons.arrow_forward_ios ,
-                  size: 33,
-                  color: Colors.grey,
+                Container(
+                  width: MediaQuery.of(context).size.width * .05,
+                  child:Icon(
+                    Icons.arrow_forward_ios ,
+                    size: 33,
+                    color: Colors.white,
+                  ),
                 ),
+
               ],
             ),
           ),

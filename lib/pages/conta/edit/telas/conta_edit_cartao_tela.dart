@@ -11,9 +11,9 @@ import 'package:me_poupe/model/conta/cartao_model.dart';
 class ContaEditCartaoTela extends StatefulWidget {
 
   void Function(CartaoModel cartao) onSubmit;
-  // CartaoModel cartao;
+  CartaoModel cartao;
 
-  ContaEditCartaoTela(this.onSubmit);
+  ContaEditCartaoTela(this.onSubmit ,{this.cartao});
 
   @override
   _ContaEditCartaoTelaState createState() => _ContaEditCartaoTelaState();
@@ -39,20 +39,18 @@ class _ContaEditCartaoTelaState extends State<ContaEditCartaoTela> {
   // VARIAVEIS
   Widget _body;
   var _dados = null;
-
+  String _descricaoAppBar = "";
   // DESCRICAO
   TextEditingController _descricaoController = new TextEditingController();
 
   // TIPO
-  String cartaoTipoController = "";
+  String _cartaoTipoController = "";
 
   TextEditingController _saldoController = TextEditingController();
   TextEditingController _limiteController = TextEditingController();
   TextEditingController _diaFechamentoController = TextEditingController();
   TextEditingController _diaVencimentoController = TextEditingController();
 
-  bool showCartaoCredito = false;
-  bool showCartaoDebito = false;
   int _showTipoCartao = 0;
   bool _flagExibirBotaoSalvar = false;
   bool cartaoSemDefinicao = false;
@@ -72,8 +70,25 @@ class _ContaEditCartaoTelaState extends State<ContaEditCartaoTela> {
     await _setDataConfig();
     await _getData();
     _limparControlles();
+    if(widget.cartao != null){
 
-    // if(widget.cartao == null){ }
+      _descricaoAppBar = "Editar cartão";
+      _descricaoController.text = widget.cartao.descricao;
+      _cartao = widget.cartao;
+      _cartaoTipo = widget.cartao.tipo;
+      _cartaoTipoController = _cartaoTipo.descricao;
+      _showTipoCartao = widget.cartao.tipo.id;
+
+      _saldoController.text = (_cartao.saldo != null)? _cartao.saldo.toString() :"";
+      _limiteController.text = (_cartao.limite != null)? _cartao.limite.toString() :"";
+      _diaFechamentoController.text = (_cartao.diaFechamento != null)? _cartao.diaFechamento.toString() :"";
+      _diaVencimentoController.text = (_cartao.diaVencimento != null)? _cartao.diaVencimento.toString() :"";
+
+      _flagExibirBotaoSalvar = true;
+    }else{
+      _descricaoAppBar = "Novo cartão";
+    }
+
   }
 
   _limparControlles(){
@@ -106,12 +121,24 @@ class _ContaEditCartaoTelaState extends State<ContaEditCartaoTela> {
     });
     return;
   }
+  
   @override
   Widget build(BuildContext context) {
 
     final appBar = AppBar(
-      title: Text("Cartões"),
+      title: Text("${_descricaoAppBar}"),
       backgroundColor: Color(int.parse(_colorAppBar) ),
+      actions: [
+        InkWell(
+          onTap: () async {
+            var retorno = await _deletar();
+          },
+          child: Container(
+            padding: EdgeInsets.fromLTRB(00, 0, 15, 0),
+            child: Icon(Icons.delete , color: Colors.white),
+          ),
+        ),
+      ],
     );
     final alturaDisponivel = MediaQuery.of(context).size.height - appBar.preferredSize.height;
     final larguraDisponivel = MediaQuery.of(context).size.width;
@@ -179,7 +206,7 @@ class _ContaEditCartaoTelaState extends State<ContaEditCartaoTela> {
                         borderRadius: BorderRadius.circular(10),
                         border: Border.all(color: Colors.grey)
                     ),
-                    child: Text(cartaoTipoController),
+                    child: Text(_cartaoTipoController),
                   ),
                 ),
               ],
@@ -426,7 +453,7 @@ class _ContaEditCartaoTelaState extends State<ContaEditCartaoTela> {
     if(objeto != null){
       setState(() {
         _flagExibirBotaoSalvar = true;
-        cartaoTipoController = objeto.descricao;
+        _cartaoTipoController = objeto.descricao;
         _showTipoCartao = objeto.id;
         // showCartaoCredito = (objeto.id == 1)? true: false;
         // showCartaoDebito = (objeto.id == 2)? true: false;
@@ -435,6 +462,10 @@ class _ContaEditCartaoTelaState extends State<ContaEditCartaoTela> {
         _cartaoTipo = objeto;
       });
     }
+
+  }
+
+  _deletar(){
 
   }
 }

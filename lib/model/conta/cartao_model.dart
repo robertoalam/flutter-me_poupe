@@ -1,4 +1,5 @@
 import 'package:me_poupe/helper/database_helper.dart';
+import 'package:me_poupe/helper/funcoes_helper.dart';
 import 'package:me_poupe/model/cad/cad_banco_model.dart';
 import 'package:me_poupe/model/cad/cad_cartao_tipo_model.dart';
 import 'package:me_poupe/model/conta/conta_model.dart';
@@ -12,6 +13,9 @@ class CartaoModel{
   double limite;
   int diaFechamento;
   int diaVencimento;
+  bool selecionado;
+  bool deletadoFlag;
+  DateTime deletadoData;
 
   CartaoModel({
     this.id,
@@ -21,10 +25,14 @@ class CartaoModel{
     this.saldo,
     this.limite,
     this.diaFechamento,
-    this.diaVencimento
+    this.diaVencimento,
+    this.selecionado = false,
+    this.deletadoFlag = false,
+    this.deletadoData,
   });
 
   final dbHelper = DatabaseHelper.instance;
+
   static final String tableName = "cartao";
 
   @override
@@ -36,12 +44,22 @@ class CartaoModel{
     return CartaoModel(id: json['id'] , descricao: json['descricao']);
   }
 
-  fromDatabase(Map<String, dynamic> linha) async {
+  fromToDatabase(Map<String, dynamic> linha) async {
     CartaoTipoCadModel tipo = new CartaoTipoCadModel();
     ContaModel conta = new ContaModel();
     conta = await conta.fetchById(int.parse( linha['id_conta'].toString() ) );
     tipo = await tipo.fetchById( int.parse( linha['id_cartao_tipo'].toString() ) );
-    return CartaoModel(id: linha['id'] ,conta: conta, descricao: linha['descricao'] , tipo: tipo);
+    return CartaoModel(
+      id: linha['id'] ,
+      conta: conta,
+      descricao: linha['descricao'] ,
+      tipo: tipo ,
+      saldo: linha['vl_saldo'],
+      limite: linha['vl_limite'],
+      diaFechamento: linha['dia_fechamento'],
+      diaVencimento: linha['dia_vencimento'],
+      deletadoFlag: (linha['st_deleted'] == 1)?true:false,
+    );
   }
 
   Map<String, dynamic> toDatabase() {
@@ -54,6 +72,8 @@ class CartaoModel{
       'vl_limite': limite,
       'dia_fechamento': diaFechamento,
       'dia_vencimento': diaVencimento,
+      'st_deleted': (deletadoFlag)?1:null,
+      'dt_deleted':(deletadoFlag)? Funcoes.dataAtualEUA(retornarHorario: true).toString() : 0 ,
     };
   }
 
@@ -67,6 +87,8 @@ class CartaoModel{
       'vl_limite': limite,
       'dia_fechamento': diaFechamento,
       'dia_vencimento': diaVencimento,
+      'st_deletado':deletadoFlag,
+      'dt_deletado':(deletadoFlag)? Funcoes.dataAtualEUA(retornarHorario: true).toString() : null ,
     };
   }
 
@@ -76,7 +98,7 @@ class CartaoModel{
       linha = await dbHelper.query(tableName, where: "id = ?", whereArgs: [id]);
       if (linha.isNotEmpty || linha != null) {
         CartaoModel cartao = new CartaoModel();
-        return await cartao.fromDatabase(linha[0]);
+        return await cartao.fromToDatabase(linha[0]);
       }else{
         return null;
       }
@@ -91,7 +113,7 @@ class CartaoModel{
     if(linhas.isNotEmpty) {
       for (int i = 0; i < linhas.length; i++) {
         CartaoModel objeto = new CartaoModel();
-        objeto = await objeto.fromDatabase(linhas[i]);
+        objeto = await objeto.fromToDatabase(linhas[i]);
         lista.add(objeto);
       }
     }
@@ -114,7 +136,7 @@ class CartaoModel{
     if(linhas.isNotEmpty) {
       for (int i = 0; i < linhas.length; i++) {
         CartaoModel objeto = new CartaoModel();
-        objeto = await objeto.fromDatabase(linhas[i]);
+        objeto = await objeto.fromToDatabase(linhas[i]);
         lista.add(objeto);
       }
     }
@@ -131,13 +153,13 @@ class CartaoModel{
     return await dbHelper.update( tableName , " id " , this.toDatabase() );
   }
 
-  save(){
+  save() async {
     // INSERT
     if(this.id.toString().isEmpty || this.id == 0 || this.id == null){
-      this.insert();
+      await dbHelper.insert(CartaoModel.tableName , toDatabase() );
       // UPDATE
     }else{
-      this.udpate();
+      await dbHelper.update(CartaoModel.tableName, "id", toDatabase() );
     }
     return true;
   }

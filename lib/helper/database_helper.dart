@@ -7,6 +7,8 @@ import 'package:me_poupe/model/cad/cad_cartao_tipo_model.dart';
 import 'package:me_poupe/model/cad/cad_categoria_model.dart';
 import 'package:me_poupe/model/cad/cad_frequencia_model.dart';
 import 'package:me_poupe/model/cad/cad_frequencia_periodo_model.dart';
+import 'package:me_poupe/model/cad/cad_lancamento_tipo_model.dart';
+import 'package:me_poupe/model/cad/cad_pagamento_forma.dart';
 import 'package:me_poupe/model/configuracoes/configuracao_model.dart';
 import 'package:me_poupe/model/conta/cartao_model.dart';
 import 'package:me_poupe/model/conta/conta_model.dart';
@@ -14,6 +16,7 @@ import 'package:me_poupe/model/conta/conta_tipo_model.dart';
 import 'package:me_poupe/model/lancamento/lancamento_frequencia_detalhe_model.dart';
 import 'package:me_poupe/model/lancamento/lancamento_frequencia_model.dart';
 import 'package:me_poupe/model/lancamento/lancamento_model.dart';
+import 'package:me_poupe/model/lancamento/lancamento_pagamento_forma_model.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
@@ -74,12 +77,8 @@ class DatabaseHelper {
 
         await contaCriar(db);
         // await contaBancariaCriar(db);
-
-
-
         // await carteiraCriar(db);
         // await carteiraPopular(db);
-
 
         await categoriaCadCriar(db);
         await categoriaCadPopular(db);
@@ -127,7 +126,7 @@ class DatabaseHelper {
   }
 
   pagamentoFormaCadCriar(Database db) async {
-    await db.execute(" CREATE TABLE IF NOT EXISTS pagamento_forma_cad ( _id INTEGER PRIMARY KEY, descricao VARCHAR(70), icone VARCGAR(50) , ordem INTEGER ); ");
+    await db.execute(" CREATE TABLE IF NOT EXISTS "+PagamentoFormaCadModel.TABLE_NAME+" ( _id INTEGER PRIMARY KEY, descricao VARCHAR(70), icone VARCGAR(50) , ordem INTEGER ); ");
   }
 
   pagamentoStatusCadCriar(Database db) async {
@@ -135,7 +134,7 @@ class DatabaseHelper {
   }
 
   cartaoCriar(Database db) async {
-    await db.execute(" CREATE TABLE IF NOT EXISTS "+CartaoModel.tableName+" ( id INTEGER PRIMARY KEY, id_conta INTEGER ,id_cartao_tipo INTEGER, descricao VARCHAR(100) , vl_saldo FLOAT , vl_limite FLOAT , dia_fechamento INTEGER , dia_vencimento INTEGER , st_protected INTEGER, dt_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP); ");
+    await db.execute(" CREATE TABLE IF NOT EXISTS "+CartaoModel.tableName+" ( id INTEGER PRIMARY KEY, id_conta INTEGER ,id_cartao_tipo INTEGER, descricao VARCHAR(100) , vl_saldo FLOAT, vl_limite FLOAT, dia_fechamento INTEGER, dia_vencimento INTEGER, st_protected INTEGER, st_deleted INTEGER DEFAULT 0 ,dt_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP, dt_deleted TIMESTAMP DEFAULT null); ");
   }
 
   lancamentoCriarTable(Database db) async {
@@ -143,7 +142,7 @@ class DatabaseHelper {
   }
 
   lancamentoPagamentoCriarTable(Database db) async {
-    await db.execute(" CREATE TABLE IF NOT EXISTS lancamento_pagamento ( _id INTEGER PRIMARY KEY, id_lancamento INTEGER, st_chave_unica VARCHAR(24), id_pagamento_forma INTEGER, id_cartao INTEGER); ");
+    await db.execute(" CREATE TABLE IF NOT EXISTS "+PagamentoModel.TABLE_NAME+" ( _id INTEGER PRIMARY KEY, id_lancamento INTEGER, st_chave_unica VARCHAR(24), id_pagamento_forma INTEGER, id_cartao INTEGER); ");
   }
 
   lancamentoFrequenciaCriarTable(Database db) async {
@@ -163,7 +162,7 @@ class DatabaseHelper {
 	}
 
   contaCriar(Database db) async {
-    await db.execute(" CREATE TABLE IF NOT EXISTS "+ContaModel.tableName+" ( id INTEGER PRIMARY KEY, id_banco INTEGER , id_conta_tipo INTEGER , descricao VARCHAR(30) , vl_saldo FLOAT , dt_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP); ");
+    await db.execute(" CREATE TABLE IF NOT EXISTS "+ContaModel.tableName+" ( id INTEGER PRIMARY KEY, id_banco INTEGER , id_conta_tipo INTEGER , descricao VARCHAR(30), st_deleted INTEGER DEFAULT 0, dt_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP, dt_deleted TIMESTAMP DEFAULT null); ");
   }
 
   // contaBancariaCriar(Database db) async {
@@ -175,7 +174,7 @@ class DatabaseHelper {
   }
 
   lancamentoTipoCadCriar(Database db) async {
-    await db.execute(" CREATE TABLE IF NOT EXISTS lancamento_tipo_cad ( _id INTEGER PRIMARY KEY , descricao VARCHAR(50) ); ");
+    await db.execute(" CREATE TABLE IF NOT EXISTS "+LancamentoTipoCadModel.TABLE_NAME+" ( _id INTEGER PRIMARY KEY , descricao VARCHAR(50) ); ");
   }
 
   lancamentoFrequenciaCadCriar(Database db) async {
@@ -188,11 +187,11 @@ class DatabaseHelper {
   // POPULAR
   configuracoesPopular(Database db) async {
     // VERSAO
-    await db.execute(" INSERT INTO configuracoes VALUES ('no_version','${_versionAPP}' );  ");
-    await db.execute(" INSERT INTO configuracoes VALUES ('no_aberturas','0' );  ");
+    await db.execute(" INSERT INTO "+ConfiguracaoModel.TABLE_NAME+" VALUES ('no_version','${_versionAPP}' );  ");
+    await db.execute(" INSERT INTO "+ConfiguracaoModel.TABLE_NAME+" VALUES ('no_aberturas','0' );  ");
     // NORMAL / NOTURNO
-    await db.execute(" INSERT INTO configuracoes VALUES ('exibir_saldo','true' );  ");
-    await db.execute(" INSERT INTO configuracoes VALUES ('modo','normal' );  ");
+    await db.execute(" INSERT INTO "+ConfiguracaoModel.TABLE_NAME+" VALUES ('exibir_saldo','true' );  ");
+    await db.execute(" INSERT INTO "+ConfiguracaoModel.TABLE_NAME+" VALUES ('modo','normal' );  ");
     return 1;
   }
 
@@ -221,9 +220,9 @@ class DatabaseHelper {
   }
 
   pagamentoFormaCadPopular(Database db) async {
-    await db.execute(" INSERT INTO pagamento_forma_cad  (descricao,icone,ordem) VALUES ('Dinheiro','dinheiro-01',10 );  ");
-    await db.execute(" INSERT INTO pagamento_forma_cad  (descricao,icone,ordem) VALUES ('Cartão','cartao-credito-01',20 );  ");
-    await db.execute(" INSERT INTO pagamento_forma_cad  (descricao,icone,ordem) VALUES ('Cheque','cheque-01',30 );  ");
+    await db.execute(" INSERT INTO "+PagamentoFormaCadModel.TABLE_NAME+"  (descricao,icone,ordem) VALUES ('Dinheiro','dinheiro-01',10 );  ");
+    await db.execute(" INSERT INTO "+PagamentoFormaCadModel.TABLE_NAME+"  (descricao,icone,ordem) VALUES ('Cartão','cartao-credito-01',20 );  ");
+    await db.execute(" INSERT INTO "+PagamentoFormaCadModel.TABLE_NAME+"  (descricao,icone,ordem) VALUES ('Cheque','cheque-01',30 );  ");
     return 1;
   }
 
@@ -248,7 +247,7 @@ class DatabaseHelper {
       String imagemAsset = ( objeto.imageAsset != null ) ? objeto.imageAsset : "assets/images/bancos/logo/00.png";
       int destaque = (objeto.destaque)? 1 : 0;
       int ordemDestaque = objeto.ordemDestaque;
-      String query = "INSERT INTO banco_cad (_id,descricao,cor_primaria,cor_secundaria,cor_terciaria,cor_cartao,image_asset,destaque,ordem_destaque) VALUES ("+id.toString()+" , '"+descricao+"', '"+corPrimaria.toString()+"', '"+corSecundaria.toString()+"', '"+corTerciaria.toString()+"', '"+corCartao.toString()+"','"+imagemAsset.toString()+"','"+destaque.toString()+"',"+ordemDestaque.toString()+");";
+      String query = "INSERT INTO "+BancoCadModel.TABLE_NAME+" (_id,descricao,cor_primaria,cor_secundaria,cor_terciaria,cor_cartao,image_asset,destaque,ordem_destaque) VALUES ("+id.toString()+" , '"+descricao+"', '"+corPrimaria.toString()+"', '"+corSecundaria.toString()+"', '"+corTerciaria.toString()+"', '"+corCartao.toString()+"','"+imagemAsset.toString()+"','"+destaque.toString()+"',"+ordemDestaque.toString()+");";
       await db.execute(query);
     }).toList();
   }
@@ -274,16 +273,16 @@ class DatabaseHelper {
   }
 
   lancamentoTipoCadPopular(Database db) async {
-    await db.execute(" INSERT INTO lancamento_tipo_cad (descricao) VALUES ('Despesa');  ");
-    await db.execute(" INSERT INTO lancamento_tipo_cad (descricao) VALUES ('Receita');  ");
-    return 1;
+    await db.execute(" INSERT INTO "+LancamentoTipoCadModel.TABLE_NAME+" (descricao) VALUES ('Despesa');  ");
+    await db.execute(" INSERT INTO "+LancamentoTipoCadModel.TABLE_NAME+" (descricao) VALUES ('Receita');  ");
+    return true;
   }
 
   lancamentoFrequenciaCadPopular(Database db) async {
     await db.execute(" INSERT INTO "+FrequenciaCadModel.TABLE_NAME+" (descricao) VALUES ('Única');  ");
     await db.execute(" INSERT INTO "+FrequenciaCadModel.TABLE_NAME+" (descricao) VALUES ('Fixa');  ");
     await db.execute(" INSERT INTO "+FrequenciaCadModel.TABLE_NAME+" (descricao) VALUES ('Parcelada');  ");
-    return 1;
+    return true;
   }
 
   lancamentoFrequenciaPeriodoCadPopular(Database db) async {
@@ -296,16 +295,17 @@ class DatabaseHelper {
     await db.execute(" INSERT INTO "+FrequenciaPeriodoCadModel.TABLE_NAME+" (descricao,dias,st_exibir) VALUES ('Quadrimestral',120,0);");
     await db.execute(" INSERT INTO "+FrequenciaPeriodoCadModel.TABLE_NAME+" (descricao,dias,st_exibir) VALUES ('Semestral',180,0);");
     await db.execute(" INSERT INTO "+FrequenciaPeriodoCadModel.TABLE_NAME+" (descricao,dias,st_exibir) VALUES ('Anual',365,1);");
-    return 1;
+    return true;
   }
 
   cartaoTipoCadPopular(Database db) async {
-    await db.execute(" INSERT INTO cartao_tipo_cad (descricao) VALUES ('outros');  ");
-    await db.execute(" INSERT INTO cartao_tipo_cad (descricao) VALUES ('cartão de crédito');  ");
-    await db.execute(" INSERT INTO cartao_tipo_cad (descricao) VALUES ('cartão de débito');  ");
-    await db.execute(" INSERT INTO cartao_tipo_cad (descricao) VALUES ('cartão vale-alimentação');  ");
-    await db.execute(" INSERT INTO cartao_tipo_cad (descricao) VALUES ('cartão vale-refeição');  ");
-    return 1;
+    await db.execute(" INSERT INTO "+CartaoTipoCadModel.TABLE_NAME+" (descricao) VALUES ('outros');  ");
+    await db.execute(" INSERT INTO "+CartaoTipoCadModel.TABLE_NAME+" (descricao) VALUES ('cartão de crédito');  ");
+    await db.execute(" INSERT INTO "+CartaoTipoCadModel.TABLE_NAME+" (descricao) VALUES ('cartão de débito');  ");
+    await db.execute(" INSERT INTO "+CartaoTipoCadModel.TABLE_NAME+" (descricao) VALUES ('cartão poupança');  ");
+    await db.execute(" INSERT INTO "+CartaoTipoCadModel.TABLE_NAME+" (descricao) VALUES ('cartão vale-alimentação');  ");
+    await db.execute(" INSERT INTO "+CartaoTipoCadModel.TABLE_NAME+" (descricao) VALUES ('cartão vale-refeição');  ");
+    return true;
   }
 
   contaTipoPopular(Database db) async {
@@ -314,6 +314,7 @@ class DatabaseHelper {
     await db.execute(" INSERT INTO "+ContaTipoModel.TABLE_NAME+" (descricao) VALUES ('salário');  ");
     await db.execute(" INSERT INTO "+ContaTipoModel.TABLE_NAME+" (descricao) VALUES ('conjunta');  ");
     await db.execute(" INSERT INTO "+ContaTipoModel.TABLE_NAME+" (descricao) VALUES ('familiar');  ");
+    return true;
   }
 
   // contaBancariaPopular(Database db) async {
@@ -325,21 +326,23 @@ class DatabaseHelper {
     await seedPopularCartao(db);
     await seedPopularLancamentos(db);
     // await seedPopularCarteiras(db);
+    return true;
 
   }
-
 
   seedPopularConta(Database db) async {
-    // await db.execute(" INSERT INTO cartao (id_banco , id_cartao_tipo , descricao , vl_saldo , vl_limite , dia_fechamento , dia_vencimento, st_protected) VALUES (1,1,'',null,null,0,0,1);  ");
-    await db.execute(" INSERT INTO "+ContaModel.tableName+" ( id_banco, id_conta_tipo , descricao , vl_saldo ) VALUES (22,1,'banri',null);  ");
-    await db.execute(" INSERT INTO "+ContaModel.tableName+" ( id_banco, id_conta_tipo , descricao , vl_saldo ) VALUES (52,1,'roxinho',null);  ");
-    await db.execute(" INSERT INTO "+ContaModel.tableName+" ( id_banco, id_conta_tipo , descricao , vl_saldo ) VALUES (44,1,'itau pai',null);  ");
+    await db.execute(" INSERT INTO "+ContaModel.tableName+" ( id_banco, id_conta_tipo , descricao ) VALUES (22,1,'banri');  ");
+    await db.execute(" INSERT INTO "+ContaModel.tableName+" ( id_banco, id_conta_tipo , descricao ) VALUES (52,1,'roxinho');  ");
+    await db.execute(" INSERT INTO "+ContaModel.tableName+" ( id_banco, id_conta_tipo , descricao ) VALUES (44,1,'itau pai');  ");
+    await db.execute(" INSERT INTO "+ContaModel.tableName+" ( id_banco, id_conta_tipo , descricao ) VALUES (80,3,'green card');  ");
   }
    seedPopularCartao(Database db) async {
-    await db.execute(" INSERT INTO "+CartaoModel.tableName+" (id_conta , id_cartao_tipo , descricao , vl_saldo , vl_limite , dia_fechamento , dia_vencimento, st_protected) VALUES (1,3,'debito',null,null,null,null,0);  ");
-    await db.execute(" INSERT INTO "+CartaoModel.tableName+" (id_conta , id_cartao_tipo , descricao , vl_saldo , vl_limite , dia_fechamento , dia_vencimento, st_protected) VALUES (1,2,'credito',null,7000.0,26,6,0);  ");
-    await db.execute(" INSERT INTO "+CartaoModel.tableName+" (id_conta , id_cartao_tipo , descricao , vl_saldo , vl_limite , dia_fechamento , dia_vencimento, st_protected) VALUES (2,2,'credito',2500.0,null,25,5,0);  ");
-    await db.execute(" INSERT INTO "+CartaoModel.tableName+" (id_conta , id_cartao_tipo , descricao , vl_saldo , vl_limite , dia_fechamento , dia_vencimento, st_protected) VALUES (3,3,'debito',10000.0,null,0,0,0);  ");
+    await db.execute(" INSERT INTO "+CartaoModel.tableName+" (id_conta , id_cartao_tipo , descricao , vl_saldo , vl_limite , dia_fechamento , dia_vencimento) VALUES (1,3,'debito',null,4500.0,null,null);  ");
+    await db.execute(" INSERT INTO "+CartaoModel.tableName+" (id_conta , id_cartao_tipo , descricao , vl_saldo , vl_limite , dia_fechamento , dia_vencimento) VALUES (1,2,'credito',null,7000.0,26,6);  ");
+    await db.execute(" INSERT INTO "+CartaoModel.tableName+" (id_conta , id_cartao_tipo , descricao , vl_saldo , vl_limite , dia_fechamento , dia_vencimento) VALUES (2,2,'credito',2500.0,null,25,5);  ");
+    await db.execute(" INSERT INTO "+CartaoModel.tableName+" (id_conta , id_cartao_tipo , descricao , vl_saldo , vl_limite , dia_fechamento , dia_vencimento) VALUES (3,3,'debito',10000.0,null,0,0);  ");
+    await db.execute(" INSERT INTO "+CartaoModel.tableName+" (id_conta , id_cartao_tipo , descricao , vl_saldo , vl_limite , dia_fechamento , dia_vencimento) VALUES (4,5,'greencard',3000.0,null,0,0);  ");
+    await db.execute(" INSERT INTO "+CartaoModel.tableName+" (id_conta , id_cartao_tipo , descricao , vl_saldo , vl_limite , dia_fechamento , dia_vencimento) VALUES (1,4,'poupanca moto',3000.0,null,null,null);");
   }
 
   // seedPopularCarteiras(Database db) async {
@@ -362,8 +365,14 @@ class DatabaseHelper {
       linhaLancamento['id_lancamento_tipo'] = linha['id_lancamento_tipo'];
       linhaLancamento['id_categoria'] = linha['id_categoria'];
       linhaLancamento['dt_lancamento'] = linha['dt_lancamento'] ;
-      int lancamentoId = await db.insert("lancamento", linhaLancamento);
-      print("ID : ${lancamentoId}");
+      int lancamentoId;
+      try{
+        lancamentoId = await db.insert("lancamento", linhaLancamento);
+        print("ID : ${lancamentoId}");
+        return;
+      }catch(e){
+        print("ERRO TABELA LANCAMENTO: $e");
+      }
 
       //lancamento pagamento
       Map<String,dynamic> linhaLancamentoPagamento = Map();
@@ -371,7 +380,11 @@ class DatabaseHelper {
       linhaLancamentoPagamento['st_chave_unica'] = chaveUnica;
       linhaLancamentoPagamento['id_pagamento_forma'] = linha['id_pagamento_forma'];
       linhaLancamentoPagamento['id_cartao'] = linha['id_cartao'];
-      await db.insert("lancamento_pagamento", linhaLancamentoPagamento);
+      try{
+        await db.insert("lancamento_pagamento", linhaLancamentoPagamento);
+      }catch(e){
+        print("ERRO TABELA lancamento_pagamento :$e");
+      }
 
       //lancamento frequencia
       Map<String,dynamic> linhaFrequencia = Map();
@@ -431,14 +444,15 @@ class DatabaseHelper {
         linhaFrequenciaDetalhe['dt_mes'] = dataParcela.month;
         linhaFrequenciaDetalhe['dt_ano'] = dataParcela.year;
         linhaFrequenciaDetalhe['vl_valor'] = linhaFrequenciaDetalheValor;
-        await db.insert("lancamento_frequencia_detalhe", linhaFrequenciaDetalhe);
+
+        try{
+          await db.insert("lancamento_frequencia_detalhe", linhaFrequenciaDetalhe);
+        }catch(e){
+          print("ERRO TABELA lancamento_frequencia_detalhe :$e");
+        }
       }
-
-
       //print("linhaFrequenciaPeriodoCad: ${linhaFrequenciaPeriodoCad[0]}");
     }).toList();
-
-
     print('CONCLUIDO');
 
 }
@@ -504,7 +518,7 @@ class DatabaseHelper {
 
   Future<int> update(tabela , primaryKey , Map<String, dynamic> row) async {
     Database db = await instance.database;
-    String primaryValue = row['_id'].toString() ;
+    String primaryValue = row["${primaryKey}"].toString() ;
     return await db.update(tabela, row, where:" $primaryKey = $primaryValue ");
   }
 
