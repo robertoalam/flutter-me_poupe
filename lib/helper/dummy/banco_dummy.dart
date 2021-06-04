@@ -25,7 +25,7 @@ class BancoDummy{
       BancoCadModel( id: 19, descricao:"Banestes" , ),
       BancoCadModel( id: 20, descricao:"Banif" , ),
       BancoCadModel( id: 21, descricao:"Banpara" , ),
-      BancoCadModel( id: 22, descricao:"Banrisul" , destaque: true,corPrimaria: "#DBBFD",corSecundaria: "#016ABE", corTerciaria: "#FFFFFF", corCartao: "#016FAC",ordemDestaque: 20 ,imageAsset: "assets/images/bancos/logo/22.png"),
+      BancoCadModel( id: 22, descricao:"Banrisul",destaque: true,corPrimaria: "#016ABE",corSecundaria: "#DBBFD", corTerciaria: "#FFFFFF", corCartao: "#016FAC",ordemDestaque: 20 ,imageAsset: "assets/images/bancos/logo/22.png"),
       BancoCadModel( id: 23, descricao:"Bbm" , ),
       BancoCadModel( id: 24, descricao:"Bradesco" , ),
       BancoCadModel( id: 25, descricao:"C6 Bank" , ),
@@ -70,7 +70,7 @@ class BancoDummy{
       BancoCadModel( id: 64, descricao:"Sicoob" , ),
       BancoCadModel( id: 65, descricao:"Sicredi" , ),
       BancoCadModel( id: 66, descricao:"Social Bank" , ),
-      BancoCadModel( id: 67, descricao:"Sodexo" , ),
+      BancoCadModel( id: 67, descricao:"Sodexo",corPrimaria: "#2A295C",corSecundaria: "#7E82D5", corTerciaria: "#FFFFFF", corCartao: "#2A295C",imageAsset: "assets/images/bancos/logo/67.png"),
       BancoCadModel( id: 68, descricao:"Sofisa Direto" , ),
       BancoCadModel( id: 69, descricao:"Submarino" , ),
       BancoCadModel( id: 70, descricao:"Superdigital" , ),
@@ -81,8 +81,9 @@ class BancoDummy{
       BancoCadModel( id: 75, descricao:"UrPay" , ),
       BancoCadModel( id: 76, descricao:"Viacredi" , ),
       BancoCadModel( id: 77, descricao:"Visa" , ),
-      BancoCadModel( id: 79, descricao:"Vitreo" , ),
-      BancoCadModel( id: 78, descricao:"Wirecard" , ),
+      BancoCadModel( id: 78, descricao:"Vitreo" , ),
+      BancoCadModel( id: 79, descricao:"Wirecard"),
+      BancoCadModel( id: 80, descricao:"GreenCard" ,corPrimaria: "#35764D",corSecundaria: "#8CC8A0", corTerciaria: "#FFFFFF", corCartao: "#8CC8A0",imageAsset: "assets/images/bancos/logo/80.png"),
     ];
   }
 
