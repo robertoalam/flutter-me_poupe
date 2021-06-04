@@ -36,14 +36,14 @@ class ConfiguracaoModel{
     static incrementAbertura() async {
         final dbHelper = DatabaseHelper.instance;
 
-        String query = "UPDATE "+TABLE_NAME+" SET valor = valor + 1 WHERE chave = 'no_aberturas' ;";
+        String query = " UPDATE "+TABLE_NAME+" SET valor = valor + 1 WHERE chave = 'no_aberturas' ;";
         return await dbHelper.executar( query );
     }
 
     static alterarModo(valor) async {
         final dbHelper = DatabaseHelper.instance;
 
-        String query = "UPDATE "+TABLE_NAME+" SET valor = '"+valor+"' WHERE chave = 'modo' ;";
+        String query = " UPDATE "+TABLE_NAME+" SET valor = '"+valor+"' WHERE chave = 'modo' ;";
         return await dbHelper.executar( query );
     }
 

@@ -20,7 +20,7 @@ class Configuracoes{
 			"sombraPrimaria":"#FFFFFF",
 			"dividerCor":"#FFFFFF",
 		}
-  	};
+  };
 
   // https://api.flutter.dev/flutter/material/Icons-class.html
   // https://materialdesignicons.com/

@@ -6,7 +6,7 @@ class PagamentoFormaCadModel{
   String icone;
   int ordem;
 
-  final String TABLE_NAME = "pagamento_forma_cad";
+  static final String TABLE_NAME = "pagamento_forma_cad";
   final dbHelper = DatabaseHelper.instance;
 
   PagamentoFormaCadModel({this.id, this.descricao,this.icone,this.ordem});

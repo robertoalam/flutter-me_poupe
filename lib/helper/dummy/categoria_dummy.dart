@@ -74,7 +74,11 @@ class CategoriaDummy{
       CategoriaCadModel(id: 7004 , idPai: 70 , descricao: "Passagem Aerea",icone:"transporte-03"),
       CategoriaCadModel(id: 7005 , idPai: 70 , descricao: "Estacionamento",icone:"estacionamento-01"),
       CategoriaCadModel(id: 7006 , idPai: 70 , descricao: "Lavagem",icone:"estacionamento-01"),
-      CategoriaCadModel(id: 7007 , idPai: 70 , descricao: "Lavagem",icone:"pedagio-01"),
+      CategoriaCadModel(id: 7007 , idPai: 70 , descricao: "Pedagio",icone:"pedagio-01"),
+      CategoriaCadModel(id: 7008 , idPai: 70 , descricao: "Aluguel de carro",icone:"pedagio-01"),
+      CategoriaCadModel(id: 7009 , idPai: 70 , descricao: "troca de oleo",icone:"pedagio-01"),
+      CategoriaCadModel(id: 7010 , idPai: 70 , descricao: "oficina mecanica",icone:"pedagio-01"),
+      CategoriaCadModel(id: 7011 , idPai: 70 , descricao: "chapista",icone:"pedagio-01"),
 
       // TRABALHO
       CategoriaCadModel(id: 8001 , idPai: 80 , descricao: "Material de escritório",icone:"escritorio-01"),
