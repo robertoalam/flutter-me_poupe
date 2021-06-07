@@ -17,16 +17,14 @@ class _TabsTelaState extends State<TabsTela> {
   static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
     TabInicioTela(),
-    Text( 'Noticias', style: optionStyle,),
     Padding(padding: EdgeInsets.fromLTRB(10, 0, 10, 0)),
-    Text( 'Carteira', style: optionStyle,),
     TabLancamentoListaTela(),
   ];
 
   void _onItemTapped(int index) {
     // SE FOR DIFERENTE DO ICONE DO MEIO QUE ESTA OCULTO ,
     // INCLUE NO FRAME
-    if(index != 2){
+    if(index != 1){
       setState(() {
         _selectedIndex = index;
       });
@@ -54,9 +52,7 @@ class _TabsTelaState extends State<TabsTela> {
         backgroundColor: Colors.purple,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem( icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem( icon: Icon(MdiIcons.newspaperVariant ), label: 'Notícias' ,),
           BottomNavigationBarItem( icon: Icon(Icons.arrow_drop_down), label: '' ,),
-          BottomNavigationBarItem( icon: Icon(Icons.monetization_on_outlined), label: 'Carteira', ),
           BottomNavigationBarItem( icon: Icon(Icons.list), label: 'Lanç.', ),
         ],
         currentIndex: _selectedIndex,
