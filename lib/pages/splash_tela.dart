@@ -28,7 +28,7 @@ class _SplashTelaState extends State<SplashTela> {
 	return Container(
     color: Colors.grey,
       child: Center(
-        child: Image.asset("assets/images/vida_quadrada.png"),
+        child: Image.asset("assets/images/i9tecnosul.png"),
       ),
 	   );
   }

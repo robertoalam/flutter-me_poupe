@@ -17,10 +17,10 @@ class TabsTela extends StatefulWidget {
 
 class _TabsTelaState extends State<TabsTela> {
 
+  DrawerWidget _drawerWidget = new DrawerWidget();
+
   bool _flagExibirSaldo = false;
   IconData _iconeExibirSaldo = Icons.visibility;
-
-  DrawerWidget _drawerWidget = new DrawerWidget();
 
   int _selectedIndex = 0;
   static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
