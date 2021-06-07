@@ -108,55 +108,54 @@ class _TabInicioTelaState extends State<TabInicioTela> {
   Widget build(BuildContext context) {
 
     // TOPO
-    widgetTopo = Container(
-        decoration: BoxDecoration(
-          color: Theme.of(context).primaryColor,
-        ),
-        child: Padding(
-            padding: EdgeInsets.fromLTRB(20, 25, 20, 0),
-            child: Column(
-              children: [
-                Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                    Row(
-                        children: [
-                            Text("Boa noite" , style: TextStyle(color: Colors.black),),
-                            SizedBox(width: 5,),
-                            LabelOpensans("Roberto !" , cor: Colors.black, tamanho: 20 ,bold: true,),
-                        ],
-                    ),
-                    Row(
-                        children: [
-                            InkWell(
-                                onTap: ( ) { _clicFlagMostrarSaldo();},
-                                child: Icon( _iconeExibirSaldo, size: 45, ) ,
-                            ),
-                            SizedBox(width:5),
-                            GestureDetector(
-                                onTap: (){
-                                    Navigator.push( context , MaterialPageRoute( builder: (context) => ConfiguracoesIndexTela() ) );
-                                },
-                                child: Column(
-                                    children: [
-                                        SizedBox(
-                                            height: 50,
-                                            width: 50,
-                                            child: Icon(MdiIcons.applicationCog, size: 45,)
-                                        ),
-                                    ],
-                                )
-                            ),
-
-                        ],
-                    ),
-                ],
-              ),
-              SizedBox( height: 30, ),
-            ]
-          )
-        )
-      );
+    // widgetTopo = Container(
+    //     decoration: BoxDecoration(
+    //       color: Theme.of(context).primaryColor,
+    //     ),
+    //     child: Padding(
+    //         padding: EdgeInsets.fromLTRB(20, 25, 20, 0),
+    //         child: Column(
+    //           children: [
+    //             Row(
+    //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    //             children: [
+    //                 Row(
+    //                     children: [
+    //                         Text("Boa noite" , style: TextStyle(color: Colors.black),),
+    //                         SizedBox(width: 5,),
+    //                         LabelOpensans("Roberto !" , cor: Colors.black, tamanho: 20 ,bold: true,),
+    //                     ],
+    //                 ),
+    //                 Row(
+    //                     children: [
+    //                         InkWell(
+    //                             onTap: ( ) { _clicFlagMostrarSaldo();},
+    //                             child: Icon( _iconeExibirSaldo, size: 45, ) ,
+    //                         ),
+    //                         SizedBox(width:5),
+    //                         GestureDetector(
+    //                             onTap: (){
+    //                                 Navigator.push( context , MaterialPageRoute( builder: (context) => ConfiguracoesIndexTela() ) );
+    //                             },
+    //                             child: Column(
+    //                                 children: [
+    //                                     SizedBox(
+    //                                         height: 50,
+    //                                         width: 50,
+    //                                         child: Icon(MdiIcons.applicationCog, size: 45,)
+    //                                     ),
+    //                                 ],
+    //                             )
+    //                         ),
+    //                     ],
+    //                 ),
+    //             ],
+    //           ),
+    //           SizedBox( height: 30, ),
+    //         ]
+    //       )
+    //     )
+    //   );
     
     // SALDOS
     if( _balancete.receita == null || _balancete.despesa == null || _balancete.diferenca == null ){
@@ -419,7 +418,7 @@ class _TabInicioTelaState extends State<TabInicioTela> {
         color: Color(int.parse(_background)),
         child: Column(
           children: [
-            widgetTopo,
+            // widgetTopo,
             widgetSaldo,
             widgetConta,
             widgetCartoes,
@@ -453,7 +452,6 @@ class _TabInicioTelaState extends State<TabInicioTela> {
 		  _iconeExibirSaldo;
 		  _saldoGeral;
 		});
-
 	}
 
   Widget cartaoList(BuildContext context , CartaoModel objeto , int index){
