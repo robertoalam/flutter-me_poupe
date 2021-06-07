@@ -17,6 +17,7 @@ import 'package:me_poupe/model/usuario/usuario_model.dart';
 
 class LancamentoModel{
   int id;
+  int webserverId;
   String chaveUnica;
   LancamentoTipoCadModel tipo;
   UsuarioModel usuario;
@@ -29,7 +30,8 @@ class LancamentoModel{
 
   @override
   String toString() {
-    return 'LancamentoModel{id: $id, '
+    return 'LancamentoModel{'
+        'id: $id, '
         'usuario: $usuario, '
         'descricao: $descricao, '
         'categoria: $categoria, '
@@ -44,6 +46,7 @@ class LancamentoModel{
   LancamentoModel({
     this.chaveUnica,
     this.id,
+    this.webserverId,
     this.tipo,
     this.usuario,
     this.descricao,
@@ -56,7 +59,8 @@ class LancamentoModel{
 
   factory LancamentoModel.fromDatabase(Map<String, dynamic> json) {
     return LancamentoModel(
-        id: json['_id'] ,
+      id: json['id'] ,
+      webserverId: json['id_webserver'] ,
         tipo: json['id_lancamento_tipo'],
         usuario: json['id_usuario'],
         descricao: json['descricao'],
@@ -68,6 +72,7 @@ class LancamentoModel{
   Map database() {
     var map = new Map<String, dynamic>();
     map["id"] = id;
+    map["id_webserver"] = webserverId;
     map["st_chave_unica"] = chaveUnica;
     map["id_lancamento_tipo"] = tipo.id;
     map["id_usuario"] = 1;

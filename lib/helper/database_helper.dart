@@ -17,6 +17,7 @@ import 'package:me_poupe/model/lancamento/lancamento_frequencia_detalhe_model.da
 import 'package:me_poupe/model/lancamento/lancamento_frequencia_model.dart';
 import 'package:me_poupe/model/lancamento/lancamento_model.dart';
 import 'package:me_poupe/model/lancamento/lancamento_pagamento_forma_model.dart';
+import 'package:me_poupe/model/usuario/usuario_model.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
@@ -115,7 +116,7 @@ class DatabaseHelper {
   }
 
   usuarioCadCriar(Database db) async {
-    await db.execute(" CREATE TABLE IF NOT EXISTS usuario ( id INTEGER ,id_usuario_pai INTEGER ,email TEXT, password TEXT, descricao VARCHAR(70) , imagem blob , dt_update DATETIME ); ");
+    await db.execute(" CREATE TABLE IF NOT EXISTS "+UsuarioModel.tableName+" ( id INTEGER PRIMARY KEY, id_webserver INTEGER, id_usuario_pai INTEGER ,email TEXT, password TEXT, descricao VARCHAR(70) , imagem blob , dt_update DATETIME ); ");
   }
   bancoCadCriar(Database db) async {
     await db.execute(" CREATE TABLE IF NOT EXISTS "+BancoCadModel.TABLE_NAME+" ( _id INTEGER PRIMARY KEY, descricao VARCHAR(70), apelido VARCHAR(30), cor_primaria VARCHAR(20), cor_secundaria VARCHAR(20) , cor_terciaria VARCHAR(20), cor_cartao VARCHAR(20) ,image_asset TEXT , image_url TEXT , image blob ,destaque BOOL , ordem_destaque INTEGER ); ");
@@ -134,23 +135,23 @@ class DatabaseHelper {
   }
 
   cartaoCriar(Database db) async {
-    await db.execute(" CREATE TABLE IF NOT EXISTS "+CartaoModel.tableName+" ( id INTEGER PRIMARY KEY, id_conta INTEGER ,id_cartao_tipo INTEGER, descricao VARCHAR(100) , vl_saldo FLOAT, vl_limite FLOAT, dia_fechamento INTEGER, dia_vencimento INTEGER, st_protected INTEGER, st_deleted INTEGER DEFAULT 0 ,dt_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP, dt_deleted TIMESTAMP DEFAULT null); ");
+    await db.execute(" CREATE TABLE IF NOT EXISTS "+CartaoModel.tableName+" ( id INTEGER PRIMARY KEY, id_webserver INTEGER, id_conta INTEGER ,id_cartao_tipo INTEGER, descricao VARCHAR(100) , vl_saldo FLOAT, vl_limite FLOAT, dia_fechamento INTEGER, dia_vencimento INTEGER, st_protected INTEGER, st_deleted INTEGER DEFAULT 0 ,dt_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP, dt_deleted TIMESTAMP DEFAULT null); ");
   }
 
   lancamentoCriarTable(Database db) async {
-    await db.execute(" CREATE TABLE IF NOT EXISTS "+LancamentoModel.TABLE_NAME+" ( id INTEGER PRIMARY KEY, st_chave_unica VARCHAR(24), id_lancamento_tipo INTEGER,id_usuario INTEGER, descricao VARCHAR(70), id_categoria INTEGER, dt_lancamento Datetime, st_protected INTEGER, dt_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP , dt_delete DEFAULT null ); ");
+    await db.execute(" CREATE TABLE IF NOT EXISTS "+LancamentoModel.TABLE_NAME+" ( id INTEGER PRIMARY KEY, id_webserver INTEGER, st_chave_unica VARCHAR(24), id_lancamento_tipo INTEGER,id_usuario INTEGER, descricao VARCHAR(70), id_categoria INTEGER, dt_lancamento Datetime, st_protected INTEGER, dt_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP , dt_delete DEFAULT null ); ");
   }
 
   lancamentoPagamentoCriarTable(Database db) async {
-    await db.execute(" CREATE TABLE IF NOT EXISTS "+PagamentoModel.TABLE_NAME+" ( _id INTEGER PRIMARY KEY, id_lancamento INTEGER, st_chave_unica VARCHAR(24), id_pagamento_forma INTEGER, id_cartao INTEGER); ");
+    await db.execute(" CREATE TABLE IF NOT EXISTS "+PagamentoModel.TABLE_NAME+" ( id INTEGER PRIMARY KEY, id_lancamento INTEGER, st_chave_unica VARCHAR(24), id_pagamento_forma INTEGER, id_cartao INTEGER); ");
   }
 
   lancamentoFrequenciaCriarTable(Database db) async {
-    await db.execute(" CREATE TABLE IF NOT EXISTS "+FrequenciaModel.TABLE_NAME+" ( _id INTEGER PRIMARY KEY, id_lancamento INTEGER, st_chave_unica VARCHAR(24), id_frequencia INTEGER, id_frequencia_periodo INTEGER, no_quantidade INTEGER, vl_integral FLOAT); ");
+    await db.execute(" CREATE TABLE IF NOT EXISTS "+FrequenciaModel.TABLE_NAME+" ( id INTEGER PRIMARY KEY, id_lancamento INTEGER, st_chave_unica VARCHAR(24), id_frequencia INTEGER, id_frequencia_periodo INTEGER, no_quantidade INTEGER, vl_integral FLOAT); ");
   }
 
   lancamentoFrequenciaDetalheCriarTable(Database db) async {
-    await db.execute(" CREATE TABLE IF NOT EXISTS "+FrequenciaDetalheModel.TABLE_NAME+" ( _id INTEGER PRIMARY KEY, id_lancamento INTEGER, st_chave_unica VARCHAR(24), id_lancamento_frequencia INTEGER, no_frequencia INTEGER, dt_detalhe Datetime, dt_mes INTEGER, dt_ano INTEGER, vl_valor FLOAT); ");
+    await db.execute(" CREATE TABLE IF NOT EXISTS "+FrequenciaDetalheModel.TABLE_NAME+" ( id INTEGER PRIMARY KEY, id_lancamento INTEGER, st_chave_unica VARCHAR(24), id_lancamento_frequencia INTEGER, no_frequencia INTEGER, dt_detalhe Datetime, dt_mes INTEGER, dt_ano INTEGER, vl_valor FLOAT); ");
   }
 
   carteiraCriar(Database db) async {
@@ -162,7 +163,7 @@ class DatabaseHelper {
 	}
 
   contaCriar(Database db) async {
-    await db.execute(" CREATE TABLE IF NOT EXISTS "+ContaModel.tableName+" ( id INTEGER PRIMARY KEY, id_banco INTEGER , id_conta_tipo INTEGER , descricao VARCHAR(30), st_deleted INTEGER DEFAULT 0, dt_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP, dt_deleted TIMESTAMP DEFAULT null); ");
+    await db.execute(" CREATE TABLE IF NOT EXISTS "+ContaModel.tableName+" ( id INTEGER PRIMARY KEY, id_webserver INTEGER, id_banco INTEGER , id_conta_tipo INTEGER , descricao VARCHAR(30), st_deleted INTEGER DEFAULT 0, dt_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP, dt_deleted TIMESTAMP DEFAULT null); ");
   }
 
   // contaBancariaCriar(Database db) async {
@@ -369,9 +370,9 @@ class DatabaseHelper {
       try{
         lancamentoId = await db.insert("lancamento", linhaLancamento);
         print("ID : ${lancamentoId}");
-        return;
       }catch(e){
         print("ERRO TABELA LANCAMENTO: $e");
+        return;
       }
 
       //lancamento pagamento
@@ -384,6 +385,7 @@ class DatabaseHelper {
         await db.insert("lancamento_pagamento", linhaLancamentoPagamento);
       }catch(e){
         print("ERRO TABELA lancamento_pagamento :$e");
+        return;
       }
 
       //lancamento frequencia
@@ -449,6 +451,7 @@ class DatabaseHelper {
           await db.insert("lancamento_frequencia_detalhe", linhaFrequenciaDetalhe);
         }catch(e){
           print("ERRO TABELA lancamento_frequencia_detalhe :$e");
+          return;
         }
       }
       //print("linhaFrequenciaPeriodoCad: ${linhaFrequenciaPeriodoCad[0]}");

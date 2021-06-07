@@ -6,6 +6,7 @@ import 'package:me_poupe/model/conta/conta_tipo_model.dart';
 
 class ContaModel {
   int id;
+  int webserverId;
   String descricao;
   BancoCadModel banco;
   ContaTipoModel tipo;
@@ -18,6 +19,7 @@ class ContaModel {
 
   ContaModel( {
     this.id,
+    this.webserverId,
     this.descricao,
     this.banco,
     this.tipo,
@@ -27,6 +29,7 @@ class ContaModel {
   factory ContaModel.fromJson(Map<String, dynamic> json) {
     return ContaModel(
       id: json['id'],
+      webserverId: json['id_webserver'],
       descricao: json['descricao'],
       banco: json['id_banco'],
       tipo: json['id_conta_tipo'],

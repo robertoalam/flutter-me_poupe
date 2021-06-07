@@ -1,11 +1,11 @@
 import 'package:me_poupe/helper/database_helper.dart';
 import 'package:me_poupe/helper/funcoes_helper.dart';
-import 'package:me_poupe/model/cad/cad_banco_model.dart';
 import 'package:me_poupe/model/cad/cad_cartao_tipo_model.dart';
 import 'package:me_poupe/model/conta/conta_model.dart';
 
 class CartaoModel{
   int id;
+  int webserverId;
   ContaModel conta;
   CartaoTipoCadModel tipo;
   String descricao;
@@ -19,6 +19,7 @@ class CartaoModel{
 
   CartaoModel({
     this.id,
+    this.webserverId,
     this.conta,
     this.tipo,
     this.descricao,
@@ -51,6 +52,7 @@ class CartaoModel{
     tipo = await tipo.fetchById( int.parse( linha['id_cartao_tipo'].toString() ) );
     return CartaoModel(
       id: linha['id'] ,
+      webserverId: linha['id_webserver'] ,
       conta: conta,
       descricao: linha['descricao'] ,
       tipo: tipo ,
@@ -65,6 +67,7 @@ class CartaoModel{
   Map<String, dynamic> toDatabase() {
     return {
       'id': id,
+      'id_webserver':webserverId,
       'id_conta': conta.id,
       'id_cartao_tipo': tipo.id,
       'descricao': descricao,
