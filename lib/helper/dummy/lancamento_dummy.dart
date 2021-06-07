@@ -150,6 +150,7 @@ class LancamentosDummy{
         {'id_usuario':2,'id_lancamento_tipo':1,'descricao':'padaria aveiro ','id_categoria':1006,'dt_lancamento':'2021-04-13 13:15:15','id_pagamento_forma':2,'id_cartao':1,'id_frequencia':1,'id_frequencia_periodo':1,'no_quantidade':1,'vl_integral':14.54},        
         {'id_usuario':2,'id_lancamento_tipo':1,'descricao':'estoril','id_categoria':1006,'dt_lancamento':'2021-04-13 19:59:31','id_pagamento_forma':2,'id_cartao':1,'id_frequencia':1,'id_frequencia_periodo':1,'no_quantidade':1,'vl_integral':10.0},
         {'id_usuario':2,'id_lancamento_tipo':1,'descricao':'almoco polo norte','id_categoria':1001,'dt_lancamento':'2021-04-14 13:18:23','id_pagamento_forma':2,'id_cartao':4,'id_frequencia':1,'id_frequencia_periodo':1,'no_quantidade':1,'vl_integral':88.09},
+        {'id_usuario':2,'id_lancamento_tipo':1,'descricao':'panvel - bupim 300mg \$182 dorflex \$5.85','id_categoria':2001,'dt_lancamento':'2021-04-14 19:10:21','id_pagamento_forma':2,'id_cartao':4,'id_frequencia':1,'id_frequencia_periodo':1,'no_quantidade':1,'vl_integral':194.40},
         {'id_usuario':2,'id_lancamento_tipo':1,'descricao':'gasolina - azeredo','id_categoria':7001,'dt_lancamento':'2021-04-14 20:34:58','id_pagamento_forma':2,'id_cartao':4,'id_frequencia':1,'id_frequencia_periodo':1,'no_quantidade':1,'vl_integral':150.0},
         {'id_usuario':2,'id_lancamento_tipo':1,'descricao':'bito carnes','id_categoria':1008,'dt_lancamento':'2021-04-14 20:54:31','id_pagamento_forma':2,'id_cartao':4,'id_frequencia':1,'id_frequencia_periodo':1,'no_quantidade':1,'vl_integral':18.59},	  
         {'id_usuario':2,'id_lancamento_tipo':1,'descricao':'almoco polo norte','id_categoria':1001,'dt_lancamento':'2021-04-15 11:40:08','id_pagamento_forma':2,'id_cartao':4,'id_frequencia':1,'id_frequencia_periodo':1,'no_quantidade':1,'vl_integral':63},
@@ -288,6 +289,10 @@ class LancamentosDummy{
         {'id_usuario':2,'id_lancamento_tipo':1,'descricao':'gasolina - posto br - 5.96 - 8litros','id_categoria':7001,'dt_lancamento':'2021-06-01 11:03:07','id_pagamento_forma':2,'id_cartao':4,'id_frequencia':1,'id_frequencia_periodo':1,'no_quantidade':1,'vl_integral':50.00},
         {'id_usuario':2,'id_lancamento_tipo':1,'descricao':'almoco - alegretche','id_categoria':1001,'dt_lancamento':'2021-06-01 11:28:23','id_pagamento_forma':2,'id_cartao':1,'id_frequencia':1,'id_frequencia_periodo':1,'no_quantidade':1,'vl_integral':48.09},
         {'id_usuario':2,'id_lancamento_tipo':1,'descricao':'gasolina - posto carrefour - 5.96 - 16.9litros','id_categoria':7001,'dt_lancamento':'2021-06-03 18:03:07','id_pagamento_forma':2,'id_cartao':4,'id_frequencia':1,'id_frequencia_periodo':1,'no_quantidade':1,'vl_integral':100.00},
+        {'id_usuario':2,'id_lancamento_tipo':1,'descricao':'zaffari','id_categoria':1004,'dt_lancamento':'2021-06-04 18:41:57','id_pagamento_forma':2,'id_cartao':4,'id_frequencia':1,'id_frequencia_periodo':1,'no_quantidade':1,'vl_integral':180.0},
+        {'id_usuario':2,'id_lancamento_tipo':1,'descricao':'zaffari','id_categoria':1004,'dt_lancamento':'2021-06-05 19:21:57','id_pagamento_forma':2,'id_cartao':4,'id_frequencia':1,'id_frequencia_periodo':1,'no_quantidade':1,'vl_integral':234.94},
+        {'id_usuario':2,'id_lancamento_tipo':1,'descricao':'pizza hut - grande','id_categoria':1001,'dt_lancamento':'2021-06-07 20:08:23','id_pagamento_forma':2,'id_cartao':1,'id_frequencia':1,'id_frequencia_periodo':1,'no_quantidade':1,'vl_integral':84.35},
+        {'id_usuario':2,'id_lancamento_tipo':1,'descricao':'zaffari','id_categoria':1004,'dt_lancamento':'2021-06-06 10:22:57','id_pagamento_forma':2,'id_cartao':4,'id_frequencia':1,'id_frequencia_periodo':1,'no_quantidade':1,'vl_integral':50.17},
     ];
   }
 }
