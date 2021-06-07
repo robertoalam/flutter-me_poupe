@@ -23,7 +23,7 @@ class PagamentoModel{
 
   Map database() {
     var map = new Map<String, dynamic>();
-    map["_id"] = id;
+    map["id"] = id;
     map["id_lancamento"] = idLancamento;
     map["st_chave_unica"] = chaveUnica;
     map["id_pagamento_forma"] = pagamentoForma.id;

@@ -33,7 +33,7 @@ class FrequenciaDetalheModel{
 
   factory FrequenciaDetalheModel.fromDatabase(Map<String, dynamic> json) {
     return FrequenciaDetalheModel(
-      id: json['_id'] ,
+      id: json['id'] ,
       idLancamento: json['id_lancamento_tipo'],
       chaveUnica: json['st_chave_unica'],
       frequencia: json['id_frequencia'],
