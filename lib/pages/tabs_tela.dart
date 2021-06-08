@@ -70,20 +70,6 @@ class _TabsTelaState extends State<TabsTela> {
             child: Icon( _iconeExibirSaldo, size: 45,color: Colors.black ) ,
           ),
           SizedBox(width:5),
-          GestureDetector(
-              onTap: (){
-                Navigator.push( context , MaterialPageRoute( builder: (context) => ConfiguracoesIndexTela() ) );
-              },
-              child: Column(
-                children: [
-                  SizedBox(
-                      height: 50,
-                      width: 50,
-                      child: Icon(MdiIcons.applicationCog, size: 45, color: Colors.black,)
-                  ),
-                ],
-              )
-          ),
         ],
       ),
       drawer: _drawerWidget,
