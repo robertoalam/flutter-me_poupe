@@ -47,7 +47,7 @@ class DatabaseHelper {
         Directory documentsDirectory = await getApplicationDocumentsDirectory();
         String path = join(documentsDirectory.path, _databaseName);
 
-        if(true){
+        if(false){
           await deleteDatabase(path);
         }
 
