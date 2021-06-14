@@ -88,7 +88,7 @@ class Configuracoes{
     {"icone":"flag-02" , "codigo": 0xe1c8, "familia":"MaterialIcons"},
     {"icone":"filtrar-01" , "codigo": 0xe73d, "familia":"MaterialIcons"},
     {"icone":"filtrar-02" , "codigo": 0xe1b6, "familia":"MaterialIcons"},
-    
+
     {"icone":"help-01" , "codigo": 0xe7b0, "familia":"MaterialIcons"},
     {"icone":"help-02" , "codigo": 0xe7b2, "familia":"MaterialIcons"},
     {"icone":"home-01" , "codigo": 0xe7ba, "familia":"MaterialIcons"},
@@ -100,9 +100,9 @@ class Configuracoes{
     {"icone":"luz-01" , "codigo": 0xf0335, "familia":"Material Design Icons" , "pacote":"material_design_icons_flutter"},
     {"icone":"luz-02" , "codigo": 0xf0e4f, "familia":"Material Design Icons" , "pacote":"material_design_icons_flutter"},
 
-    {"icone":"mala-01" , "codigo": 0xf0587, "familia":"Material Design Icons" , "pacote":"material_design_icons_flutter"},
-    {"icone":"material-construcao-01" , "codigo": 0xe67a, "familia":"Icon" , "pacote":"MaterialIcons"},
-    {"icone":"money-01" , "codigo": 0xe5c6, "familia":"MaterialIcons","pacote":""},
+    {"icone":"mala-01" , "codigo": 0xf158b, "familia":"Material Design Icons" , "pacote":"material_design_icons_flutter"},
+    {"icone":"material-construcao-01" , "codigo": 0xe67a, "familia":"MaterialIcons"},
+    {"icone":"money-01" , "codigo": 0xe5c6, "familia":"MaterialIcons"},
     {"icone":"money-02" , "codigo": 0xf0116, "familia":"Material Design Icons" , "pacote":"material_design_icons_flutter"},
     {"icone":"money-03" , "codigo": 0xf067a, "familia":"Material Design Icons" , "pacote":"material_design_icons_flutter"},
 
@@ -132,8 +132,7 @@ class Configuracoes{
     {"icone":"saude-pasta-01" , "codigo": 0xf06ef, "familia":"Material Design Icons" , "pacote":"material_design_icons_flutter"},
     {"icone":"saude-pessoa-01" , "codigo": 0xf0a42, "familia":"Material Design Icons" , "pacote":"material_design_icons_flutter"},
     {"icone":"servicos-01" , "codigo": 0xe6a8, "familia":"MaterialIcons"},
-
-    
+    {"icone":"seguradora-01" , "codigo": 0xf4c0, "familia":"FontAwesomeSolid" , "pacote":"font_awesome_flutter"},
     {"icone":"seta-baixo-01" , "codigo": 0xf0792, "familia":"Material Design Icons" , "pacote":"material_design_icons_flutter"},
     {"icone":"seta-baixo-02" , "codigo": 0xf0796, "familia":"Material Design Icons" , "pacote":"material_design_icons_flutter"},
     {"icone":"seta-cima-01" , "codigo": 0xf0795, "familia":"Material Design Icons" , "pacote":"material_design_icons_flutter"},
@@ -158,7 +157,7 @@ class Configuracoes{
     {"icone":"transporte-02" , "codigo": 0xf00e7, "familia":"Material Design Icons" , "pacote":"material_design_icons_flutter"},
     {"icone":"transporte-03" , "codigo": 0xf001d, "familia":"Material Design Icons" , "pacote":"material_design_icons_flutter"},
     {"icone":"televisao-01" , "codigo": 0xf07f4, "familia":"Material Design Icons" , "pacote":"material_design_icons_flutter"},
-    {"icone":"torneira-01" , "codigo": 0xe005, "familia":"Awesome" , "pacote":"font_awesome_flutter"},
+    {"icone":"torneira-01" , "codigo": 0xe005, "familia":"FontAwesomeSolid" , "pacote":"font_awesome_flutter"},
 
     {"icone":"ventilador-01" , "codigo": 0xf0210, "familia":"Material Design Icons" , "pacote":"material_design_icons_flutter"},
 

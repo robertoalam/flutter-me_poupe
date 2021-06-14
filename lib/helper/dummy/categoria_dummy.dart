@@ -78,7 +78,7 @@ class CategoriaDummy{
       CategoriaCadModel(id: 7008 , idPai: 70 , descricao: "Aluguel de carro",icone:"pedagio-01"),
       CategoriaCadModel(id: 7009 , idPai: 70 , descricao: "troca de oleo",icone:"pedagio-01"),
       CategoriaCadModel(id: 7010 , idPai: 70 , descricao: "oficina mecanica",icone:"pedagio-01"),
-      CategoriaCadModel(id: 7011 , idPai: 70 , descricao: "chapista",icone:"pedagio-01"),
+      CategoriaCadModel(id: 7011 , idPai: 70 , descricao: "chapista",icone:"seguradora-01"),
 
       // TRABALHO
       CategoriaCadModel(id: 8001 , idPai: 80 , descricao: "Material de escritório",icone:"escritorio-01"),
@@ -99,13 +99,18 @@ class CategoriaDummy{
       CategoriaCadModel(id: 11005 , idPai: 110 , descricao: "Mensalidade Cartao de Crédito",icone:"televisao-01"),
       CategoriaCadModel(id: 11006 , idPai: 110 , descricao: "Mensalidade Cartao de Crédito",icone:"televisao-01"),
       CategoriaCadModel(id: 11007 , idPai: 110 , descricao: "Aluguel",icone:"home-01"),
+      CategoriaCadModel(id: 11008 , idPai: 110 , descricao: "Despesa em cartório",icone:"home-01"),
 
+      // CONTAS FIXAS
       CategoriaCadModel(id: 12001 , idPai: 120 , descricao: "Condominio",icone:"predio-01"),
       CategoriaCadModel(id: 12002 , idPai: 120 , descricao: "Conta de luz",icone:"luz-01"),
       CategoriaCadModel(id: 12003 , idPai: 120 , descricao: "Conta de água",icone:"agua-01"),
       CategoriaCadModel(id: 12004 , idPai: 120 , descricao: "Conta de internet",icone:"arroba-01"),
       CategoriaCadModel(id: 12005 , idPai: 120 , descricao: "Plano telefônico",icone:"celular-01"),
       CategoriaCadModel(id: 12006 , idPai: 120 , descricao: "TV a cabo",icone:"televisao-01"),
+      CategoriaCadModel(id: 12007 , idPai: 120 , descricao: "Seguro de vida",icone:"seguradora-01"),
+      CategoriaCadModel(id: 12008 , idPai: 120 , descricao: "Seguro residencial",icone:"seguradora-01"),
+      CategoriaCadModel(id: 12009 , idPai: 120 , descricao: "Seguro automotivo",icone:"seguradora-01"),
     ];
   }
 }
