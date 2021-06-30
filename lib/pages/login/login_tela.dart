@@ -49,35 +49,47 @@ class LoginTela extends StatelessWidget {
 				height: 60,
 				alignment: Alignment.centerLeft,
 				decoration: BoxDecoration(
-					gradient: LinearGradient(
-						begin: Alignment.topLeft,
-						end: Alignment.bottomRight,
-
-						// stops: [0.2,1],
-						// colors: [Color(0XFFF58524),Color(0XFFF92B7F)],
-					),
+					// gradient: LinearGradient(
+					// 	begin: Alignment.topLeft,
+					// 	end: Alignment.bottomRight,
+					// 	stops: [0.2,1],
+					// 	colors: [Color(0XFFF58524),Color(0XFFF92B7F)],
+					// ),
 					borderRadius: BorderRadius.all( Radius.circular(5)),
 				),
 				child: SizedBox.expand(
 					child: FlatButton(
+            color: Theme.of(context).primaryColor,
 						child: Text("LOGAR",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 20),),
 						onPressed: ()=>{},
 					),
 				),
 			),
-			Container(
-				height: 40,
-				alignment: Alignment.centerRight,
-				child: FlatButton(
-					child: Text("Recuperar Senha" ),
-					onPressed: (){
-						Navigator.push(context , MaterialPageRoute(builder: (context)=>SplashTela()));
-					},
-				),
-			),
-			SizedBox(
-              height: 40,
+			Column(
+        children: [
+          Container(
+            height: 40,
+            alignment: Alignment.centerRight,
+            child: FlatButton(
+              child: Text("Criar Senha" ),
+              onPressed: (){
+                Navigator.push(context , MaterialPageRoute(builder: (context)=>SplashTela()));
+              },
             ),
+          ),
+          Container(
+            height: 40,
+            alignment: Alignment.centerRight,
+            child: FlatButton(
+              child: Text("Recuperar Senha" ),
+              onPressed: (){
+                Navigator.push(context , MaterialPageRoute(builder: (context)=>SplashTela()));
+              },
+            ),
+          ),
+        ],
+      ),
+			SizedBox(height: 20,),
 			Container(
 				height: 60,
 				alignment: Alignment.centerLeft,
@@ -114,9 +126,7 @@ class LoginTela extends StatelessWidget {
 			),
 
 			// FACEBOOK
-						SizedBox(
-              height: 40,
-            ),
+      SizedBox( height: 20,),
 			Container(
 				height: 60,
 				alignment: Alignment.centerLeft,
