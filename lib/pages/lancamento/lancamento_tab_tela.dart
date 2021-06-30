@@ -19,7 +19,7 @@ class LancamentoTabTela extends StatefulWidget {
 class _LancamentoTabTelaState extends State<LancamentoTabTela>  with SingleTickerProviderStateMixin {
   var body;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
-  MeuBlocModel bloc = MeuBlocModel();
+  BlocModel bloc = BlocModel();
   TabController _tabController ;
   int _currentIndex = 0;
   String corTopo = Funcoes.converterCorStringColor("#FF0000");

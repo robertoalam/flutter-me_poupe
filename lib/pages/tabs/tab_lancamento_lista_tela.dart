@@ -186,7 +186,7 @@ class _TabLancamentoListaTelaState extends State<TabLancamentoListaTela> {
 
   _cardResumo(){
     return Container(
-      padding: EdgeInsets.fromLTRB(10, 5, 10, 50),
+      padding: EdgeInsets.fromLTRB(10, 5, 10, 80),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
