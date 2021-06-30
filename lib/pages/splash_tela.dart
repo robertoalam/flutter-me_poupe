@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:me_poupe/helper/database_helper.dart';
 import 'package:me_poupe/model/configuracoes/configuracao_model.dart';
+import 'package:me_poupe/pages/login/login_tela.dart';
 import 'package:me_poupe/pages/tabs_tela.dart';
 
 
@@ -37,7 +38,7 @@ class _SplashTelaState extends State<SplashTela> {
     ConfiguracaoModel.incrementAbertura();
 
 		Timer( Duration(seconds: 2) , ()=>
-      Navigator.pushReplacement( context,  MaterialPageRoute( builder: (context) => TabsTela() ) ),
+      Navigator.pushReplacement( context,  MaterialPageRoute( builder: (context) => LoginTela() ) ),
 		);
   }
 }

@@ -18,6 +18,8 @@ class _DrawerWidgetState extends State<DrawerWidget> {
     {'icone':Icons.home ,'label':'Dicas','rota':TabInicioTela()},
     {'icone':Icons.home ,'label':'Faturas','rota':TabInicioTela()},
     {'icone':Icons.home ,'label':'Relatórios','rota':TabInicioTela()},
+    {'icone':Icons.home ,'label':'Metas','rota':TabInicioTela()},
+    {'icone':Icons.home ,'label':'Desafio','rota':TabInicioTela()},
     {'icone':Icons.home ,'label':'Carteira','rota':TabInicioTela()},
     {'icone':Icons.help ,'label':'Suporte','rota':TabInicioTela()},
     {'icone':MdiIcons.file ,'label':'Termos e políticas','rota':TabInicioTela()},
