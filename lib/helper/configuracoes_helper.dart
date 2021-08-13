@@ -69,6 +69,7 @@ class Configuracoes{
 
     {"icone":"dinheiro-01" , "codigo": 0xf0116, "familia":"Material Design Icons" , "pacote":"material_design_icons_flutter"},
     {"icone":"deletar-01" , "codigo": 0xe3b7, "familia":"MaterialIcons"},
+    {"icone":"dente-01" , "codigo": 0xf57f, "familia":"FontAwesomeSolid" , "pacote":"font_awesome_flutter"},
     {"icone":"doce-01" , "codigo": 0xf00e9, "familia":"Material Design Icons" , "pacote":"material_design_icons_flutter"},
 
     {"icone":"eletro-01" , "codigo": 0xf109f, "familia":"Material Design Icons" , "pacote":"material_design_icons_flutter"},

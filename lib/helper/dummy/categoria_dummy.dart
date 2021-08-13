@@ -33,6 +33,7 @@ class CategoriaDummy{
       CategoriaCadModel(id: 2002 , idPai: 20 , descricao: "Consulta",icone:"saude-pessoa-01"),
       CategoriaCadModel(id: 2003 , idPai: 20 , descricao: "Exame",icone:"saude-03"),
       CategoriaCadModel(id: 2004 , idPai: 20 , descricao: "Cabelereiro",icone:"cabelereiro-01"),
+      CategoriaCadModel(id: 2005 , idPai: 20 , descricao: "Dentista",icone:"dentista-01"),
 
       //LAZER
       CategoriaCadModel(id: 3001 , idPai: 30 , descricao: "Esportes",icone:"esporte-futebol-01"),
@@ -100,7 +101,7 @@ class CategoriaDummy{
       CategoriaCadModel(id: 11002 , idPai: 110 , descricao: "Emprestimo",icone:"money-03"),
       CategoriaCadModel(id: 11003 , idPai: 110 , descricao: "Titulo de Capitalização",icone:"money-02"),
       CategoriaCadModel(id: 11004 , idPai: 110 , descricao: "Consórcio",icone:"money-03"),
-      CategoriaCadModel(id: 11005 , idPai: 110 , descricao: "Mensalidade Cartao de Crédito",icone:"televisao-01"),
+      CategoriaCadModel(id: 11005 , idPai: 110 , descricao: "Fatura Cartao de Crédito",icone:"televisao-01"),
       CategoriaCadModel(id: 11006 , idPai: 110 , descricao: "Mensalidade Cartao de Crédito",icone:"televisao-01"),
       CategoriaCadModel(id: 11007 , idPai: 110 , descricao: "Aluguel",icone:"home-01"),
       CategoriaCadModel(id: 11008 , idPai: 110 , descricao: "Despesa em cartório",icone:"home-01"),
