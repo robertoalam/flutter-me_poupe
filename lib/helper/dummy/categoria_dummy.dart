@@ -34,6 +34,7 @@ class CategoriaDummy{
       CategoriaCadModel(id: 2003 , idPai: 20 , descricao: "Exame",icone:"saude-03"),
       CategoriaCadModel(id: 2004 , idPai: 20 , descricao: "Cabelereiro",icone:"cabelereiro-01"),
       CategoriaCadModel(id: 2005 , idPai: 20 , descricao: "Dentista",icone:"dentista-01"),
+      CategoriaCadModel(id: 2006 , idPai: 20 , descricao: "Podologa",icone:"podologa-01"),
 
       //LAZER
       CategoriaCadModel(id: 3001 , idPai: 30 , descricao: "Esportes",icone:"esporte-futebol-01"),
@@ -49,6 +50,8 @@ class CategoriaDummy{
       // COMPRAS
       CategoriaCadModel(id: 4001 , idPai: 40 , descricao: "Roupas",icone:"roupa-01"),
       CategoriaCadModel(id: 4002 , idPai: 40 , descricao: "Pets",icone:"pets-01"),
+      CategoriaCadModel(id: 4003 , idPai: 40 , descricao: "Presente",icone:"presente-aniver-01"),
+      CategoriaCadModel(id: 4003 , idPai: 40 , descricao: "Presente Aniversário",icone:"presente-01"),
 
       //CASA
       CategoriaCadModel(id: 5001 , idPai: 50 , descricao: "Decoração",icone:"home-03"),
