@@ -1,11 +1,8 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:me_poupe/helper/database_helper.dart';
 import 'package:me_poupe/model/configuracoes/configuracao_model.dart';
 import 'package:me_poupe/pages/login/login_tela.dart';
-import 'package:me_poupe/pages/tabs_tela.dart';
-
 
 class SplashTela extends StatefulWidget {
   @override
