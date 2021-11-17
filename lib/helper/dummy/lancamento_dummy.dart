@@ -749,6 +749,7 @@ class LancamentosDummy{
       {'id_usuario':5,'id_lancamento_tipo':1,'id_categoria':2005,'dt_lancamento':'2021-11-11 17:23:45','descricao':'dentista - luisa - adriana gomes sesti paz - limpeza e avaliacao','id_pagamento_forma':2,'id_cartao':1,'id_frequencia':1,'id_frequencia_periodo':1,'no_quantidade':1,'vl_integral':300},
       {'id_usuario':5,'id_lancamento_tipo':1,'id_categoria':2005,'dt_lancamento':'2021-11-11 17:53:45','descricao':'dentista - roberto - adriana gomes sesti paz - limpeza e avaliacao','id_pagamento_forma':2,'id_cartao':4,'id_frequencia':1,'id_frequencia_periodo':1,'no_quantidade':1,'vl_integral':300},		
       {'id_usuario':5,'id_lancamento_tipo':1,'id_categoria':1001,'dt_lancamento':'2021-11-12 12:16:27','descricao':'refeicao - lanche - troppo buono','id_pagamento_forma':2,'id_cartao':4,'id_frequencia':1,'id_frequencia_periodo':1,'no_quantidade':1,'vl_integral':14},
+      {'id_usuario':5,'id_lancamento_tipo':1,'id_categoria':7001,'dt_lancamento':'2021-11-12 18:18:07','descricao':'carro - combustivel - gasolina - posto farinhas','id_pagamento_forma':2,'id_cartao':4,'id_frequencia':1,'id_frequencia_periodo':1,'no_quantidade':1,'vl_integral':246.29},
       {'id_usuario':5,'id_lancamento_tipo':1,'id_categoria':1001,'dt_lancamento':'2021-11-13 11:49:23','descricao':'refeicao - almoco - polo norte','id_pagamento_forma':2,'id_cartao':4,'id_frequencia':1,'id_frequencia_periodo':1,'no_quantidade':1,'vl_integral':100.60},
       {'id_usuario':5,'id_lancamento_tipo':1,'id_categoria':1004,'dt_lancamento':'2021-11-13 12:27:24','descricao':'mercado - treichel - aniversario','id_pagamento_forma':2,'id_cartao':4,'id_frequencia':1,'id_frequencia_periodo':1,'no_quantidade':1,'vl_integral':158.11},
       {'id_usuario':5,'id_lancamento_tipo':1,'id_categoria':8001,'dt_lancamento':'2021-11-13 10:59:11','descricao':'decoracao - aniversario','id_pagamento_forma':2,'id_cartao':4,'id_frequencia':1,'id_frequencia_periodo':1,'no_quantidade':1,'vl_integral':252.50},
@@ -769,6 +770,5 @@ class LancamentosDummy{
       {'id_usuario':5,'id_lancamento_tipo':1,'id_categoria':1001,'dt_lancamento':'2021-11-16 12:24:27','descricao':'refeicao - almoco - caseiro -  2 almocos','id_pagamento_forma':2,'id_cartao':4,'id_frequencia':1,'id_frequencia_periodo':1,'no_quantidade':1,'vl_integral':32},
       {'id_usuario':5,'id_lancamento_tipo':1,'id_categoria':1004,'dt_lancamento':'2021-11-16 18:13:33','descricao':'mercado - guanabara','id_pagamento_forma':2,'id_cartao':4,'id_frequencia':1,'id_frequencia_periodo':1,'no_quantidade':1,'vl_integral':100.14},
     ];
-
   }
 }
