@@ -323,8 +323,8 @@ class DatabaseHelper {
   // }
 
   seedTestes(Database db) async {
-    await seedPopularConta(db);
-    await seedPopularCartao(db);
+    // await seedPopularConta(db);
+    // await seedPopularCartao(db);
     await seedPopularLancamentos(db);
     // await seedPopularCarteiras(db);
     return true;

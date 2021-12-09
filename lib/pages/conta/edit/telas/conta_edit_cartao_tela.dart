@@ -1,4 +1,5 @@
-import 'package:brasil_fields/formatter/real_input_formatter.dart';
+
+import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/material.dart';
 import 'package:me_poupe/componentes/label_simples_widget.dart';
 import 'package:me_poupe/componentes/mascara_campos.dart';
@@ -233,7 +234,7 @@ class _ContaEditCartaoTelaState extends State<ContaEditCartaoTela> {
                       hint: null,
                       label: 'R\$ 0,00',
                       icone: Icon(Icons.attach_money , color: Colors.grey,),
-                      formatter: RealInputFormatter(centavos: true),
+                      formatter: RealInputFormatter(),
                       validate: false,
                     ),
                   ],
@@ -322,7 +323,7 @@ class _ContaEditCartaoTelaState extends State<ContaEditCartaoTela> {
                     hint: null,
                     label: 'R\$ 0,00',
                     icone: Icon(Icons.attach_money , color: Colors.grey,),
-                    formatter: RealInputFormatter(centavos: true),
+                    formatter: RealInputFormatter(),
                     validate: false,
                   ),
                 ],
@@ -347,7 +348,7 @@ class _ContaEditCartaoTelaState extends State<ContaEditCartaoTela> {
                     hint: null,
                     label: 'R\$ 0,00',
                     icone: Icon(Icons.attach_money , color: Colors.grey,),
-                    formatter: RealInputFormatter(centavos: true),
+                    formatter: RealInputFormatter(),
                     validate: false,
                   ),
                 ],
