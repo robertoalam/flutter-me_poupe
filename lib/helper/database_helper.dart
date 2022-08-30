@@ -188,11 +188,16 @@ class DatabaseHelper {
   // POPULAR
   configuracoesPopular(Database db) async {
     // VERSAO
+    await db.execute(" INSERT INTO "+ConfiguracaoModel.TABLE_NAME+" VALUES ('dt_instalacao','"+DateTime.now().toString()+"' );");    
     await db.execute(" INSERT INTO "+ConfiguracaoModel.TABLE_NAME+" VALUES ('no_version','${_versionAPP}' );  ");
     await db.execute(" INSERT INTO "+ConfiguracaoModel.TABLE_NAME+" VALUES ('no_aberturas','0' );  ");
     // NORMAL / NOTURNO
     await db.execute(" INSERT INTO "+ConfiguracaoModel.TABLE_NAME+" VALUES ('exibir_saldo','true' );  ");
     await db.execute(" INSERT INTO "+ConfiguracaoModel.TABLE_NAME+" VALUES ('modo','normal' );  ");
+    await db.execute(" INSERT INTO "+ConfiguracaoModel.TABLE_NAME+" VALUES ('debug','false'); ");    
+    await db.execute(" INSERT INTO "+ConfiguracaoModel.TABLE_NAME+" VALUES ('ambiente','local'); ");    
+    String deviceId = await Funcoes.buscarDeviceId;  
+    await db.execute(" INSERT INTO "+ConfiguracaoModel.TABLE_NAME+" VALUES ('device_id','${deviceId.toString()}' );  ");     
     return 1;
   }
 
@@ -323,29 +328,29 @@ class DatabaseHelper {
   // }
 
   seedTestes(Database db) async {
-    // await seedPopularConta(db);
-    // await seedPopularCartao(db);
+    await seedPopularConta(db);
+    await seedPopularCartao(db);
     await seedPopularLancamentos(db);
     // await seedPopularCarteiras(db);
     return true;
 
   }
 
-  // seedPopularConta(Database db) async {
-  //   await db.execute(" INSERT INTO "+ContaModel.tableName+" ( id_banco, id_conta_tipo , descricao ) VALUES (22,1,'banri');  ");
-  //   await db.execute(" INSERT INTO "+ContaModel.tableName+" ( id_banco, id_conta_tipo , descricao ) VALUES (52,1,'roxinho');  ");
-  //   await db.execute(" INSERT INTO "+ContaModel.tableName+" ( id_banco, id_conta_tipo , descricao ) VALUES (44,1,'itau pai');  ");
-  //   await db.execute(" INSERT INTO "+ContaModel.tableName+" ( id_banco, id_conta_tipo , descricao ) VALUES (80,3,'green card');  ");
-  // }
+  seedPopularConta(Database db) async {
+    await db.execute(" INSERT INTO "+ContaModel.tableName+" ( id_banco, id_conta_tipo , descricao ) VALUES (22,1,'banri');  ");
+    await db.execute(" INSERT INTO "+ContaModel.tableName+" ( id_banco, id_conta_tipo , descricao ) VALUES (52,1,'roxinho');  ");
+    await db.execute(" INSERT INTO "+ContaModel.tableName+" ( id_banco, id_conta_tipo , descricao ) VALUES (44,1,'itau pai');  ");
+    await db.execute(" INSERT INTO "+ContaModel.tableName+" ( id_banco, id_conta_tipo , descricao ) VALUES (80,3,'green card');  ");
+  }
 
-  //  seedPopularCartao(Database db) async {
-  //   await db.execute(" INSERT INTO "+CartaoModel.tableName+" (id_conta , id_cartao_tipo , descricao , vl_saldo , vl_limite , dia_fechamento , dia_vencimento) VALUES (1,3,'debito',null,4500.0,null,null);  ");
-  //   await db.execute(" INSERT INTO "+CartaoModel.tableName+" (id_conta , id_cartao_tipo , descricao , vl_saldo , vl_limite , dia_fechamento , dia_vencimento) VALUES (1,2,'credito',null,7000.0,26,6);  ");
-  //   await db.execute(" INSERT INTO "+CartaoModel.tableName+" (id_conta , id_cartao_tipo , descricao , vl_saldo , vl_limite , dia_fechamento , dia_vencimento) VALUES (2,2,'credito',2500.0,null,25,5);  ");
-  //   await db.execute(" INSERT INTO "+CartaoModel.tableName+" (id_conta , id_cartao_tipo , descricao , vl_saldo , vl_limite , dia_fechamento , dia_vencimento) VALUES (3,3,'debito',10000.0,null,0,0);  ");
-  //   await db.execute(" INSERT INTO "+CartaoModel.tableName+" (id_conta , id_cartao_tipo , descricao , vl_saldo , vl_limite , dia_fechamento , dia_vencimento) VALUES (4,5,'greencard',3000.0,null,0,0);  ");
-  //   await db.execute(" INSERT INTO "+CartaoModel.tableName+" (id_conta , id_cartao_tipo , descricao , vl_saldo , vl_limite , dia_fechamento , dia_vencimento) VALUES (1,4,'poupanca moto',3000.0,null,null,null);");
-  // }
+   seedPopularCartao(Database db) async {
+    await db.execute(" INSERT INTO "+CartaoModel.tableName+" (id_conta , id_cartao_tipo , descricao , vl_saldo , vl_limite , dia_fechamento , dia_vencimento) VALUES (1,3,'debito',null,4500.0,null,null);  ");
+    await db.execute(" INSERT INTO "+CartaoModel.tableName+" (id_conta , id_cartao_tipo , descricao , vl_saldo , vl_limite , dia_fechamento , dia_vencimento) VALUES (1,2,'credito',null,7000.0,26,6);  ");
+    await db.execute(" INSERT INTO "+CartaoModel.tableName+" (id_conta , id_cartao_tipo , descricao , vl_saldo , vl_limite , dia_fechamento , dia_vencimento) VALUES (2,2,'credito',2500.0,null,25,5);  ");
+    await db.execute(" INSERT INTO "+CartaoModel.tableName+" (id_conta , id_cartao_tipo , descricao , vl_saldo , vl_limite , dia_fechamento , dia_vencimento) VALUES (3,3,'debito',10000.0,null,0,0);  ");
+    await db.execute(" INSERT INTO "+CartaoModel.tableName+" (id_conta , id_cartao_tipo , descricao , vl_saldo , vl_limite , dia_fechamento , dia_vencimento) VALUES (4,5,'greencard',3000.0,null,0,0);  ");
+    await db.execute(" INSERT INTO "+CartaoModel.tableName+" (id_conta , id_cartao_tipo , descricao , vl_saldo , vl_limite , dia_fechamento , dia_vencimento) VALUES (1,4,'poupanca moto',3000.0,null,null,null);");
+  }
 
   // seedPopularCarteiras(Database db) async {
   //   await db.execute(" INSERT INTO carteira (id , id_cartao, descricao, st_protected) VALUES (2,3,'Banri',0);  ");
