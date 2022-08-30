@@ -2,7 +2,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:me_poupe/helper/database_helper.dart';
 import 'package:me_poupe/model/configuracoes/configuracao_model.dart';
-import 'package:me_poupe/pages/login/login_tela.dart';
+
+import 'login/login_tela.dart';
 
 class SplashTela extends StatefulWidget {
   @override
@@ -35,7 +36,7 @@ class _SplashTelaState extends State<SplashTela> {
     ConfiguracaoModel.incrementAbertura();
 
 		Timer( Duration(seconds: 2) , ()=>
-      Navigator.pushReplacement( context,  MaterialPageRoute( builder: (context) => LoginTela() ) ),
+      Navigator.pushReplacement( context,  MaterialPageRoute( builder: (context) => SigninTela() ) ),
 		);
   }
 }
