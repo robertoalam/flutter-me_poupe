@@ -6,7 +6,7 @@ import 'package:me_poupe/pages/lancamento/lancamento_tab_tela.dart';
 import 'package:me_poupe/pages/tabs/tab_inicio_tela.dart';
 import 'package:me_poupe/pages/tabs/tab_lancamento_lista_tela.dart';
 
-import 'configuracoes/configuracoes_index_tela.dart';
+import 'configuracoes/configuracoes_tela.dart';
 
 
 class TabsTela extends StatefulWidget {
@@ -90,9 +90,9 @@ class _TabsTelaState extends State<TabsTela> {
         type: BottomNavigationBarType.fixed,
         backgroundColor: Colors.purple,
         items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem( icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem( icon: Icon(Icons.arrow_drop_down), label: '' ,),
-          BottomNavigationBarItem( icon: Icon(Icons.list), label: 'Lanç.', ),
+          BottomNavigationBarItem( icon: Icon(Icons.home), title: Text('Home')),
+          BottomNavigationBarItem( icon: Icon(Icons.arrow_drop_down), title: Text('') ,),
+          BottomNavigationBarItem( icon: Icon(Icons.list), title: Text('Lanç.'), ),
         ],
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.white,

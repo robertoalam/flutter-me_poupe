@@ -4,7 +4,7 @@ class Configuracoes{
   //CORES
   static const cores = {
 	"normal":{
-		"corAppBar":"#9C27B0",
+		"appBarFundo":"#9C27B0",
 		"background":"#FFFFFF",
 		"containerFundo":"#FFFFFF",
 		"containerBorda":"#C1C1C1",
@@ -12,13 +12,13 @@ class Configuracoes{
 		"sombraPrimaria":"#000000",
 		"dividerCor":"#C1C1C1",
 	},"escuro": {
-			"corAppBar":"#461151",
-			"background":"#000000",
-			"containerFundo":"#000000",
-			"containerBorda":"#EEEEEE",
-			"textoPrimaria":"#FFFFFF",
-			"sombraPrimaria":"#FFFFFF",
-			"dividerCor":"#FFFFFF",
+    "appBarFundo":"#461151",
+    "background":"#000000",
+    "containerFundo":"#000000",
+    "containerBorda":"#EEEEEE",
+    "textoPrimaria":"#FFFFFF",
+    "sombraPrimaria":"#FFFFFF",
+    "dividerCor":"#FFFFFF",
 		}
   };
 

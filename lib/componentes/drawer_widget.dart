@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:me_poupe/pages/configuracoes/configuracoes_index_tela.dart';
+import 'package:me_poupe/pages/configuracoes/configuracoes_tela.dart';
 import 'package:me_poupe/pages/tabs/tab_inicio_tela.dart';
 
 import 'label_opensans.dart';
@@ -89,7 +89,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             InkWell(
-                              onTap: (){ Navigator.push( context , MaterialPageRoute( builder: (context) => ConfiguracoesIndexTela() ) ); },
+                              onTap: (){ Navigator.push( context , MaterialPageRoute( builder: (context) => ConfiguracoesTela() ) ); },
                               child: Icon( MdiIcons.applicationCog , size: 33, ),
                             ),
                           ],
@@ -106,7 +106,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         LabelOpensans("Sair" , cor: Colors.black, tamanho: 15 ,bold: true,),
-                        Icon(Icons.logout),
+                        Icon(Icons.home),
                       ],
                     ),
                   ],

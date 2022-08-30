@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:me_poupe/componentes/botao_adaptavel_widget.dart';
 import 'package:me_poupe/componentes/label_opensans.dart';
 import 'package:me_poupe/componentes/label_quicksand.dart';
@@ -11,7 +10,6 @@ import 'package:me_poupe/model/configuracoes/configuracao_model.dart';
 import 'package:me_poupe/model/conta/cartao_model.dart';
 import 'package:me_poupe/model/conta/conta_model.dart';
 import 'package:me_poupe/pages/cartao/cartao_index_tela.dart';
-import 'package:me_poupe/pages/configuracoes/configuracoes_index_tela.dart';
 import 'package:me_poupe/pages/conta/conta_list_tela.dart';
 
 class TabInicioTela extends StatefulWidget {
