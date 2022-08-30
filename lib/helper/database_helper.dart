@@ -20,7 +20,9 @@ import 'package:me_poupe/model/lancamento/lancamento_pagamento_forma_model.dart'
 import 'package:me_poupe/model/usuario/usuario_model.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
+import 'configuracoes_helper.dart';
 import 'funcoes_helper.dart';
 
 class DatabaseHelper {
@@ -44,63 +46,62 @@ class DatabaseHelper {
 
   // this opens the database (and creates it if it doesn't exist)
   _initDatabase() async {
-        Directory documentsDirectory = await getApplicationDocumentsDirectory();
-        String path = join(documentsDirectory.path, _databaseName);
+    Directory documentsDirectory = await getApplicationDocumentsDirectory();
+    String path = join(documentsDirectory.path, _databaseName);
 
-        if(false){
-          await deleteDatabase(path);
-        }
+    if(false){ await deleteDatabase(path); }
 
-        return await openDatabase(path, version: _databaseVersion, onCreate: _onCreate);
-    }
+    return await openDatabase(path, version: _databaseVersion, onCreate: _onCreate);
+  }
 
     // SQL code to create the database table
     Future _onCreate(Database db, int version) async {
-        //CADs
-        // await usuarioTipoCadCriar(db);
-        await configuracoesCadCriar(db);
-        await configuracoesPopular(db);
-        await bancoCadCriar(db);
-        await bancoCadPopular(db);
-        await usuarioCadCriar(db);
-        await usuarioPopular(db);
+      //CADs
+      // await usuarioTipoCadCriar(db);
+      await configuracoesCadCriar(db);
+      await configuracoesPopular(db);
+      await setarEstilos;
+      await bancoCadCriar(db);
+      await bancoCadPopular(db);
+      await usuarioCadCriar(db);
+      await usuarioPopular(db);
 
-        await pagamentoFormaCadCriar(db);
-        await pagamentoFormaCadPopular(db);
-        await pagamentoStatusCadCriar(db);
-        await pagamentoStatusCadPopular(db);
+      await pagamentoFormaCadCriar(db);
+      await pagamentoFormaCadPopular(db);
+      await pagamentoStatusCadCriar(db);
+      await pagamentoStatusCadPopular(db);
 
-        await contaTipoCadCriar(db);
-        await contaTipoPopular(db);
+      await contaTipoCadCriar(db);
+      await contaTipoPopular(db);
 
-        await cartaoTipoCadCriar(db);
-        await cartaoTipoCadPopular(db);
+      await cartaoTipoCadCriar(db);
+      await cartaoTipoCadPopular(db);
 
-        await contaCriar(db);
-        // await contaBancariaCriar(db);
-        // await carteiraCriar(db);
-        // await carteiraPopular(db);
+      await contaCriar(db);
+      // await contaBancariaCriar(db);
+      // await carteiraCriar(db);
+      // await carteiraPopular(db);
 
-        await categoriaCadCriar(db);
-        await categoriaCadPopular(db);
-        // LANCAMENTO CAD
-        await lancamentoTipoCadCriar(db);
-        await lancamentoFrequenciaCadCriar(db);
-        await lancamentoFrequenciaPeriodoCadCriar(db);
-        await cartaoCriar(db);
+      await categoriaCadCriar(db);
+      await categoriaCadPopular(db);
+      // LANCAMENTO CAD
+      await lancamentoTipoCadCriar(db);
+      await lancamentoFrequenciaCadCriar(db);
+      await lancamentoFrequenciaPeriodoCadCriar(db);
+      await cartaoCriar(db);
 
-        //LANCAMENTO POPULAR
-        await lancamentoTipoCadPopular(db);
-        await lancamentoFrequenciaCadPopular(db);
-        await lancamentoFrequenciaPeriodoCadPopular(db);
-        await lancamentoCriarTable(db);
-        await lancamentoPagamentoCriarTable(db);
-        await lancamentoFrequenciaCriarTable(db);
-        await lancamentoFrequenciaDetalheCriarTable(db);
-        // await lancamentoFrequenciaCriar(db);
-        // await usuarioTipoCadPopular(db);
+      //LANCAMENTO POPULAR
+      await lancamentoTipoCadPopular(db);
+      await lancamentoFrequenciaCadPopular(db);
+      await lancamentoFrequenciaPeriodoCadPopular(db);
+      await lancamentoCriarTable(db);
+      await lancamentoPagamentoCriarTable(db);
+      await lancamentoFrequenciaCriarTable(db);
+      await lancamentoFrequenciaDetalheCriarTable(db);
+      // await lancamentoFrequenciaCriar(db);
+      // await usuarioTipoCadPopular(db);
 
-        await seedTestes(db);
+      await seedTestes(db);
     }
 
   // usuarioTipoCadCriar(Database db) async {
@@ -185,6 +186,7 @@ class DatabaseHelper {
   lancamentoFrequenciaPeriodoCadCriar(Database db) async {
     await db.execute(" CREATE TABLE IF NOT EXISTS "+FrequenciaPeriodoCadModel.TABLE_NAME+" ( _id INTEGER PRIMARY KEY , descricao VARCHAR(50) , dias INTEGER , st_exibir INTEGER); ");
   }
+  
   // POPULAR
   configuracoesPopular(Database db) async {
     // VERSAO
@@ -199,6 +201,13 @@ class DatabaseHelper {
     String deviceId = await Funcoes.buscarDeviceId;  
     await db.execute(" INSERT INTO "+ConfiguracaoModel.TABLE_NAME+" VALUES ('device_id','${deviceId.toString()}' );  ");     
     return 1;
+  }
+
+  get setarEstilos async {
+    SharedPreferences _prefs = await SharedPreferences.getInstance();
+    ConfiguracaoModel.cores['normal'].forEach((key, value) { 
+      _prefs.setString(key, value);
+    });
   }
 
   iconeCadPopular(Database db) async{

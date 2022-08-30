@@ -1,3 +1,9 @@
+import 'dart:io';
+
+import 'package:flutter/services.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:platform_device_id/platform_device_id.dart';
+
 class Funcoes{
 
   static converterCorStringColor(String hexadecimal){
@@ -28,7 +34,7 @@ class Funcoes{
     if(retornarHorario ==null || retornarHorario == false){
       return nova;
     }
-    return "${nova+" "+dataAmericanizada[1]}";
+    return "${nova+" "+dataAmericanizada[1].toString().split(".")[0].toString()}";
   }
 
   static somenteData(String valor) {
@@ -115,6 +121,57 @@ class Funcoes{
     return "${ dataTruncado + usuarioTruncado }";
   }
 
+  static Future<String> get buscarVersao async {
+    return await rootBundle.loadString('assets/git/versao.txt');
+  }
 
+  static Future<Directory> get buscarPastaLogRest async {
+    return Directory( ( (await getApplicationDocumentsDirectory()).path).toString()+"/logs/rest/" );
+  } 
 
+  static Future<String> get buscarDeviceId async {
+    try {
+      return await PlatformDeviceId.getDeviceId;
+    } on PlatformException {
+      // GRAVAR ARQUIVO
+      await Funcoes.gravarArquivo( ( (await Funcoes.buscarPastaLogRest).path) .toString() , "rest.txt" , "ERRO BUSCAR DEVICE ID" ,limpar: false);
+      return null;    
+    }    
+  }
+
+  static  Future<Directory> criarPasta(String diretorio) async{
+    final Directory diretorioNovo = Directory(diretorio); 
+    if(await diretorioNovo.exists()){
+      return diretorioNovo;
+    }else{
+      final Directory diretoNovoCriado = await diretorioNovo.create(recursive: true);
+      return diretoNovoCriado;
+    }
+  }    
+
+  static  Future<File> criarArquivo(Directory diretorio , String nomeArquivo) async {
+    try{
+      return File(diretorio.path.toString()+nomeArquivo.toString());
+    }catch(e){
+      return File("${ (await getApplicationDocumentsDirectory()).path }/default.txt");
+    }
+  }  
+
+  // METODOS P/GRAVAR LOGS FISICOS
+  static Future<File> gravarArquivo(String diretorio, String nomeArquivo , String texto ,  { bool limpar = false}) async {
+    texto = texto.toString();
+    // // SE DIRETORIO ESTIVER NULL INSERE O DIRETORIO PADRAO
+    // String diretorio = (await getApplicationDocumentsDirectory()).path.toString() ;
+
+    Directory dir = await Funcoes.criarPasta( diretorio.toString() );
+    final File file = await Funcoes.criarArquivo( dir , nomeArquivo );
+
+    if( await file.exists() ) {
+      if( limpar == false) { 
+        texto += "\n";
+        texto += await file.readAsString();
+      }
+    }
+    return file.writeAsString('$texto');
+  }
 }
