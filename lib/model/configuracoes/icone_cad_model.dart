@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:me_poupe/helper/configuracoes_helper.dart';
+
 import 'package:me_poupe/helper/database_helper.dart';
+import 'package:me_poupe/model/configuracoes/configuracao_model.dart';
 
 class IconeCadModel {
   String icone;
@@ -16,7 +17,7 @@ class IconeCadModel {
   IconeCadModel({this.icone, this.codigo, this.familia,this.pacote, this.tag });
 
   List<IconeCadModel> get buscarLista {
-    var listaBugada = Configuracoes.icones;
+    var listaBugada = ConfiguracaoModel.icones;
     List<IconeCadModel> lista = new List<IconeCadModel>();
     listaBugada.forEach((el) {
       lista.add(
@@ -27,7 +28,7 @@ class IconeCadModel {
   }
 
   factory IconeCadModel.find(String label) {
-    var listaBugada = Configuracoes.icones;
+    var listaBugada = ConfiguracaoModel.icones;
     var lista1 = listaBugada.where( (item) => item['icone'] == label).toList();
     if(lista1.length > 0){
       var el = lista1[0];

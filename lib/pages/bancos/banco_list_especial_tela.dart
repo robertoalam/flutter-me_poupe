@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:me_poupe/helper/configuracoes_helper.dart';
+
 import 'package:me_poupe/helper/funcoes_helper.dart';
 import 'package:me_poupe/model/cad/cad_banco_model.dart';
 import 'package:me_poupe/model/configuracoes/configuracao_model.dart';
@@ -49,10 +49,10 @@ class _BancoListEspecialTelaState extends State<BancoListEspecialTela> {
   }
 
   _setDataConfig(){
-    _background = Funcoes.converterCorStringColor( Configuracoes.cores[_dados['modo']]['background']);
-    _colorContainerFundo = Funcoes.converterCorStringColor( Configuracoes.cores[_dados['modo']]['containerFundo']);
-    _colorContainerBorda = Funcoes.converterCorStringColor( Configuracoes.cores[_dados['modo']]['containerBorda']);
-    _colorLetra = Funcoes.converterCorStringColor( Configuracoes.cores[_dados['modo']]['textoPrimaria']);
+    _background = Funcoes.converterCorStringColor( ConfiguracaoModel.cores[_dados['modo']]['background']);
+    _colorContainerFundo = Funcoes.converterCorStringColor( ConfiguracaoModel.cores[_dados['modo']]['containerFundo']);
+    _colorContainerBorda = Funcoes.converterCorStringColor( ConfiguracaoModel.cores[_dados['modo']]['containerBorda']);
+    _colorLetra = Funcoes.converterCorStringColor( ConfiguracaoModel.cores[_dados['modo']]['textoPrimaria']);
   }
 
   _getDataConfig() async {

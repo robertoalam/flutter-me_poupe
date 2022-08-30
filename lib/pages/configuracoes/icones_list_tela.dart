@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:me_poupe/componentes/icone_gambiarra.dart';
 import 'package:me_poupe/componentes/label_opensans.dart';
 import 'package:me_poupe/componentes/label_quicksand.dart';
-import 'package:me_poupe/helper/configuracoes_helper.dart';
 import 'package:me_poupe/helper/funcoes_helper.dart';
 import 'package:me_poupe/model/configuracoes/configuracao_model.dart';
 import 'package:me_poupe/model/configuracoes/icone_cad_model.dart';
@@ -14,7 +13,7 @@ class IconeListTela extends StatefulWidget {
 
 class _IconeListTelaState extends State<IconeListTela> {
   var _dados = null;
-  var listaBugada = Configuracoes.icones;
+  var listaBugada = ConfiguracaoModel.icones;
   List<IconeCadModel> _listaOriginal = List<IconeCadModel>();
   List<IconeCadModel> _listaFiltrada = List<IconeCadModel>();
 
@@ -70,13 +69,13 @@ class _IconeListTelaState extends State<IconeListTela> {
 
   montarTela() {
     setState(() {
-      _colorAppBar = Funcoes.converterCorStringColor( Configuracoes.cores[_dados['modo']]['corAppBar']);
-    //   print("APPBAR: ${Configuracoes.cores[_dados['modo']]['corAppBar']}");
-      _background = Funcoes.converterCorStringColor(Configuracoes.cores[_dados['modo']]['background']);
-      _colorContainerFundo = Funcoes.converterCorStringColor(Configuracoes.cores[_dados['modo']]['containerFundo']);
-      _colorContainerBorda = Funcoes.converterCorStringColor(Configuracoes.cores[_dados['modo']]['containerBorda']);
-      _colorFundo = Funcoes.converterCorStringColor(Configuracoes.cores[_dados['modo']]['background']);
-      _colorLetra = Funcoes.converterCorStringColor(Configuracoes.cores[_dados['modo']]['textoPrimaria']);
+      _colorAppBar = Funcoes.converterCorStringColor( ConfiguracaoModel.cores[_dados['modo']]['corAppBar']);
+    //   print("APPBAR: ${ConfiguracaoModel.cores[_dados['modo']]['corAppBar']}");
+      _background = Funcoes.converterCorStringColor(ConfiguracaoModel.cores[_dados['modo']]['background']);
+      _colorContainerFundo = Funcoes.converterCorStringColor(ConfiguracaoModel.cores[_dados['modo']]['containerFundo']);
+      _colorContainerBorda = Funcoes.converterCorStringColor(ConfiguracaoModel.cores[_dados['modo']]['containerBorda']);
+      _colorFundo = Funcoes.converterCorStringColor(ConfiguracaoModel.cores[_dados['modo']]['background']);
+      _colorLetra = Funcoes.converterCorStringColor(ConfiguracaoModel.cores[_dados['modo']]['textoPrimaria']);
     });
     return;
   }

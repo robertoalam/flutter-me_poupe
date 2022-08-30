@@ -4,7 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:me_poupe/componentes/modal_aviso_simples_widget.dart';
 import 'package:me_poupe/componentes/modal_dialog_widget.dart';
-import 'package:me_poupe/helper/configuracoes_helper.dart';
+
 import 'package:me_poupe/helper/funcoes_helper.dart';
 import 'package:me_poupe/model/cad/cad_banco_model.dart';
 import 'package:me_poupe/model/configuracoes/configuracao_model.dart';
@@ -127,11 +127,11 @@ class _ContaEditTelaState extends State<ContaEditTela> {
 
     _setDataConfig() async {
         setState(() {
-            _background = Funcoes.converterCorStringColor(Configuracoes.cores[_dados['modo']]['background']);
-            _colorAppBar = Funcoes.converterCorStringColor(Configuracoes.cores[_dados['modo']]['corAppBar']);
-            _colorContainerFundo = Funcoes.converterCorStringColor(Configuracoes.cores[_dados['modo']]['containerFundo']);
-            _colorContainerBorda = Funcoes.converterCorStringColor(Configuracoes.cores[_dados['modo']]['containerBorda']);
-            _colorLetra = Funcoes.converterCorStringColor(Configuracoes.cores[_dados['modo']]['textoPrimaria']);
+            _background = Funcoes.converterCorStringColor(ConfiguracaoModel.cores[_dados['modo']]['background']);
+            _colorAppBar = Funcoes.converterCorStringColor(ConfiguracaoModel.cores[_dados['modo']]['corAppBar']);
+            _colorContainerFundo = Funcoes.converterCorStringColor(ConfiguracaoModel.cores[_dados['modo']]['containerFundo']);
+            _colorContainerBorda = Funcoes.converterCorStringColor(ConfiguracaoModel.cores[_dados['modo']]['containerBorda']);
+            _colorLetra = Funcoes.converterCorStringColor(ConfiguracaoModel.cores[_dados['modo']]['textoPrimaria']);
         });
     }
 

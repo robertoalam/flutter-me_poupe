@@ -2,7 +2,7 @@ import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/material.dart';
 import 'package:me_poupe/componentes/label_simples_widget.dart';
 import 'package:me_poupe/componentes/mascara_campos.dart';
-import 'package:me_poupe/helper/configuracoes_helper.dart';
+
 import 'package:me_poupe/helper/funcoes_helper.dart';
 import 'package:me_poupe/model/cad/cad_cartao_tipo_model.dart';
 import 'package:me_poupe/model/configuracoes/configuracao_model.dart';
@@ -107,11 +107,11 @@ class _ContaEditCartaoTelaState extends State<ContaEditCartaoTela> {
 
   _setDataConfig() async {
     setState(() {
-      _background = Funcoes.converterCorStringColor(Configuracoes.cores[_dados['modo']]['background']);
-      _colorAppBar = Funcoes.converterCorStringColor(Configuracoes.cores[_dados['modo']]['corAppBar']);
-      _colorContainerFundo = Funcoes.converterCorStringColor(Configuracoes.cores[_dados['modo']]['containerFundo']);
-      _colorContainerBorda = Funcoes.converterCorStringColor(Configuracoes.cores[_dados['modo']]['containerBorda']);
-      _colorLetra = Funcoes.converterCorStringColor(Configuracoes.cores[_dados['modo']]['textoPrimaria']);
+      _background = Funcoes.converterCorStringColor(ConfiguracaoModel.cores[_dados['modo']]['background']);
+      _colorAppBar = Funcoes.converterCorStringColor(ConfiguracaoModel.cores[_dados['modo']]['corAppBar']);
+      _colorContainerFundo = Funcoes.converterCorStringColor(ConfiguracaoModel.cores[_dados['modo']]['containerFundo']);
+      _colorContainerBorda = Funcoes.converterCorStringColor(ConfiguracaoModel.cores[_dados['modo']]['containerBorda']);
+      _colorLetra = Funcoes.converterCorStringColor(ConfiguracaoModel.cores[_dados['modo']]['textoPrimaria']);
     });
   }
 

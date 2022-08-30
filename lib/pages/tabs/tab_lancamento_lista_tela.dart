@@ -63,11 +63,11 @@ class _TabLancamentoListaTelaState extends State<TabLancamentoListaTela> {
     setState(() {
       corLancamentoDespesa = Funcoes.converterCorStringColor( corLancamentoDespesa );
       corLancamentoReceita = Funcoes.converterCorStringColor( corLancamentoReceita );
-      // _background = Funcoes.converterCorStringColor( Configuracoes.cores[_dados['modo']]['background']);
-      // _colorFundo = Funcoes.converterCorStringColor( Configuracoes.cores[_dados['modo']]['background']);
-      // _colorContainerFundo = Funcoes.converterCorStringColor( Configuracoes.cores[_dados['modo']]['containerFundo']);
-      // _colorContainerBorda = Funcoes.converterCorStringColor( Configuracoes.cores[_dados['modo']]['containerBorda']);
-      // _colorLetra = Funcoes.converterCorStringColor( Configuracoes.cores[_dados['modo']]['textoPrimaria']);
+      // _background = Funcoes.converterCorStringColor( ConfiguracaoModel.cores[_dados['modo']]['background']);
+      // _colorFundo = Funcoes.converterCorStringColor( ConfiguracaoModel.cores[_dados['modo']]['background']);
+      // _colorContainerFundo = Funcoes.converterCorStringColor( ConfiguracaoModel.cores[_dados['modo']]['containerFundo']);
+      // _colorContainerBorda = Funcoes.converterCorStringColor( ConfiguracaoModel.cores[_dados['modo']]['containerBorda']);
+      // _colorLetra = Funcoes.converterCorStringColor( ConfiguracaoModel.cores[_dados['modo']]['textoPrimaria']);
     });
     return;
   }

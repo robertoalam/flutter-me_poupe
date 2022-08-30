@@ -4,7 +4,6 @@ import 'package:me_poupe/componentes/datepicker_adaptavel.dart';
 import 'package:me_poupe/componentes/icone_gambiarra.dart';
 import 'package:me_poupe/componentes/label_opensans.dart';
 import 'package:me_poupe/componentes/label_simples_widget.dart';
-import 'package:me_poupe/helper/configuracoes_helper.dart';
 import 'package:me_poupe/helper/funcoes_helper.dart';
 import 'package:me_poupe/model/cad/cad_categoria_model.dart';
 import 'package:me_poupe/model/cad/cad_frequencia_model.dart';
@@ -167,11 +166,11 @@ class _LancamentoDespesaTelaState extends State<LancamentoDespesaTela> {
     _corTopoString = ( _dados['modo'] == "normal" ) ? "#FF5C4A":"#7A0004";
     setState(() {
       _corTopo =  Funcoes.converterCorStringColor( _corTopoString );
-      _background = Funcoes.converterCorStringColor( Configuracoes.cores[_dados['modo']]['background']);
-      _colorFundo = Funcoes.converterCorStringColor( Configuracoes.cores[_dados['modo']]['background']);
-      _colorContainerFundo = Funcoes.converterCorStringColor( Configuracoes.cores[_dados['modo']]['containerFundo']);
-      _colorContainerBorda = Funcoes.converterCorStringColor( Configuracoes.cores[_dados['modo']]['containerBorda']);
-      _colorLetra = Funcoes.converterCorStringColor( Configuracoes.cores[_dados['modo']]['textoPrimaria']);
+      _background = Funcoes.converterCorStringColor( ConfiguracaoModel.cores[_dados['modo']]['background']);
+      _colorFundo = Funcoes.converterCorStringColor( ConfiguracaoModel.cores[_dados['modo']]['background']);
+      _colorContainerFundo = Funcoes.converterCorStringColor( ConfiguracaoModel.cores[_dados['modo']]['containerFundo']);
+      _colorContainerBorda = Funcoes.converterCorStringColor( ConfiguracaoModel.cores[_dados['modo']]['containerBorda']);
+      _colorLetra = Funcoes.converterCorStringColor( ConfiguracaoModel.cores[_dados['modo']]['textoPrimaria']);
     });
     return;
   }
