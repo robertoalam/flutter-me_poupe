@@ -1,9 +1,9 @@
-cat semver.sh
+#cat semver.sh
 #!/bin/sh
 
 #Get the highest tag number
 VERSION=`git describe --abbrev=0 --tags`
-VERSION=${VERSION:-'0.0.0'}
+VERSION=${VERSION:'0.0.0'}
 
 #Get number parts
 MAJOR="${VERSION%%.}"; VERSION="${VERSION#.}"
@@ -33,10 +33,13 @@ echo "Atualizando para $NEW_TAG"
 #Only tag if no tag already (would be better if the git describe command above could have a silent option)
 if [ -z "$NEEDS_TAG" ]; then
   echo "Tag criada $NEW_TAG (Ignorando erro fatal:cannot describe - significa que o commit nao possui tag) "
-  git tag $NEW_TAG
+  git tag -a $NEW_TAG
   git push origin main --tags
+  rm assets/git/versao.txt
+  echo -n $NEW_TAG >> assets/git/versao.txt
   #echo -n User:
   #read -s password
   #echo password | git push homologa master --tags
 else
   echo "J▒ existe uma tag neste commit"
+fi  
