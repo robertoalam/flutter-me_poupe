@@ -18,7 +18,7 @@ class _ContaListTelaState extends State<ContaListTela> {
   String modo;
   // CORES TELA
   String _background = Funcoes.converterCorStringColor("#FFFFFF");
-  String _colorAppBar = Funcoes.converterCorStringColor("#FFFFFF");
+  String _corAppBarFundo = Funcoes.converterCorStringColor("#FFFFFF");
   String _colorContainerFundo = Funcoes.converterCorStringColor("#FFFFFF");
   String _colorContainerBorda = Funcoes.converterCorStringColor("#FFFFFF");
   String _colorFundo = Funcoes.converterCorStringColor("#FFFFFF");
@@ -57,7 +57,7 @@ class _ContaListTelaState extends State<ContaListTela> {
   _setDataConfig() async {
     setState(() {
       _background = Funcoes.converterCorStringColor(ConfiguracaoModel.cores[_dados['modo']]['background']);
-      _colorAppBar = Funcoes.converterCorStringColor(ConfiguracaoModel.cores[_dados['modo']]['corAppBar']);
+      _corAppBarFundo = Funcoes.converterCorStringColor(ConfiguracaoModel.cores[_dados['modo']]['corAppBar']);
       _colorContainerFundo = Funcoes.converterCorStringColor(ConfiguracaoModel.cores[_dados['modo']]['containerFundo']);
       _colorContainerBorda = Funcoes.converterCorStringColor(ConfiguracaoModel.cores[_dados['modo']]['containerBorda']);
       _colorLetra = Funcoes.converterCorStringColor(ConfiguracaoModel.cores[_dados['modo']]['textoPrimaria']);
@@ -76,7 +76,7 @@ class _ContaListTelaState extends State<ContaListTela> {
   Widget build(BuildContext context) {
     final appBar = AppBar(
       title: Text('Lista de contas'),
-      backgroundColor: Color(int.parse(_colorAppBar) ),
+      backgroundColor: Color(int.parse(_corAppBarFundo) ),
     );
     final alturaDisponivel = MediaQuery.of(context).size.height - appBar.preferredSize.height;
 
@@ -121,7 +121,7 @@ class _ContaListTelaState extends State<ContaListTela> {
             // width: MediaQuery.of(context).size.width * .5,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
-              color: Color( int.parse(_colorAppBar ) ),
+              color: Color( int.parse(_corAppBarFundo ) ),
             ),
             child: Row(
               mainAxisSize: MainAxisSize.min,

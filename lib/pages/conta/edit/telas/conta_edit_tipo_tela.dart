@@ -18,7 +18,7 @@ class _ContaEditTipoTelaState extends State<ContaEditTipoTela> {
 
   // CORES TELA
   String _background = Funcoes.converterCorStringColor("#FFFFFF");
-  String _colorAppBar = Funcoes.converterCorStringColor("#FFFFFF");
+  String _corAppBarFundo = Funcoes.converterCorStringColor("#FFFFFF");
   String _colorContainerFundo = Funcoes.converterCorStringColor("#FFFFFF");
   String _colorContainerBorda = Funcoes.converterCorStringColor("#FFFFFF");
   String _colorFundo = Funcoes.converterCorStringColor("#FFFFFF");
@@ -52,7 +52,7 @@ class _ContaEditTipoTelaState extends State<ContaEditTipoTela> {
   _setDataConfig() async {
     setState(() {
       _background = Funcoes.converterCorStringColor(ConfiguracaoModel.cores[_dados['modo']]['background']);
-      _colorAppBar = Funcoes.converterCorStringColor(ConfiguracaoModel.cores[_dados['modo']]['corAppBar']);
+      _corAppBarFundo = Funcoes.converterCorStringColor(ConfiguracaoModel.cores[_dados['modo']]['corAppBar']);
       _colorContainerFundo = Funcoes.converterCorStringColor(ConfiguracaoModel.cores[_dados['modo']]['containerFundo']);
       _colorContainerBorda = Funcoes.converterCorStringColor(ConfiguracaoModel.cores[_dados['modo']]['containerBorda']);
       _colorLetra = Funcoes.converterCorStringColor(ConfiguracaoModel.cores[_dados['modo']]['textoPrimaria']);
@@ -71,7 +71,7 @@ class _ContaEditTipoTelaState extends State<ContaEditTipoTela> {
 
     final appBar = AppBar(
       title: Text("Banco"),
-      backgroundColor: Color(int.parse(_colorAppBar) ),
+      backgroundColor: Color(int.parse(_corAppBarFundo) ),
     );
     final alturaDisponivel = MediaQuery.of(context).size.height - appBar.preferredSize.height;
     final larguraDisponivel = MediaQuery.of(context).size.width;

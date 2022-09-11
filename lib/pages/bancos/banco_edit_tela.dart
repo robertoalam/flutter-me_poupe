@@ -25,7 +25,7 @@ class _BancoEditTelaState extends State<BancoEditTela> {
 
     // CORES TELA
     String _background = Funcoes.converterCorStringColor("#FFFFFF");
-    String _colorAppBar = Funcoes.converterCorStringColor("#FFFFFF");
+    String _corAppBarFundo = Funcoes.converterCorStringColor("#FFFFFF");
     String _colorContainerFundo = Funcoes.converterCorStringColor("#FFFFFF");
     String _colorContainerBorda = Funcoes.converterCorStringColor("#FFFFFF");
     String _colorFundo = Funcoes.converterCorStringColor("#FFFFFF");
@@ -68,7 +68,7 @@ class _BancoEditTelaState extends State<BancoEditTela> {
     _setDataConfig() async {
         setState(() {
             _background = Funcoes.converterCorStringColor(ConfiguracaoModel.cores[_dados['modo']]['background']);
-            _colorAppBar = Funcoes.converterCorStringColor(ConfiguracaoModel.cores[_dados['modo']]['corAppBar']);
+            _corAppBarFundo = Funcoes.converterCorStringColor(ConfiguracaoModel.cores[_dados['modo']]['corAppBar']);
             _colorContainerFundo = Funcoes.converterCorStringColor(ConfiguracaoModel.cores[_dados['modo']]['containerFundo']);
             _colorContainerBorda = Funcoes.converterCorStringColor(ConfiguracaoModel.cores[_dados['modo']]['containerBorda']);
             _colorLetra = Funcoes.converterCorStringColor(ConfiguracaoModel.cores[_dados['modo']]['textoPrimaria']);
@@ -227,7 +227,7 @@ class _BancoEditTelaState extends State<BancoEditTela> {
 
         final appBar = AppBar(
             title: Text("Banco"),
-            backgroundColor: Color(int.parse(_colorAppBar) ),
+            backgroundColor: Color(int.parse(_corAppBarFundo) ),
         );
         final alturaDisponivel = MediaQuery.of(context).size.height - appBar.preferredSize.height;
 
@@ -241,7 +241,7 @@ class _BancoEditTelaState extends State<BancoEditTela> {
                         print('ERRO NA TELA');
                     }
                 },
-                backgroundColor: Color(int.parse( _colorAppBar) ),
+                backgroundColor: Color(int.parse( _corAppBarFundo) ),
                 child: Icon(Icons.save , color: Colors.black, size: 32,),
             ),
             body: SafeArea(
@@ -315,7 +315,7 @@ class _BancoEditTelaState extends State<BancoEditTela> {
                                     children: [
                                         Padding(
                                             padding: EdgeInsets.fromLTRB(5, 15, 0, 15),
-                                            child: Text("${objeto.descricao}",style: TextStyle(color: Color(int.parse( _colorAppBar)), fontSize: 20.0) ),
+                                            child: Text("${objeto.descricao}",style: TextStyle(color: Color(int.parse( _corAppBarFundo)), fontSize: 20.0) ),
                                         ),
                                         Visibility(
                                             visible: (objeto.id != _contaTipoLista.last.id)? true:false,

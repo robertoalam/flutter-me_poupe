@@ -22,7 +22,6 @@ import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
-import 'configuracoes_helper.dart';
 import 'funcoes_helper.dart';
 
 class DatabaseHelper {
@@ -60,7 +59,6 @@ class DatabaseHelper {
       // await usuarioTipoCadCriar(db);
       await configuracoesCadCriar(db);
       await configuracoesPopular(db);
-      await setarEstilos;
       await bancoCadCriar(db);
       await bancoCadPopular(db);
       await usuarioCadCriar(db);
@@ -205,9 +203,11 @@ class DatabaseHelper {
 
   get setarEstilos async {
     SharedPreferences _prefs = await SharedPreferences.getInstance();
-    ConfiguracaoModel.cores['normal'].forEach((key, value) { 
-      _prefs.setString(key, value);
-    });
+    List<String> lista = [ 'beto','luisa' ];
+    _prefs.setStringList('nomes', lista);
+    // ConfiguracaoModel.cores['normal'].forEach((key, value) { 
+    //   _prefs.setString(key, value);
+    // });
   }
 
   iconeCadPopular(Database db) async{

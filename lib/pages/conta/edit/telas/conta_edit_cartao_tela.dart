@@ -30,7 +30,7 @@ class _ContaEditCartaoTelaState extends State<ContaEditCartaoTela> {
 
   // CORES TELA
   String _background = Funcoes.converterCorStringColor("#FFFFFF");
-  String _colorAppBar = Funcoes.converterCorStringColor("#FFFFFF");
+  String _corAppBarFundo = Funcoes.converterCorStringColor("#FFFFFF");
   String _colorContainerFundo = Funcoes.converterCorStringColor("#FFFFFF");
   String _colorContainerBorda = Funcoes.converterCorStringColor("#FFFFFF");
   String _colorFundo = Funcoes.converterCorStringColor("#FFFFFF");
@@ -108,7 +108,7 @@ class _ContaEditCartaoTelaState extends State<ContaEditCartaoTela> {
   _setDataConfig() async {
     setState(() {
       _background = Funcoes.converterCorStringColor(ConfiguracaoModel.cores[_dados['modo']]['background']);
-      _colorAppBar = Funcoes.converterCorStringColor(ConfiguracaoModel.cores[_dados['modo']]['corAppBar']);
+      _corAppBarFundo = Funcoes.converterCorStringColor(ConfiguracaoModel.cores[_dados['modo']]['corAppBar']);
       _colorContainerFundo = Funcoes.converterCorStringColor(ConfiguracaoModel.cores[_dados['modo']]['containerFundo']);
       _colorContainerBorda = Funcoes.converterCorStringColor(ConfiguracaoModel.cores[_dados['modo']]['containerBorda']);
       _colorLetra = Funcoes.converterCorStringColor(ConfiguracaoModel.cores[_dados['modo']]['textoPrimaria']);
@@ -127,7 +127,7 @@ class _ContaEditCartaoTelaState extends State<ContaEditCartaoTela> {
 
     final appBar = AppBar(
       title: Text("${_descricaoAppBar}"),
-      backgroundColor: Color(int.parse(_colorAppBar) ),
+      backgroundColor: Color(int.parse(_corAppBarFundo) ),
       actions: [
         InkWell(
           onTap: () async {

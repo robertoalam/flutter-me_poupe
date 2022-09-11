@@ -15,10 +15,16 @@ class _SobreTelaState extends State<SobreTela> {
 
   ConfiguracaoModel _config = new ConfiguracaoModel();
   Map<String,dynamic> _listagem = new Map<String,dynamic>();
-
-  String _versao = "";
   int _contador = 0;
-
+  // CORES TELA
+  var listaCores ;
+  String _corAppBarFundo = Funcoes.converterCorStringColor("#FFFFFF");
+  String _background = Funcoes.converterCorStringColor("#FFFFFF");
+  String _colorContainerFundo = Funcoes.converterCorStringColor("#FFFFFF");
+  String _colorContainerBorda = Funcoes.converterCorStringColor("#FFFFFF");
+  String _colorFundo = Funcoes.converterCorStringColor("#FFFFFF");
+  String _colorLetra = Funcoes.converterCorStringColor("#FFFFFF");
+  
   @override
   void initState() {
     _listagem.clear();
@@ -27,9 +33,22 @@ class _SobreTelaState extends State<SobreTela> {
   }
 
   _start() async {
+    await montarTela();
     _listagem = await ConfiguracaoModel.getConfiguracoes();
     _listagem['versao'] = await Funcoes.buscarVersao;
     setState(() { });
+  }
+
+  montarTela() async {
+    listaCores = await ConfiguracaoModel.buscarEstilos;
+    setState(() {
+      _corAppBarFundo = Funcoes.converterCorStringColor( listaCores['corAppBarFundo'] );
+      _background = Funcoes.converterCorStringColor( listaCores['background'] );
+      _colorContainerFundo = Funcoes.converterCorStringColor( listaCores['containerFundo'] );
+      _colorContainerBorda = Funcoes.converterCorStringColor( listaCores['containerBorda'] );
+      _colorLetra = Funcoes.converterCorStringColor( listaCores['textoPrimaria'] );      
+    });
+    return;
   }
 
   @override
@@ -71,7 +90,9 @@ class _SobreTelaState extends State<SobreTela> {
 
 
     return Scaffold(
+      backgroundColor: Color(int.parse(_background)),
       appBar: AppBar( title: Text("Sobre"), 
+        backgroundColor: Color(int.parse( _corAppBarFundo) ),
         actions: [
           InkWell(
             onTap: (){
@@ -103,10 +124,10 @@ class _SobreTelaState extends State<SobreTela> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          LabelOpensans(label ,tamanho: 17,bold: true,),
+          LabelOpensans(label ,tamanho: 17,bold: true,cor: Color(int.parse( Funcoes.converterCorStringColor( _colorLetra ) ) ),),
           Padding(
             padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
-            child: LabelQuicksand(valor ,tamanho: 15),
+            child: LabelQuicksand(valor ,tamanho: 15 , cor: Color(int.parse( Funcoes.converterCorStringColor( _corAppBarFundo ) ) ),),
           ),
         ],
       ),

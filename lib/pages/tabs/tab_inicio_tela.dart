@@ -216,6 +216,7 @@ class _TabInicioTelaState extends State<TabInicioTela> {
                 width: double.infinity,
                 padding: EdgeInsets.fromLTRB(25, 0, 25, 0),
                 child: RaisedButton(
+                  onPressed: null,
                   child: Text("Ajustar Balanço"),
                 ),
               ),

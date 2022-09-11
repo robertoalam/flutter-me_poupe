@@ -17,26 +17,28 @@ class _IconeListTelaState extends State<IconeListTela> {
   List<IconeCadModel> _listaOriginal = List<IconeCadModel>();
   List<IconeCadModel> _listaFiltrada = List<IconeCadModel>();
 
-  // CORES TELA
-  String _background = Funcoes.converterCorStringColor("#FFFFFF");
-  String _colorAppBar = Funcoes.converterCorStringColor("#FFFFFF");
-  String _colorContainerFundo = Funcoes.converterCorStringColor("#FFFFFF");
-  String _colorContainerBorda = Funcoes.converterCorStringColor("#FFFFFF");
-  String _colorFundo = Funcoes.converterCorStringColor("#FFFFFF");
-  String _colorLetra = Funcoes.converterCorStringColor("#FFFFFF");
+	// CORES TELA
+	var listaCores ;
+	Color _corAppBarFundo = Color(int.parse( Funcoes.converterCorStringColor("#FFFFFF") ) );
+	Color _colorBackground = Color(int.parse( Funcoes.converterCorStringColor("#FFFFFF") ) );
+	Color _colorContainerFundo = Color(int.parse( Funcoes.converterCorStringColor("#FFFFFF") ) );
+	Color _colorContainerBorda = Color(int.parse( Funcoes.converterCorStringColor("#FFFFFF") ) );
+	Color _colorFundo = Color(int.parse( Funcoes.converterCorStringColor("#FFFFFF") ) );
+	Color _colorLetra = Color(int.parse( Funcoes.converterCorStringColor("#FFFFFF") ) );
 
   @override
   void initState() {
-    buscarDados();
+    _start();
     super.initState();
   }
 
-  buscarDados() async {
+  _start() async {
+    await montarTela();
     await loadDados();
     await buscarLista();
     _listaFiltrada = _listaOriginal;
     await _atualizarListaFiltrada();
-    montarTela();
+
   }
 
   buscarLista() {
@@ -67,18 +69,17 @@ class _IconeListTelaState extends State<IconeListTela> {
     await _atualizarListaFiltrada();
   }
 
-  montarTela() {
-    setState(() {
-      _colorAppBar = Funcoes.converterCorStringColor( ConfiguracaoModel.cores[_dados['modo']]['corAppBar']);
-    //   print("APPBAR: ${ConfiguracaoModel.cores[_dados['modo']]['corAppBar']}");
-      _background = Funcoes.converterCorStringColor(ConfiguracaoModel.cores[_dados['modo']]['background']);
-      _colorContainerFundo = Funcoes.converterCorStringColor(ConfiguracaoModel.cores[_dados['modo']]['containerFundo']);
-      _colorContainerBorda = Funcoes.converterCorStringColor(ConfiguracaoModel.cores[_dados['modo']]['containerBorda']);
-      _colorFundo = Funcoes.converterCorStringColor(ConfiguracaoModel.cores[_dados['modo']]['background']);
-      _colorLetra = Funcoes.converterCorStringColor(ConfiguracaoModel.cores[_dados['modo']]['textoPrimaria']);
-    });
-    return;
-  }
+	montarTela() async {
+		listaCores = await ConfiguracaoModel.buscarEstilos;
+		setState(() {
+		  _corAppBarFundo = Color(int.parse( Funcoes.converterCorStringColor( listaCores['corAppBarFundo'] ) ) );
+		  _colorBackground = Color(int.parse( Funcoes.converterCorStringColor( listaCores['background'] ) ) );
+		  _colorContainerFundo = Color(int.parse( Funcoes.converterCorStringColor( listaCores['containerFundo'] ) ) );
+		  _colorContainerBorda = Color(int.parse( Funcoes.converterCorStringColor( listaCores['containerBorda'] ) ) );
+		  _colorLetra = Color(int.parse( Funcoes.converterCorStringColor( listaCores['textoPrimaria'] ) ) );   
+		});
+		return;
+	}
 
   loadDados() async {
     _dados = await ConfiguracaoModel.getConfiguracoes().then((list) {
@@ -91,13 +92,13 @@ class _IconeListTelaState extends State<IconeListTela> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(int.parse(_background)),
+      backgroundColor: _colorBackground,
       appBar: AppBar(
-        backgroundColor: Color(int.parse(_colorAppBar)),
+        backgroundColor: _corAppBarFundo,
         title: Text("Lista de Icones"),
       ),
       body: SafeArea(
-          child: SingleChildScrollView(
+        child: SingleChildScrollView(
         child: Column(
           children: [
             Container(
@@ -116,10 +117,9 @@ class _IconeListTelaState extends State<IconeListTela> {
                 ),
               ),
             ),
-            Divider(
-              color: Colors.grey,
-            ),
+            Divider( color: Colors.grey, ),
             Container(
+              padding: EdgeInsets.fromLTRB(7, 3, 7, 3),
               height: MediaQuery.of(context).size.height,
               child: GridView.builder(
                 itemCount: _listaFiltrada.length,
@@ -152,20 +152,16 @@ class _IconeListTelaState extends State<IconeListTela> {
               height: 70,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(40),
-                color: Color(int.parse(_background)),
+                color: _colorBackground,
               ),
               child: IconeGambiarra(
                 objeto,
-                cor: Color(int.parse(_colorLetra)),
+                cor: _colorLetra,
                 tamanho: 50.0,
               ),
             ),
-            LabelOpensans(
-              "${objeto.icone}",
-              cor: Color(int.parse(_colorLetra)),
-            ),
-            LabelQuicksand("${objeto.familia}",
-                cor: Color(int.parse(_colorLetra))),
+            LabelOpensans( "${objeto.icone}", cor: _colorLetra, ),
+            LabelQuicksand("${objeto.familia}", cor: _colorLetra,)
           ],
         ),
       ),

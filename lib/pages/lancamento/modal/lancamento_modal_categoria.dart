@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:me_poupe/componentes/icone_gambiarra.dart';
-import 'package:me_poupe/helper/configuracoes_helper.dart';
 import 'package:me_poupe/model/cad/cad_categoria_model.dart';
+import 'package:me_poupe/model/configuracoes/configuracao_model.dart';
 import 'package:me_poupe/model/configuracoes/icone_cad_model.dart';
 
 class LancamentoModalCategoria extends StatefulWidget {
@@ -19,7 +19,7 @@ class _LancamentoModalCategoriaState extends State<LancamentoModalCategoria> {
   final TextEditingController _pesquisaController = new TextEditingController();
   List<CategoriaCadModel> _lista = new List<CategoriaCadModel>();
   List<CategoriaCadModel> _listaFiltrada = new List<CategoriaCadModel>();
-  var _listaIcones = Configuracoes.icones;
+  var _listaIcones = ConfiguracaoModel.icones;
 
   @override
   Widget build(BuildContext context) {

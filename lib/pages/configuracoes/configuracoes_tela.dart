@@ -8,7 +8,8 @@ import 'package:me_poupe/pages/configuracoes/sobre_tela.dart';
 import 'package:me_poupe/pages/testes/teste_tela.dart';
 
 class ConfiguracoesTela extends StatefulWidget {
-  ConfiguracoesTela();
+  bool flagExibirTodasConfiguracoes;
+  ConfiguracoesTela( {this.flagExibirTodasConfiguracoes});
 
   @override
   State<ConfiguracoesTela> createState() => _ConfiguracoesTelaState();
@@ -19,12 +20,13 @@ var body;
   bool _modoNoturno = false;
   var _dados = null;
   // CORES TELA
-  String _colorAppBar = Funcoes.converterCorStringColor("#FFFFFF");
+  String _corAppBarFundo = Funcoes.converterCorStringColor("#FFFFFF");
   String _background = Funcoes.converterCorStringColor("#FFFFFF");
   String _colorContainerFundo = Funcoes.converterCorStringColor("#FFFFFF");
   String _colorContainerBorda = Funcoes.converterCorStringColor("#FFFFFF");
   String _colorFundo = Funcoes.converterCorStringColor("#FFFFFF");
   String _colorLetra = Funcoes.converterCorStringColor("#FFFFFF");
+  var listaCores ;
 
   @override
   void initState() {
@@ -33,17 +35,18 @@ var body;
   }
 
   buscarDados() async {
+    await montarTela();
     await loadDados();
-    montarTela();
   }
 
-  montarTela() {
+  montarTela() async {
+    listaCores = await ConfiguracaoModel.buscarEstilos;
     setState(() {
-      _colorAppBar = Funcoes.converterCorStringColor( ConfiguracaoModel.cores[_dados['modo']]['corAppBar']);
-      _background = Funcoes.converterCorStringColor( ConfiguracaoModel.cores[_dados['modo']]['background']);
-      _colorContainerFundo = Funcoes.converterCorStringColor( ConfiguracaoModel.cores[_dados['modo']]['containerFundo']);
-      _colorContainerBorda = Funcoes.converterCorStringColor( ConfiguracaoModel.cores[_dados['modo']]['containerBorda']);
-      _colorLetra = Funcoes.converterCorStringColor( ConfiguracaoModel.cores[_dados['modo']]['textoPrimaria']);
+      _corAppBarFundo = Funcoes.converterCorStringColor( listaCores['corAppBarFundo'] );
+      _background = Funcoes.converterCorStringColor( listaCores['background'] );
+      _colorContainerFundo = Funcoes.converterCorStringColor( listaCores['containerFundo'] );
+      _colorContainerBorda = Funcoes.converterCorStringColor( listaCores['containerBorda'] );
+      _colorLetra = Funcoes.converterCorStringColor( listaCores['textoPrimaria'] );      
     });
     return;
   }
@@ -141,7 +144,7 @@ var body;
     return Scaffold(
       backgroundColor: Color(int.parse(_background)),
       appBar: AppBar(
-        backgroundColor: Color(int.parse(_colorAppBar)),
+        backgroundColor: Color(int.parse( Funcoes.converterCorStringColor( listaCores['corAppBarFundo'] ) )),
         title: LabelOpensans( "Configurações", bold: true, cor: Colors.white, ),
       ),
       body: SafeArea(
