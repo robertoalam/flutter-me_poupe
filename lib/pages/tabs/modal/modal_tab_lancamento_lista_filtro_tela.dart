@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:me_poupe/componentes/datepicker_adaptavel.dart';
-import 'package:me_poupe/componentes/label_quicksand.dart';
+import 'package:me_poupe/componentes/label/label_quicksand.dart';
 import 'package:me_poupe/helper/funcoes_helper.dart';
 import 'package:me_poupe/model/cad/cad_categoria_model.dart';
 import 'package:me_poupe/model/cad/cad_lancamento_tipo_model.dart';

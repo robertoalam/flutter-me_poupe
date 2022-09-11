@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:me_poupe/componentes/icone_gambiarra.dart';
-import 'package:me_poupe/componentes/label_opensans.dart';
-import 'package:me_poupe/componentes/label_quicksand.dart';
+import 'package:me_poupe/componentes/label/label_opensans.dart';
+import 'package:me_poupe/componentes/label/label_quicksand.dart';
 import 'package:me_poupe/helper/funcoes_helper.dart';
 import 'package:me_poupe/model/configuracoes/configuracao_model.dart';
 import 'package:me_poupe/model/configuracoes/icone_cad_model.dart';

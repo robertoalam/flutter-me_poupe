@@ -1,6 +1,8 @@
 import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:me_poupe/componentes/modal/modal_dialog_generic_typed_screen.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:platform_device_id/platform_device_id.dart';
 
@@ -174,4 +176,19 @@ class Funcoes{
     }
     return file.writeAsString('$texto');
   }
+
+    static modalExibir(context, List mensagens, int tipo, 
+    {
+      String botaoLabel,
+      bool showButtonCancel ,
+      String botaoLabelCancelar
+    }
+  ) async {
+      return await showDialog(
+      context: context,
+      builder: (context) {
+        return ModalDialogGenericTypedScreen(context , mensagens,tipo , labelBotaoConfirmar: botaoLabel );
+      }
+    );
+  } 
 }

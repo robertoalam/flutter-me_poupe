@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:me_poupe/componentes/label_opensans.dart';
+import 'package:me_poupe/componentes/label/label_opensans.dart';
 import 'package:me_poupe/helper/api_helper.dart';
 import 'package:me_poupe/helper/funcoes_helper.dart';
 import 'package:me_poupe/model/configuracoes/configuracao_model.dart';

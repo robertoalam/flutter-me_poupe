@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:me_poupe/helper/dummy/banco_dummy.dart';
 import 'package:me_poupe/helper/dummy/categoria_dummy.dart';
 import 'package:me_poupe/helper/dummy/lancamento_dummy.dart';
+import 'package:me_poupe/model/auth/auth_model.dart';
 import 'package:me_poupe/model/cad/cad_banco_model.dart';
 import 'package:me_poupe/model/cad/cad_cartao_tipo_model.dart';
 import 'package:me_poupe/model/cad/cad_categoria_model.dart';
@@ -37,10 +38,10 @@ class DatabaseHelper {
   // only have a single app-wide reference to the database
   static Database _database;
     Future<Database> get database async {
-        if (_database != null) return _database;
-        // lazily instantiate the db the first time it is accessed
-        _database = await _initDatabase();
-        return _database;
+      if (_database != null) return _database;
+      // lazily instantiate the db the first time it is accessed
+      _database = await _initDatabase();
+      return _database;
     }
 
   // this opens the database (and creates it if it doesn't exist)
@@ -54,53 +55,55 @@ class DatabaseHelper {
   }
 
     // SQL code to create the database table
-    Future _onCreate(Database db, int version) async {
-      //CADs
-      // await usuarioTipoCadCriar(db);
-      await configuracoesCadCriar(db);
-      await configuracoesPopular(db);
-      await bancoCadCriar(db);
-      await bancoCadPopular(db);
-      await usuarioCadCriar(db);
-      await usuarioPopular(db);
+  Future _onCreate(Database db, int version) async {
+    //CADs
+    // await usuarioTipoCadCriar(db);
+    await configuracoesCadCriar(db);
+    await configuracoesPopular(db);
+    await autenticacaoCriar(db);
 
-      await pagamentoFormaCadCriar(db);
-      await pagamentoFormaCadPopular(db);
-      await pagamentoStatusCadCriar(db);
-      await pagamentoStatusCadPopular(db);
+    await bancoCadCriar(db);
+    await bancoCadPopular(db);
+    await usuarioCadCriar(db);
+    await usuarioPopular(db);
 
-      await contaTipoCadCriar(db);
-      await contaTipoPopular(db);
+    await pagamentoFormaCadCriar(db);
+    await pagamentoFormaCadPopular(db);
+    await pagamentoStatusCadCriar(db);
+    await pagamentoStatusCadPopular(db);
 
-      await cartaoTipoCadCriar(db);
-      await cartaoTipoCadPopular(db);
+    await contaTipoCadCriar(db);
+    await contaTipoPopular(db);
 
-      await contaCriar(db);
-      // await contaBancariaCriar(db);
-      // await carteiraCriar(db);
-      // await carteiraPopular(db);
+    await cartaoTipoCadCriar(db);
+    await cartaoTipoCadPopular(db);
 
-      await categoriaCadCriar(db);
-      await categoriaCadPopular(db);
-      // LANCAMENTO CAD
-      await lancamentoTipoCadCriar(db);
-      await lancamentoFrequenciaCadCriar(db);
-      await lancamentoFrequenciaPeriodoCadCriar(db);
-      await cartaoCriar(db);
+    await contaCriar(db);
+    // await contaBancariaCriar(db);
+    // await carteiraCriar(db);
+    // await carteiraPopular(db);
 
-      //LANCAMENTO POPULAR
-      await lancamentoTipoCadPopular(db);
-      await lancamentoFrequenciaCadPopular(db);
-      await lancamentoFrequenciaPeriodoCadPopular(db);
-      await lancamentoCriarTable(db);
-      await lancamentoPagamentoCriarTable(db);
-      await lancamentoFrequenciaCriarTable(db);
-      await lancamentoFrequenciaDetalheCriarTable(db);
-      // await lancamentoFrequenciaCriar(db);
-      // await usuarioTipoCadPopular(db);
+    await categoriaCadCriar(db);
+    await categoriaCadPopular(db);
+    // LANCAMENTO CAD
+    await lancamentoTipoCadCriar(db);
+    await lancamentoFrequenciaCadCriar(db);
+    await lancamentoFrequenciaPeriodoCadCriar(db);
+    await cartaoCriar(db);
 
-      await seedTestes(db);
-    }
+    //LANCAMENTO POPULAR
+    await lancamentoTipoCadPopular(db);
+    await lancamentoFrequenciaCadPopular(db);
+    await lancamentoFrequenciaPeriodoCadPopular(db);
+    await lancamentoCriarTable(db);
+    await lancamentoPagamentoCriarTable(db);
+    await lancamentoFrequenciaCriarTable(db);
+    await lancamentoFrequenciaDetalheCriarTable(db);
+    // await lancamentoFrequenciaCriar(db);
+    // await usuarioTipoCadPopular(db);
+
+    await seedTestes(db);
+  }
 
   // usuarioTipoCadCriar(Database db) async {
   //   await db.execute(" CREATE TABLE IF NOT EXISTS usuario_tipo_cad ( id INTEGER PRIMARY KEY, descricao VARCHAR(70) ); ");
@@ -108,6 +111,10 @@ class DatabaseHelper {
 
   configuracoesCadCriar(Database db) async {
     await db.execute(" CREATE TABLE IF NOT EXISTS "+ConfiguracaoModel.TABLE_NAME+" ( chave TEXT , valor TEXT ); ");
+  }
+
+  autenticacaoCriar(Database db) async {
+    await db.execute(" CREATE TABLE IF NOT EXISTS "+AuthModel.TABLE_NAME+" ( _id INTEGER PRIMARY KEY AUTOINCREMENT, id INTEGER, usuario VARCHAR(50), nome VARCHAR(100), email VARCHAR(150), senha VARCHAR(200), token VARCHAR(200), ativo INTEGER, dt_login TIMESTAMP DEFAULT CURRENT_TIMESTAMP ); ");
   }
 
   iconesCadCriar(Database db) async {

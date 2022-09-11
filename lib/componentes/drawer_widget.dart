@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:me_poupe/pages/auth/logout_screen.dart';
 import 'package:me_poupe/pages/configuracoes/configuracoes_tela.dart';
 import 'package:me_poupe/pages/tabs/tab_inicio_tela.dart';
 
-import 'label_opensans.dart';
+import 'label/label_opensans.dart';
 
 class DrawerWidget extends StatefulWidget {
   @override
@@ -21,8 +22,8 @@ class _DrawerWidgetState extends State<DrawerWidget> {
     {'icone':Icons.home ,'label':'Metas','rota':TabInicioTela()},
     {'icone':Icons.home ,'label':'Desafio','rota':TabInicioTela()},
     {'icone':Icons.home ,'label':'Carteira','rota':TabInicioTela()},
-    {'icone':Icons.help ,'label':'Suporte','rota':TabInicioTela()},
-    {'icone':MdiIcons.file ,'label':'Termos e políticas','rota':TabInicioTela()},
+    // {'icone':Icons.help ,'label':'Suporte','rota':TabInicioTela()},
+    // {'icone':MdiIcons.file ,'label':'Termos e políticas','rota':TabInicioTela()},
   ];
 
   List _listaRedeSociais = [
@@ -55,17 +56,13 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 Icon( objeto['icone'] ),
                 SizedBox(width: 10,),
                 Text(objeto['label'] , style:
-                TextStyle(
-                  fontWeight: FontWeight.bold,
-                ),
+                  TextStyle( fontWeight: FontWeight.bold, ),
                 ),
               ],
             ),
           ],
         ),
-        onTap: () {
-          Navigator.pop(context);
-        },
+        onTap: () { Navigator.pop(context); },
       );
     }
 
@@ -102,13 +99,17 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                         LabelOpensans("Roberto !" , cor: Colors.black, tamanho: 20 ,bold: true,),
                       ],
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        LabelOpensans("Sair" , cor: Colors.black, tamanho: 15 ,bold: true,),
-                        Icon(Icons.home),
-                      ],
+                    InkWell(
+                      onTap: ()=> Navigator.push(context, MaterialPageRoute( builder: (context) => LogoutTela() ) ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          LabelOpensans("Sair" , cor: Colors.black, tamanho: 15 ,bold: true,),
+                          Icon(Icons.home),
+                        ],
+                      ),
                     ),
+                    
                   ],
                 )
             ),

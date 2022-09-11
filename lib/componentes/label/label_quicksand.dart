@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
-class LabelOpensans extends StatelessWidget {
+class LabelQuicksand extends StatelessWidget {
   final String texto;
   final Color cor;
   final double tamanho;
   final bool bold;
+  final int maximoLinhas;
 
-  LabelOpensans(this.texto,{this.cor,this.tamanho,this.bold = false});
+  LabelQuicksand(this.texto,{this.cor,this.tamanho,this.bold = false,this.maximoLinhas =1});
 
   @override
   Widget build(BuildContext context) {
@@ -16,13 +17,15 @@ class LabelOpensans extends StatelessWidget {
     var negrito = (this.bold) ? FontWeight.bold : FontWeight.normal ;
 
     return Text(texto , style: TextStyle(
-      fontFamily: "OpenSans",
-      fontSize: size,
-      fontWeight:negrito,
-      color: cor
-    ),);
+        fontFamily: "Quicksand",
+        fontSize: size,
+        fontWeight: negrito,
+        color: cor ,
+        ),
+        overflow: TextOverflow.ellipsis,
+        maxLines: this.maximoLinhas,
+        softWrap: false,
+    );
   }
 }
-
-
 

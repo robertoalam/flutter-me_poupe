@@ -6,11 +6,7 @@ import 'package:me_poupe/pages/lancamento/lancamento_tab_tela.dart';
 import 'package:me_poupe/pages/tabs/tab_inicio_tela.dart';
 import 'package:me_poupe/pages/tabs/tab_lancamento_lista_tela.dart';
 
-import 'configuracoes/configuracoes_tela.dart';
-
-
 class TabsTela extends StatefulWidget {
-
   @override
   _TabsTelaState createState() => _TabsTelaState();
 }
@@ -57,16 +53,13 @@ class _TabsTelaState extends State<TabsTela> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         actions: [
           InkWell(
-            onTap: ( ) {
-              _clicFlagMostrarSaldo();
-            },
+            onTap: ( ) { _clicFlagMostrarSaldo(); },
             child: Icon( _iconeExibirSaldo, size: 45,color: Colors.black ) ,
           ),
           SizedBox(width:5),

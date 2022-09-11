@@ -2,9 +2,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:me_poupe/componentes/modal_aviso_simples_widget.dart';
-import 'package:me_poupe/componentes/modal_dialog_widget.dart';
-
 import 'package:me_poupe/helper/funcoes_helper.dart';
 import 'package:me_poupe/model/cad/cad_banco_model.dart';
 import 'package:me_poupe/model/configuracoes/configuracao_model.dart';
@@ -565,13 +562,13 @@ class _ContaEditTelaState extends State<ContaEditTela> {
 
     _clickBotaoSalvarConta() async {
       var retorno = await _conta.save();
-      await showDialog(
-          context: context,
-          useSafeArea: true,
-          builder: (context) {
-            return ModalDialogWidget(context , (retorno['status'] == 200)?"Sucesso !": "ERRO !!!", null , mensagem: (retorno['status'] != 200)?retorno['msg']:null,);
-          }
-      );
+      // await showDialog(
+      //     context: context,
+      //     useSafeArea: true,
+      //     builder: (context) {
+      //       return ModalDialogWidget(context , (retorno['status'] == 200)?"Sucesso !": "ERRO !!!", null , mensagem: (retorno['status'] != 200)?retorno['msg']:null,);
+      //     }
+      // );
     }
     
     void _showDialog(BuildContext context , retorno) {
@@ -585,12 +582,12 @@ class _ContaEditTelaState extends State<ContaEditTela> {
     }
 
     _exibirAviso(title,mensagem,botao,action) async {
-      return await showDialog(
-          context: context,
-          builder: (context) {
-            return ModalAvisoSimplesWidget(context,title,mensagem,action,textoBotao: (botao!=null)?botao.toString():null , exibirBotaoCancelar: true,);
-          }
-      );
+      // return await showDialog(
+      //     context: context,
+      //     builder: (context) {
+      //       return ModalAvisoSimplesWidget(context,title,mensagem,action,textoBotao: (botao!=null)?botao.toString():null , exibirBotaoCancelar: true,);
+      //     }
+      // );
       // await Navigator.push( context ,MaterialPageRoute( builder: (context) => ModalAvisoSimplesWidget('Erro','Defina o tipo de conta') ) );
     }
 

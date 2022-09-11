@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:me_poupe/componentes/label_opensans.dart';
+import 'package:me_poupe/componentes/label/label_opensans.dart';
 class RadioWidget extends StatefulWidget {
   String texto;
   int index;

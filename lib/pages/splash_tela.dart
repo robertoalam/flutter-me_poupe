@@ -2,8 +2,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:me_poupe/helper/database_helper.dart';
 import 'package:me_poupe/model/configuracoes/configuracao_model.dart';
+import 'package:me_poupe/pages/tabs_tela.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'auth/login_tela.dart';
 
 
@@ -20,14 +20,9 @@ class _SplashTelaState extends State<SplashTela> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _preferencias();
-    _init();
-
+    _start();
   }
   
-  _preferencias(){
-    SharedPreferences _prefs ;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,12 +34,35 @@ class _SplashTelaState extends State<SplashTela> {
 	   );
   }
 
-	void _init() async {
+	void _start() async {
     ConfiguracaoModel.incrementAbertura();
     
+    SharedPreferences _prefs = await SharedPreferences.getInstance();
+
+    if(_prefs == null ){
+      Timer( const Duration(seconds: 3) , (){
+        Navigator.pushReplacement( context,  MaterialPageRoute( builder: (context) => LoginTela() ) );
+      });
+      return ;
+    }
+
+    if( _prefs.getString('token') == null ){
+      Timer( const Duration(seconds: 3) , (){
+        Navigator.pushReplacement( context,  MaterialPageRoute( builder: (context) => LoginTela() ) );
+      });
+      return ;
+    }
+
+    if( _prefs.getString('token').trim() == ''){
+      Timer( const Duration(seconds: 3) , (){
+        Navigator.pushReplacement( context,  MaterialPageRoute( builder: (context) => LoginTela() ) );
+      });
+      return ;
+    }
+
 
 		Timer( Duration(seconds: 2) , ()=>
-      Navigator.pushReplacement( context,  MaterialPageRoute( builder: (context) => SigninTela() ) ),
+      Navigator.pushReplacement( context,  MaterialPageRoute( builder: (context) => TabsTela() ) ),
 		);
   }
 }

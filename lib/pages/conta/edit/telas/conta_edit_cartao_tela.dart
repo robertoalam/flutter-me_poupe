@@ -1,6 +1,6 @@
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/material.dart';
-import 'package:me_poupe/componentes/label_simples_widget.dart';
+import 'package:me_poupe/componentes/label/label_simples_widget.dart';
 import 'package:me_poupe/componentes/mascara_campos.dart';
 
 import 'package:me_poupe/helper/funcoes_helper.dart';

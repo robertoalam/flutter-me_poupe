@@ -110,7 +110,7 @@ class ConfiguracaoModel{
           'host_url':'http://192.168.0.110/i9tecnosul.com.br/mepoupe',
         },
         'rest':{
-          'auth_loging':'/api/v1/auth/loging',
+          'auth_loging':'/api/v1/basic/logon',
           'cidades_buscar':'/api/v1/cidade/get_all',
           'arquivo_send':'/api/v1/arquivo/send',
           'database_send':'/api/v1/database/send',
@@ -142,17 +142,20 @@ class ConfiguracaoModel{
   };
 
   static get buscarConstantesTodas{ return ConfiguracaoModel.CONFIGURACAO; }
-  static get buscarConstantesAmbiente{
-    var teste2 = ConfiguracaoModel.CONFIGURACAO['ambientes'].where( 
-      (item) => item['ambiente'] == ConfiguracaoModel.buscarConfiguracaoAmbiente
+  static get buscarConstantesAmbiente async {
+    String _ambiente = (await ConfiguracaoModel.buscarConfiguracaoAmbiente).toString();
+    var retorno = ConfiguracaoModel.CONFIGURACAO['ambientes'].where( 
+      (item) => item['ambiente'] == _ambiente
     ).toList() as List<Map<String,dynamic>>;
-    return teste2[0]['constantes'];
+    return retorno[0]['constantes'];
   }
-  static get buscarConstantesRest{
-    var teste2 = ConfiguracaoModel.CONFIGURACAO['ambientes'].where( 
-      (item) => item['ambiente'] == ConfiguracaoModel.buscarConfiguracaoAmbiente
+
+  static get buscarConstantesRest async {
+    String _ambiente = (await ConfiguracaoModel.buscarConfiguracaoAmbiente).toString();
+    var retorno = ConfiguracaoModel.CONFIGURACAO['ambientes'].where(
+      (item) => item['ambiente'].toString() == _ambiente
     ).toList() as List<Map<String,dynamic>>;
-    return teste2[0]['rest'];
+    return retorno[0]['rest'];
   }
 
   //CORES

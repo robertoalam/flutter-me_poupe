@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:me_poupe/componentes/label_opensans.dart';
-import 'package:me_poupe/componentes/label_simples_widget.dart';
+import 'package:me_poupe/componentes/label/label_opensans.dart';
+import 'package:me_poupe/componentes/label/label_simples_widget.dart';
 
 
 class LancamentoReceitaTela extends StatefulWidget {
