@@ -16,7 +16,11 @@ class IconeGambiarra extends StatelessWidget {
     double dimensionar = (tamanho != null)? tamanho : 14.0;
 
     return Icon(
-      IconData(icone.codigo, fontFamily: icone.familia , fontPackage: icone.pacote ),
+      IconData(
+        icone?.codigo, 
+        fontFamily: icone?.familia, 
+        fontPackage: icone?.pacote 
+      ),
       color: colorir,
       size: dimensionar,
     );

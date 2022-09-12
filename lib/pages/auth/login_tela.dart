@@ -39,6 +39,8 @@ class _LoginTelaState extends State<LoginTela> {
   buscarDados() async {
     // await montarTela();
     _flagRequisicao = false;
+    _emailController.text = "tonialcf@gmail.com";
+    _senhaController.text = "1234";
   }
 
   @override
@@ -117,15 +119,19 @@ class _LoginTelaState extends State<LoginTela> {
                       child: Text("LOGAR",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 20),),
                       onPressed: () async {
                         _modalMensagens.clear();                        
-                        
+                        _modalMensagens.add("ERRO !!!");
                         if( _validar ) {
-                          await Funcoes.modalExibir(context,['ERRO !!!'],0);
+                          await Funcoes.modalExibir(context, _modalMensagens ,0);
                           return ;                          
                         }
 
                         _bloquearTela( true );
                         var retorno = await _autenticacaoEmailAndSenha();
                         _bloquearTela( false );
+
+                        print("RETORNO");
+                        print(retorno);
+
                         // SALVAR NA MEMORIA DADO USUARIO
                         if( retorno['success'] == false){
                           _modalMensagens.add("ERRO: email ou senha incorretos !");
@@ -255,13 +261,22 @@ class _LoginTelaState extends State<LoginTela> {
   }
   
   _autenticacaoSalvar( dados ) async {
+    bool flagErro = true;
     try{
       await _autenticacaoSalvarDatabase(dados);
-      await _autenticacaoSalvarMemoria();
-      return true;
     }catch(e){
-      return false;
+      print("ERRO DATABASE: ${e.toString()}");      
+      flagErro = false;
     }
+
+    try{
+      await _autenticacaoSalvarMemoria();
+    }catch(e){
+      print("ERRO MEMORIA: ${e.toString()}");
+      flagErro = false;
+    }
+    return flagErro;
+
   }
 
   _autenticacaoSalvarMemoria() async {
@@ -278,7 +293,12 @@ class _LoginTelaState extends State<LoginTela> {
 
   _autenticacaoSalvarDatabase( dados ) async {
     _auth.id = dados['id'];
+    _auth.usuario = dados['email'].toString().split("@")[0];
+    _auth.nome = dados['nome'];
+    _auth.email = dados['email'];
     _auth.token = dados['assinatura'];
+    _auth.datalogin = DateTime.now();
+    
     try{
       await _auth.create();
       return true;

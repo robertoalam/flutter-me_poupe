@@ -127,7 +127,7 @@ class _SobreTelaState extends State<SobreTela> {
           LabelOpensans(label ,tamanho: 17,bold: true,cor: Color(int.parse( Funcoes.converterCorStringColor( _colorLetra ) ) ),),
           Padding(
             padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
-            child: LabelQuicksand(valor ,tamanho: 15 , cor: Color(int.parse( Funcoes.converterCorStringColor( _corAppBarFundo ) ) ),),
+            child: LabelQuicksand(valor ,tamanho: 15 , cor: Colors.grey,bold: true,),
           ),
         ],
       ),

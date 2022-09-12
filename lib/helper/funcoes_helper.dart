@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 import 'package:me_poupe/componentes/modal/modal_dialog_generic_typed_screen.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:platform_device_id/platform_device_id.dart';
@@ -18,6 +19,11 @@ class Funcoes{
     } else {
       return valor.replaceAll('.', '').replaceAll(',', '.');
     }
+  }
+
+  static converterDateParaDataEUAString( data ){
+    final DateFormat dataFormatada = DateFormat('yyyy-MM-dd');
+    return dataFormatada.format( DateTime.parse( data.toString() ) );
   }
 
   static verificarTimeStamp(dataTimestamp){
@@ -162,9 +168,6 @@ class Funcoes{
   // METODOS P/GRAVAR LOGS FISICOS
   static Future<File> gravarArquivo(String diretorio, String nomeArquivo , String texto ,  { bool limpar = false}) async {
     texto = texto.toString();
-    // // SE DIRETORIO ESTIVER NULL INSERE O DIRETORIO PADRAO
-    // String diretorio = (await getApplicationDocumentsDirectory()).path.toString() ;
-
     Directory dir = await Funcoes.criarPasta( diretorio.toString() );
     final File file = await Funcoes.criarArquivo( dir , nomeArquivo );
 
@@ -177,7 +180,19 @@ class Funcoes{
     return file.writeAsString('$texto');
   }
 
-    static modalExibir(context, List mensagens, int tipo, 
+  // METODOS P/GRAVAR LOGS FISICOS
+  static Future<String> lerArquivo(String diretorio, String nomeArquivo ) async {
+    String texto = "";
+    Directory dir = Directory( diretorio );
+    final File file = File(dir.path.toString()+nomeArquivo.toString());
+
+    if( await file.exists() ) {
+      texto = await file.readAsString();
+    }
+    return texto;
+  }
+
+  static modalExibir(context, List mensagens, int tipo, 
     {
       String botaoLabel,
       bool showButtonCancel ,

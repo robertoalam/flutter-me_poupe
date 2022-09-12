@@ -6,6 +6,8 @@ import 'package:me_poupe/pages/lancamento/lancamento_tab_tela.dart';
 import 'package:me_poupe/pages/tabs/tab_inicio_tela.dart';
 import 'package:me_poupe/pages/tabs/tab_lancamento_lista_tela.dart';
 
+import 'auth/logout_screen.dart';
+
 class TabsTela extends StatefulWidget {
   @override
   _TabsTelaState createState() => _TabsTelaState();
@@ -62,7 +64,12 @@ class _TabsTelaState extends State<TabsTela> {
             onTap: ( ) { _clicFlagMostrarSaldo(); },
             child: Icon( _iconeExibirSaldo, size: 45,color: Colors.black ) ,
           ),
-          SizedBox(width:5),
+          SizedBox(width:15),
+          InkWell(
+            onTap:  ()=> Navigator.push(context, MaterialPageRoute( builder: (context) => LogoutTela() ) ),
+            child: Icon( MdiIcons.logout , size: 40,color: Colors.black ) ,
+          ),
+          SizedBox(width:5),          
         ],
       ),
       drawer: _drawerWidget,

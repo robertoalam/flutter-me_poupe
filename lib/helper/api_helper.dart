@@ -2,21 +2,24 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:me_poupe/helper/funcoes_helper.dart';
 import 'package:me_poupe/model/configuracoes/configuracao_model.dart';
+import 'package:me_poupe/model/logs/log_rest_model.dart';
 
 class APIHelper {
 
   static post( opcoes ) async {
 
-    String logTexto = "";
-    int contador = 0;
     String fullUrl = opcoes['url'].toString();
     String ambiente = await ConfiguracaoModel.buscarConfiguracaoAmbiente;
-    logTexto += "DATETIME \t[0${(++contador).toString()}]: ${new DateTime.now().toString().split(".")[0]}";
-    logTexto += "\nAMBIENTE \t[0${(++contador).toString()}]: ${ambiente.toString()}";
-    logTexto += "\nURL \t\t[0${(++contador).toString()}]: ${fullUrl.toString()}";
-    logTexto += "\nTOKEN \t\t[0${(++contador).toString()}]: ${opcoes['token'].toString()}";
-    logTexto += "\nDADOS SAIDA [0${(++contador).toString()}]: ${jsonEncode(opcoes['data']).toString()}";
-  
+    
+    LogRestModel log = new LogRestModel(
+      data: DateTime.now(),
+      ambiente: ambiente.toString(),
+      url: fullUrl.toString(),
+      rest: "ENVIADO",
+      dados: opcoes['data'],
+    );
+    await Funcoes.gravarArquivo( ( (await Funcoes.buscarPastaLogRest).path) .toString() , "rest.txt" , jsonEncode( log.toMap() ) ,limpar: false);
+
     Dio dio = new Dio();
     Response response;
     Map<String,dynamic> retorno = new Map();
@@ -27,9 +30,16 @@ class APIHelper {
         data: opcoes['data']
       );
 
-      logTexto += "\nDADOS VOLTA [0${(++contador).toString()}]: ${response.data.toString()}";
-      logTexto += "\n--------------------------------------------------------------------";
-      await Funcoes.gravarArquivo( ( (await Funcoes.buscarPastaLogRest).path) .toString() , "rest.txt" , logTexto ,limpar: false);      
+      LogRestModel log = new LogRestModel(
+        data: DateTime.now(),
+        ambiente: ambiente.toString(),
+        url: fullUrl.toString(),
+        token: opcoes['token'].toString(),
+        rest: "RECEBIDO",
+        statusCode: response.statusCode,
+        dados: json.decode ( response.data )['dados'],
+      );
+      await Funcoes.gravarArquivo( ( (await Funcoes.buscarPastaLogRest).path) .toString() , "rest.txt" , jsonEncode( log.toMap() ) ,limpar: false);
 
       retorno['success'] = true;
       retorno['mensagem'] = "";
@@ -39,9 +49,13 @@ class APIHelper {
     }on DioError catch (e){
 
       print("ERRO REQUISICAO: ${e.toString()}");
-      logTexto += "\nDADOS VOLTA [0${(++contador).toString()}]: ${e.toString()}";  
-      logTexto += "\n--------------------------------------------------------------------";          
-      await Funcoes.gravarArquivo( ( (await Funcoes.buscarPastaLogRest).path) .toString() , "rest.txt" , logTexto ,limpar: false);
+      LogRestModel log = new LogRestModel(
+        ambiente: ambiente.toString(),
+        url: fullUrl.toString(),
+        rest: "RECEBIDO",
+        dados: response.data,
+      );
+      await Funcoes.gravarArquivo( ( (await Funcoes.buscarPastaLogRest).path) .toString() , "rest.txt" , jsonEncode( log.toMap() ) ,limpar: false);
 
       retorno['success'] = false;
       retorno['mensagem'] = e.toString();

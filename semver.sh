@@ -6,10 +6,11 @@ VERSION=`git describe --abbrev=0 --tags`
 VERSION=${VERSION:-'0.0.0'}
 
 #Get number parts
-MAJOR="${VERSION%%.}"; VERSION="${VERSION#.}"
-MINOR="${VERSION%%.}"; VERSION="${VERSION#.}"
-PATCH="${VERSION%%.}"; VERSION="${VERSION#.}"
+MAJOR="${VERSION%%.*}"; VERSION="${VERSION#*.}"
+MINOR="${VERSION%%.*}"; VERSION="${VERSION#*.}"
+PATCH="${VERSION%%.*}"; VERSION="${VERSION#*.}"
 
+echo ${PATCH};
 #Increase version
 if [ "$1" = "bug" ]; then
   PATCH=$((PATCH+1))
@@ -37,6 +38,8 @@ if [ -z "$NEEDS_TAG" ]; then
   git push origin main --tags
   rm assets/git/versao.txt
   echo -n $NEW_TAG >> assets/git/versao.txt
+  git add assets/git/versao.txt
+  git commit --amend --no-edit
   #echo -n User:
   #read -s password
   #echo password | git push homologa master --tags

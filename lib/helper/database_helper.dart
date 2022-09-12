@@ -114,7 +114,7 @@ class DatabaseHelper {
   }
 
   autenticacaoCriar(Database db) async {
-    await db.execute(" CREATE TABLE IF NOT EXISTS "+AuthModel.TABLE_NAME+" ( _id INTEGER PRIMARY KEY AUTOINCREMENT, id INTEGER, usuario VARCHAR(50), nome VARCHAR(100), email VARCHAR(150), senha VARCHAR(200), token VARCHAR(200), ativo INTEGER, dt_login TIMESTAMP DEFAULT CURRENT_TIMESTAMP ); ");
+    await db.execute(" CREATE TABLE IF NOT EXISTS "+AuthModel.TABLE_NAME+" ( _id INTEGER PRIMARY KEY AUTOINCREMENT, id INTEGER, usuario VARCHAR(50), nome VARCHAR(100), dt_nasciment DATE, email VARCHAR(150), senha VARCHAR(200), token VARCHAR(200), ativo INTEGER, dt_login TIMESTAMP DEFAULT CURRENT_TIMESTAMP ); ");
   }
 
   iconesCadCriar(Database db) async {

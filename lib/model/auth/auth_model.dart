@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:me_poupe/helper/api_helper.dart';
 import 'package:me_poupe/helper/database_helper.dart';
+import 'package:me_poupe/helper/funcoes_helper.dart';
 
 class AuthModel{
   int id;
@@ -29,18 +32,19 @@ class AuthModel{
 
   @override
   String toString() {
-    return "${this.id} ${this.token}";
+    return "${this.id} ${this.usuario} ${this.nome} ${this.email} ${this.token} ${this.datalogin}";
   }
 
   Map database() {
     var map = new Map<String, dynamic>();
     map["id"] = id;
-    map["usuario"] = usuario;
-    map["nome"] = nome;
-    map["email"] = email;
-    map["senha"] = senha;
+    map["usuario"] = this.usuario;
+    map["nome"] = this.nome;
+    map["email"] = this.email;
+    map["token"] = this.token;
+    map["senha"] = this.senha;
     map["ativo"] = ativo;
-    map["dt_login"] = datalogin;
+    // map["dt_login"] = datalogin;
     return map;
   }
 

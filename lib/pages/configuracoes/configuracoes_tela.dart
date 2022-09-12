@@ -4,6 +4,7 @@ import 'package:me_poupe/componentes/label/label_opensans.dart';
 import 'package:me_poupe/componentes/label/label_quicksand.dart';
 import 'package:me_poupe/helper/funcoes_helper.dart';
 import 'package:me_poupe/model/configuracoes/configuracao_model.dart';
+import 'package:me_poupe/pages/configuracoes/logs/log_rest_tela.dart';
 import 'package:me_poupe/pages/configuracoes/sobre_tela.dart';
 import 'package:me_poupe/pages/testes/teste_tela.dart';
 
@@ -16,7 +17,7 @@ class ConfiguracoesTela extends StatefulWidget {
 }
 
 class _ConfiguracoesTelaState extends State<ConfiguracoesTela> {
-var body;
+  var body;
   bool _modoNoturno = false;
   var _dados = null;
   // CORES TELA
@@ -118,8 +119,6 @@ var body;
             ),
             Divider( color: Color(int.parse(_colorLetra)), ),
 
-
-
             Container(
               child: ListTile(
                 onTap: () { Navigator.push(context, MaterialPageRoute(builder: (context) => TesteTela())); },
@@ -131,7 +130,19 @@ var body;
                 subtitle: LabelQuicksand( "Tela de testes", cor: Color(int.parse(_colorLetra)), ),
               ),
             ),
-    
+            Divider( color: Color(int.parse(_colorLetra)), ),
+
+            Container(
+              child: ListTile(
+                onTap: () { Navigator.push(context, MaterialPageRoute(builder: (context) => LogRestTela())); },
+                leading: CircleAvatar(
+                  backgroundColor: Color(int.parse(_colorLetra)),
+                  child: Icon( CupertinoIcons.gear , color: Color(int.parse(_background)), ),
+                ),
+                title: LabelOpensans( "LOGs", bold: true, cor: Color(int.parse(_colorLetra)), ),
+                subtitle: LabelQuicksand( "visualização dos logs", cor: Color(int.parse(_colorLetra)), ),
+              ),
+            ),            
           ],
         ),
       );
