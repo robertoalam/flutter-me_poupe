@@ -28,6 +28,7 @@ class APIHelper {
       );
 
       logTexto += "\nDADOS VOLTA [0${(++contador).toString()}]: ${response.data.toString()}";
+      logTexto += "\n--------------------------------------------------------------------";
       await Funcoes.gravarArquivo( ( (await Funcoes.buscarPastaLogRest).path) .toString() , "rest.txt" , logTexto ,limpar: false);      
 
       retorno['success'] = true;
@@ -38,7 +39,8 @@ class APIHelper {
     }on DioError catch (e){
 
       print("ERRO REQUISICAO: ${e.toString()}");
-      logTexto += "\nDADOS VOLTA [0${(++contador).toString()}]: ${e.toString()}";      
+      logTexto += "\nDADOS VOLTA [0${(++contador).toString()}]: ${e.toString()}";  
+      logTexto += "\n--------------------------------------------------------------------";          
       await Funcoes.gravarArquivo( ( (await Funcoes.buscarPastaLogRest).path) .toString() , "rest.txt" , logTexto ,limpar: false);
 
       retorno['success'] = false;

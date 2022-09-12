@@ -256,8 +256,8 @@ class _LoginTelaState extends State<LoginTela> {
   
   _autenticacaoSalvar( dados ) async {
     try{
-      await _autenticacaoSalvarMemoria();
       await _autenticacaoSalvarDatabase(dados);
+      await _autenticacaoSalvarMemoria();
       return true;
     }catch(e){
       return false;
