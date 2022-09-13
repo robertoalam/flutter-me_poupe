@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:me_poupe/helper/funcoes_helper.dart';
 import 'package:me_poupe/pages/auth/logout_screen.dart';
 import 'package:me_poupe/pages/configuracoes/configuracoes_tela.dart';
 import 'package:me_poupe/pages/tabs/tab_inicio_tela.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'label/label_opensans.dart';
 
@@ -12,7 +14,7 @@ class DrawerWidget extends StatefulWidget {
 }
 
 class _DrawerWidgetState extends State<DrawerWidget> {
-
+  
   List _listaMenu = [
     {'icone':Icons.home ,'label':'Home','rota':TabInicioTela()},
     {'icone':MdiIcons.newspaperVariant,'label':'Notícias','rota':TabInicioTela()},
@@ -32,6 +34,23 @@ class _DrawerWidgetState extends State<DrawerWidget> {
     {'icone':MdiIcons.twitter ,'rota':TabInicioTela()},
     {'icone':MdiIcons.youtube ,'rota':TabInicioTela()},
   ];
+
+  String _versao = "";
+  SharedPreferences _preferences;
+  @override
+  void initState() {
+    _start();
+    super.initState();
+  }
+
+  _start() async {
+    _preferences = await SharedPreferences.getInstance();
+    print(_preferences.getString("usuario"));
+    print(_preferences.getString("email"));
+    print(_preferences.getString("nome"));
+    _versao = await Funcoes.buscarVersao;
+    setState(() { });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -96,7 +115,9 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                     Row(
                       children: [
                         LabelOpensans("Bom Dia," , cor: Colors.black, tamanho: 15 ,bold: true,),
-                        LabelOpensans("Roberto !" , cor: Colors.black, tamanho: 20 ,bold: true,),
+                        Expanded(
+                          child: LabelOpensans( _preferences.getString("nome") , cor: Colors.black, tamanho: 20 ,bold: true,),
+                        ),
                       ],
                     ),
                     InkWell(
@@ -142,7 +163,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 child: Image.asset("assets/images/porco_02.png",scale: .1,),
               ),
               Text(" | "),
-              LabelOpensans("Versão: 0.0.1.beta",bold: true,),
+              LabelOpensans("Versão: ${_versao}beta",bold: true,),
             ],
           ),
           SizedBox(height: 10,),
