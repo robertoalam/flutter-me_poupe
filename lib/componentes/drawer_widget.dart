@@ -36,6 +36,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
   ];
 
   String _versao = "";
+  String _nome = "";
   SharedPreferences _preferences;
   @override
   void initState() {
@@ -45,9 +46,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
 
   _start() async {
     _preferences = await SharedPreferences.getInstance();
-    print(_preferences.getString("usuario"));
-    print(_preferences.getString("email"));
-    print(_preferences.getString("nome"));
+    _nome = _preferences.getString("nome");
     _versao = await Funcoes.buscarVersao;
     setState(() { });
   }
@@ -116,7 +115,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                       children: [
                         LabelOpensans("Bom Dia," , cor: Colors.black, tamanho: 15 ,bold: true,),
                         Expanded(
-                          child: LabelOpensans( _preferences.getString("nome") , cor: Colors.black, tamanho: 20 ,bold: true,),
+                          child: LabelOpensans( _nome , cor: Colors.black, tamanho: 20 ,bold: true,),
                         ),
                       ],
                     ),
