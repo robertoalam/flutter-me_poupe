@@ -50,6 +50,11 @@ class Funcoes{
     return pedacos[0];
   }
 
+  static somenteHora(String valor) {
+    List<String> pedacos = valor.split(" ");
+    return pedacos[1].toString().split(".")[0];
+  }
+
   static converterDataBRParaEUA(String valor, {bool retornarHorario}) {
     List<String> dataBrasil = valor.toString().split(" ");
     List<String> dataBrasilExplode = dataBrasil[0].toString().split("/");
