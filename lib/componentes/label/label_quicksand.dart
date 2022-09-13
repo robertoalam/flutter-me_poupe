@@ -16,15 +16,16 @@ class LabelQuicksand extends StatelessWidget {
     double size = (this.tamanho != null) ?  this.tamanho : 14;
     var negrito = (this.bold) ? FontWeight.bold : FontWeight.normal ;
 
-    return Text(texto , style: TextStyle(
-        fontFamily: "Quicksand",
-        fontSize: size,
-        fontWeight: negrito,
-        color: cor ,
+    return Text(
+      texto , style: TextStyle(
+          fontFamily: "Quicksand",
+          fontSize: size,
+          fontWeight: negrito,
+          color: cor ,
         ),
-        overflow: TextOverflow.ellipsis,
-        maxLines: this.maximoLinhas,
-        softWrap: false,
+      overflow: TextOverflow.ellipsis,
+      maxLines: this.maximoLinhas,
+      softWrap: false,
     );
   }
 }
