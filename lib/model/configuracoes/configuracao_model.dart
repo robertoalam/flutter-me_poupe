@@ -61,6 +61,12 @@ class ConfiguracaoModel{
     return await dbHelper.executar( query );
   }
 
+  static setarDebug(valor) async {
+    final dbHelper = DatabaseHelper.instance;
+    String query = " UPDATE "+TABLE_NAME+" SET valor = '"+valor.toString()+"' WHERE chave = 'debug' ;";
+    return await dbHelper.executar( query );
+  }
+
   static alterarModo(valor) async {
     final dbHelper = DatabaseHelper.instance;
     String query = " UPDATE "+TABLE_NAME+" SET valor = '"+valor+"' WHERE chave = 'modo' ;";
@@ -184,7 +190,6 @@ class ConfiguracaoModel{
     "dividerCor":"#FFFFFF",
 		}
   };
-
 
   static get buscarEstilos async {
     ConfiguracaoModel _config = new ConfiguracaoModel();

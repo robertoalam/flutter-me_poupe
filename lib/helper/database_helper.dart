@@ -50,7 +50,6 @@ class DatabaseHelper {
     String path = join(documentsDirectory.path, _databaseName);
 
     if(false){ await deleteDatabase(path); }
-
     return await openDatabase(path, version: _databaseVersion, onCreate: _onCreate);
   }
 
@@ -102,7 +101,7 @@ class DatabaseHelper {
     // await lancamentoFrequenciaCriar(db);
     // await usuarioTipoCadPopular(db);
 
-    await seedTestes(db);
+    // await seedTestes(db);
   }
 
   // usuarioTipoCadCriar(Database db) async {

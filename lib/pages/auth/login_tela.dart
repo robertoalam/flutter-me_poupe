@@ -19,7 +19,10 @@ class LoginTela extends StatefulWidget {
 }
 
 class _LoginTelaState extends State<LoginTela> {
+  
   AuthModel _auth = new AuthModel();
+  ConfiguracaoModel _config = new ConfiguracaoModel();
+
   bool _flagRequisicao = false;
   Widget _body;
   SharedPreferences _shared;
@@ -30,6 +33,7 @@ class _LoginTelaState extends State<LoginTela> {
 
   TextEditingController _senhaController = new TextEditingController();
   bool _senhaFlagErro = false;
+  bool _flagExibirSenha = false;
 
   var body;
   bool _modoNoturno = false;
@@ -50,6 +54,11 @@ class _LoginTelaState extends State<LoginTela> {
   }
 
   _start() async {
+    _config = await _config.fetchByChave('debug');
+    if( _config.valor.toString().toLowerCase() == "true"){
+      _emailController.text = "teste@gmail.com";
+      _senhaController.text = "1234";
+    }    
     await montarTela();
     buscarDados();
   }
@@ -68,9 +77,10 @@ class _LoginTelaState extends State<LoginTela> {
 
   buscarDados() async {
     // await montarTela();
+  
+
     _flagRequisicao = false;
-    _emailController.text = "tonialcf@gmail.com";
-    _senhaController.text = "1234";
+
   }
 
   @override
@@ -120,18 +130,22 @@ class _LoginTelaState extends State<LoginTela> {
               ),
 
               TextFormField(
-              controller: _senhaController,
+                controller: _senhaController,
                 // autofocus: true,
                 keyboardType: TextInputType.text,
-                obscureText: true,
                 decoration: InputDecoration(
                   labelText: "Senha",
                   labelStyle: TextStyle(
                     color:_colorLetra,
                     fontWeight: FontWeight.w400,
                     fontSize: 20,
-                  )
+                  ),
+                  suffixIcon: GestureDetector(
+                    onTap: () => setState(() { _flagExibirSenha = !_flagExibirSenha; }),
+                    child: Icon( _flagExibirSenha ? Icons.visibility : Icons.visibility_off , color: _colorLetra,),
+                  ),
                 ),
+                obscureText: _flagExibirSenha,                  
                 style: TextStyle(fontSize: 20,color: _colorLetra),
               ),
               SizedBox(height: 20, ),

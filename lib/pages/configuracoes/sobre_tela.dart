@@ -12,7 +12,7 @@ class SobreTela extends StatefulWidget {
 }
 
 class _SobreTelaState extends State<SobreTela> {
-
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
   ConfiguracaoModel _config = new ConfiguracaoModel();
   Map<String,dynamic> _listagem = new Map<String,dynamic>();
   int _contador = 0;
@@ -67,11 +67,11 @@ class _SobreTelaState extends State<SobreTela> {
           _Elemento( "installation date:" , Funcoes.converterDataEUAParaBR( _listagem['dt_instalacao'].toString() ,retornarHorario: true ) ),
           _Elemento( "openings:" , _listagem['no_aberturas'].toString() ),
           _Elemento( "device:" , _listagem['device_id'].toString() ),
+          _Elemento( "debug:" , _listagem['debug'].toString() ),
           Visibility(
-            visible:  ( _listagem['modo_debug'].toString().toLowerCase() == "true")?true:false,
-            child: _Elemento( "modo debug:", _listagem['modo_debug'].toString() ),
+            visible:  ( _listagem['debug'].toString().toLowerCase() == "true")?true:false,
+            child: _Elemento( "environment:" , _listagem['ambiente'].toString() ),
           ),
-          _Elemento( "environment:" , _listagem['ambiente'].toString() ),
           _Elemento( "database version:" , _listagem['database_versao'].toString() ),
           _Elemento( "database schema version:" , _listagem['database_schema_versao'].toString() ),
         ],
@@ -88,21 +88,14 @@ class _SobreTelaState extends State<SobreTela> {
       );
     }
 
-
     return Scaffold(
+      key: _scaffoldKey,
       backgroundColor: Color(int.parse(_background)),
       appBar: AppBar( title: Text("Sobre"), 
         backgroundColor: Color(int.parse( _corAppBarFundo) ),
         actions: [
           InkWell(
-            onTap: (){
-              ++_contador;
-              print("CONTADOR: ${_contador.toString()}");
-              if( _contador == 7){
-                print("ENTROU");
-                _contador = 0;
-              }
-            },
+            onTap: ()=>_alterarModo,
             child: Container(
               color: Colors.black,
               padding: EdgeInsets.fromLTRB(20, 10, 10, 10),
@@ -116,6 +109,30 @@ class _SobreTelaState extends State<SobreTela> {
         child: _body
       )
     );
+  }
+  get _alterarModo async {
+    ++_contador;
+    if( _contador == 7){
+      print("ENTROU");
+      bool flag = ( ( await _config.fetchByChave('debug') ).valor.toString().toLowerCase() == "true")? true : false;
+      flag = !flag;
+      await ConfiguracaoModel.setarDebug( flag );
+      String mensagem = (flag)? "ATIVADO":"DESATIVADO";
+      setState(() {
+        _listagem.clear();
+        _start();
+      });
+
+      _showToast(context , "MODO DEBUG ${mensagem.toString()}");
+      _contador = 0;
+    }
+  }
+
+  void _showToast(BuildContext context, String messagem) {
+    final snackBar = SnackBar(content: Text(messagem));
+    if(snackBar != null){
+      _scaffoldKey.currentState.showSnackBar(snackBar);
+    }
   }
 
   Widget _Elemento( label , valor ){
