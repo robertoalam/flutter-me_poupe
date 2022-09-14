@@ -49,17 +49,17 @@ class _TabInicioTelaState extends State<TabInicioTela> {
 
     @override
     void initState() {
-        _start();
-        super.initState();
+      _start();
+      super.initState();
     }
 
   _start() async {
-      await _getDataConfig();
-      await _setDataConfig();
-      await _getBalanceteGeral();
-      await _getConta();
-      await _getCartao();
-    }
+    await _getDataConfig();
+    await _setDataConfig();
+    await _getBalanceteGeral();
+    await _getConta();
+    await _getCartao();
+  }
 
 	_getCartao() async {
 		_cartaoLista = await _cartao.fetchProtected(protected: 0);
@@ -77,12 +77,11 @@ class _TabInicioTelaState extends State<TabInicioTela> {
         _saldoGeral = (_dados['exibir_saldo'] == "true")? _balancete.diferenca.toStringAsFixed(2) :"------";
       });
     }
-
 	}
 
    _getConta() async {
-        _contaLista = await _conta.fetchByAll();
-        setState(() { _contaLista; });
+      _contaLista = await _conta.fetchByAll();
+      setState(() { _contaLista; });
     }
 
 	_setDataConfig() async {
@@ -104,56 +103,6 @@ class _TabInicioTelaState extends State<TabInicioTela> {
 
   @override
   Widget build(BuildContext context) {
-
-    // TOPO
-    // widgetTopo = Container(
-    //     decoration: BoxDecoration(
-    //       color: Theme.of(context).primaryColor,
-    //     ),
-    //     child: Padding(
-    //         padding: EdgeInsets.fromLTRB(20, 25, 20, 0),
-    //         child: Column(
-    //           children: [
-    //             Row(
-    //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //             children: [
-    //                 Row(
-    //                     children: [
-    //                         Text("Boa noite" , style: TextStyle(color: Colors.black),),
-    //                         SizedBox(width: 5,),
-    //                         LabelOpensans("Roberto !" , cor: Colors.black, tamanho: 20 ,bold: true,),
-    //                     ],
-    //                 ),
-    //                 Row(
-    //                     children: [
-    //                         InkWell(
-    //                             onTap: ( ) { _clicFlagMostrarSaldo();},
-    //                             child: Icon( _iconeExibirSaldo, size: 45, ) ,
-    //                         ),
-    //                         SizedBox(width:5),
-    //                         GestureDetector(
-    //                             onTap: (){
-    //                                 Navigator.push( context , MaterialPageRoute( builder: (context) => ConfiguracoesIndexTela() ) );
-    //                             },
-    //                             child: Column(
-    //                                 children: [
-    //                                     SizedBox(
-    //                                         height: 50,
-    //                                         width: 50,
-    //                                         child: Icon(MdiIcons.applicationCog, size: 45,)
-    //                                     ),
-    //                                 ],
-    //                             )
-    //                         ),
-    //                     ],
-    //                 ),
-    //             ],
-    //           ),
-    //           SizedBox( height: 30, ),
-    //         ]
-    //       )
-    //     )
-    //   );
     
     // SALDOS
     if( _balancete.receita == null || _balancete.despesa == null || _balancete.diferenca == null ){
@@ -164,9 +113,9 @@ class _TabInicioTelaState extends State<TabInicioTela> {
         child: Container(
           padding: EdgeInsets.all(10),
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color:  Color(int.parse(_colorContainerFundo)),
-              border: Border.all(color: Color(int.parse(_colorContainerBorda)))
+            borderRadius: BorderRadius.circular(10),
+            color:  Color(int.parse(_colorContainerFundo)),
+            border: Border.all(color: Color(int.parse(_colorContainerBorda)))
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -174,8 +123,8 @@ class _TabInicioTelaState extends State<TabInicioTela> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text("Saldo Atual "),
-                  LabelOpensans(" R\$ ${_saldoGeral}",bold: true,),
+                  LabelOpensans("Saldo Atual ",cor:Color(int.parse(_colorLetra))),
+                  LabelOpensans(" R\$ ${_saldoGeral}",bold: true,cor:Color(int.parse(_colorLetra))),
                 ],
               ),
               Padding(
@@ -183,33 +132,33 @@ class _TabInicioTelaState extends State<TabInicioTela> {
                 child: LabelOpensans("Balancete",bold: true,tamanho: 25),
               ),
               ListTile(
-                  leading: CircleAvatar(
-                    backgroundColor: Color(int.parse(_colorLetra)),
-                    child: Icon(Icons.person, color: Color(int.parse(_colorContainerFundo)),),
-                  ),
-                  title: LabelOpensans("Conta padrão"),
-                  subtitle: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("Geral"),
-                      Text("R\$ ${_saldoGeral}")
-                    ],
-                  )
+                leading: CircleAvatar(
+                  backgroundColor: Color(int.parse(_colorLetra)),
+                  child: Icon(Icons.person, color: Color(int.parse(_colorContainerFundo)),),
+                ),
+                title: LabelOpensans("Conta padrão",cor: Color(int.parse(_colorLetra)),),
+                subtitle: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    LabelQuicksand("Geral",cor: Color(int.parse(_colorLetra))),
+                    LabelQuicksand("R\$ ${_saldoGeral}",cor: Color(int.parse(_colorLetra)))
+                  ],
+                )
               ),
               Divider(),
               ListTile(
-                  leading: CircleAvatar(
-                    backgroundColor: Color(int.parse(_colorLetra)),
-                    child: Icon(Icons.person, color: Color(int.parse(_colorContainerFundo)),),
-                  ),
-                  title: Text("Poupança"),
-                  subtitle: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("Banco do Brasil"),
-                      Text("R\$ 2.500,00")
-                    ],
-                  )
+                leading: CircleAvatar(
+                  backgroundColor: Color(int.parse(_colorLetra)),
+                  child: Icon(Icons.person, color: Color(int.parse(_colorContainerFundo)),),
+                ),
+                title: LabelOpensans("Poupança",cor: Color(int.parse(_colorLetra))),
+                subtitle: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    LabelQuicksand("Banco do Brasil",cor: Color(int.parse(_colorLetra))),
+                    LabelQuicksand("R\$ 2.500,00",cor: Color(int.parse(_colorLetra)))
+                  ],
+                )
               ),
               Divider(),
               Container(
@@ -217,17 +166,14 @@ class _TabInicioTelaState extends State<TabInicioTela> {
                 padding: EdgeInsets.fromLTRB(25, 0, 25, 0),
                 child: RaisedButton(
                   onPressed: null,
-                  child: Text("Ajustar Balanço"),
+                  child: LabelQuicksand("Ajustar Balanço",cor: Color(int.parse(_colorLetra))),
                 ),
               ),
-
             ],
           ),
         ),
       );
     }
-
-
 
     // SALDO
     if(_contaLista.length == 0 || _contaLista == null){
@@ -314,7 +260,7 @@ class _TabInicioTelaState extends State<TabInicioTela> {
             children: [
               Align(
                 alignment: Alignment.centerLeft,
-                child: Text("Cartões de Creditos",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18), ),
+                child: LabelOpensans("Cartões de Creditos",bold: true,tamanho: 18,cor: Color(int.parse(_colorLetra)),),
               ),
               SizedBox(
                 height: 15,
@@ -327,14 +273,12 @@ class _TabInicioTelaState extends State<TabInicioTela> {
                   )
               ),
               Align(
-                child:Text("Escolha o seu cartao",style: TextStyle(fontSize: 20),),
+                child:LabelOpensans("Escolha o seu cartao",tamanho: 20,cor:Color(int.parse(_colorContainerFundo)),),
                 alignment: Alignment.topCenter,
               ),
-              SizedBox(
-                height: 15,
-              ),
+              SizedBox( height: 15 ),
               Align(
-                child: Text(cartaoDescricao),
+                child: LabelOpensans(cartaoDescricao),
                 alignment: Alignment.topCenter,
               ),
 
@@ -366,7 +310,7 @@ class _TabInicioTelaState extends State<TabInicioTela> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Icon(Icons.credit_card , size: 25,),
-                  LabelOpensans("Meus cartões",bold: true,tamanho: 25,),
+                  LabelOpensans("Meus cartões",bold: true,tamanho: 25,cor:  Color(int.parse(_colorLetra)),),
                 ],
               ),
 
@@ -468,41 +412,39 @@ class _TabInicioTelaState extends State<TabInicioTela> {
 
     return Container(
       transform: Matrix4.translationValues(0.0, valor, 0.0),
-          // transform: Matrix4.translationValues(0.0, -20.0, 0.0),
-          width: MediaQuery.of(context).size.width,
-          height: 80,
-          padding: EdgeInsets.all(10),
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              stops: [ 0.8, 0.95, 1.0 ],
-              colors: [ Color(int.parse(_colorFundo)) , Color(int.parse(_colorFundo))  , Colors.black]
-            ),
-            borderRadius: BorderRadius.only( topRight: Radius.circular(10) , topLeft: Radius.circular(10) ),
-            boxShadow: [ BoxShadow(color: Colors.black, blurRadius: 5.0), ],
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+      // transform: Matrix4.translationValues(0.0, -20.0, 0.0),
+      width: MediaQuery.of(context).size.width,
+      height: 80,
+      padding: EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          stops: [ 0.8, 0.95, 1.0 ],
+          colors: [ Color(int.parse(_colorFundo)) , Color(int.parse(_colorFundo))  , Colors.black]
+        ),
+        borderRadius: BorderRadius.only( topRight: Radius.circular(10) , topLeft: Radius.circular(10) ),
+        boxShadow: [ BoxShadow(color: Colors.black, blurRadius: 5.0), ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
             children: [
-              Row(
-                children: [
-                  SizedBox(
-                    height: 24, width: 24,
-                    child: Image.asset(_imagem),
-                  ),
-                  SizedBox(width: 10,),
-                  LabelOpensans(objeto.conta.banco.descricao,tamanho: 22,cor: Color(int.parse(_colorLetra) ),bold: true,),
-                ],
+              SizedBox( height: 24, width: 24,
+                child: Image.asset(_imagem),
               ),
-              LabelOpensans("Cartão tipo ${objeto.tipo.descricao}",cor: Color(int.parse(_colorLetra) ),bold: true,),
+              SizedBox(width: 10,),
+              LabelOpensans(objeto.conta.banco.descricao,tamanho: 22,cor: Color(int.parse(_colorLetra) ),bold: true,),
             ],
           ),
-        );
+          LabelOpensans("Cartão tipo ${objeto.tipo.descricao}",cor: Color(int.parse(_colorLetra) ),bold: true,),
+        ],
+      ),
+    );
   }
 
   _contaAdicionar(){
-    // Navigator.push( context , MaterialPageRoute( builder: (context) => BancoDestaqueTela() ) );
     Navigator.push( context , MaterialPageRoute( builder: (context) => ContaListTela() ) );
   }
 

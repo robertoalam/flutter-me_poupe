@@ -10,7 +10,6 @@ MAJOR="${VERSION%%.*}"; VERSION="${VERSION#*.}"
 MINOR="${VERSION%%.*}"; VERSION="${VERSION#*.}"
 PATCH="${VERSION%%.*}"; VERSION="${VERSION#*.}"
 
-echo ${PATCH};
 #Increase version
 if [ "$1" = "bug" ]; then
   PATCH=$((PATCH+1))
@@ -44,5 +43,5 @@ if [ -z "$NEEDS_TAG" ]; then
   #read -s password
   #echo password | git push homologa master --tags
 else
-  echo "J▒ existe uma tag neste commit"
+  echo "Ja existe uma tag neste commit"
 fi  
