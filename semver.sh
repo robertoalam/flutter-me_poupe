@@ -38,7 +38,9 @@ if [ -z "$NEEDS_TAG" ]; then
   rm assets/git/versao.txt
   echo -n $NEW_TAG >> assets/git/versao.txt
   git add assets/git/versao.txt
-  git commit --amend --no-edit
+  git commit -m "."
+  git push origin main
+  #git commit --amend --no-edit
   #echo -n User:
   #read -s password
   #echo password | git push homologa master --tags
