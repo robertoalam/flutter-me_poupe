@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:me_poupe/componentes/label/label_opensans.dart';
 import 'package:me_poupe/componentes/label/label_quicksand.dart';
 import 'package:me_poupe/helper/funcoes_helper.dart';
 import 'package:me_poupe/model/auth/auth_model.dart';
@@ -30,10 +31,39 @@ class _LoginTelaState extends State<LoginTela> {
   TextEditingController _senhaController = new TextEditingController();
   bool _senhaFlagErro = false;
 
+  var body;
+  bool _modoNoturno = false;
+  var _dados = null;
+  // CORES TELA
+  Color _corAppBarFundo =  Color( int.parse( Funcoes.converterCorStringColor("#FFFFFF") ) );
+  Color _background = Color( int.parse( Funcoes.converterCorStringColor("#FFFFFF") ) );
+  Color _colorContainerFundo = Color( int.parse(Funcoes.converterCorStringColor("#FFFFFF") ) );
+  Color _colorContainerBorda = Color( int.parse(Funcoes.converterCorStringColor("#FFFFFF") ) );
+  Color _colorFundo = Color( int.parse(Funcoes.converterCorStringColor("#FFFFFF") ) );
+  Color _colorLetra = Color( int.parse(Funcoes.converterCorStringColor("#FFFFFF") ) );
+  var listaCores ;
+
   @override
   void initState() {
-    buscarDados();
+    _start();
     super.initState();
+  }
+
+  _start() async {
+    await montarTela();
+    buscarDados();
+  }
+
+  montarTela() async {
+    listaCores = await ConfiguracaoModel.buscarEstilos;
+    setState(() {
+      _corAppBarFundo =  Color( int.parse( Funcoes.converterCorStringColor( listaCores['corAppBarFundo'] ) ) );
+      _background = Color( int.parse(Funcoes.converterCorStringColor( listaCores['background'] ) ) );
+      _colorContainerFundo = Color( int.parse(Funcoes.converterCorStringColor( listaCores['containerFundo'] ) ) ) ;
+      _colorContainerBorda = Color( int.parse(Funcoes.converterCorStringColor( listaCores['containerBorda'] ) ) );
+      _colorLetra = Color( int.parse(Funcoes.converterCorStringColor( listaCores['textoPrimaria'] ) ) );
+    });
+    return;
   }
 
   buscarDados() async {
@@ -47,163 +77,161 @@ class _LoginTelaState extends State<LoginTela> {
   Widget build(BuildContext context) {
 
     if( !_flagRequisicao ){
-      _body = WillPopScope(
-        onWillPop: () async => false,
-        child: Scaffold(
-          appBar: AppBar(
-            backgroundColor: Colors.white,
-            elevation: 0,
-            actions: [
+      _body = Scaffold(
+        appBar: AppBar(
+          backgroundColor: _colorContainerFundo,
+          elevation: 0,
+          actions: [
+            Container(
+              padding: EdgeInsets.fromLTRB(0, 0, 25, 0),
+              child: InkWell(
+                onTap: (){ Navigator.push( context , MaterialPageRoute( builder: (context) => ConfiguracoesTela() ) ); },
+                child: Icon( MdiIcons.applicationCog , 
+                  color: Theme.of(context).primaryColor,
+                  size: MediaQuery.of(context).textScaleFactor * 30,
+                ) ,
+              ),
+            ),
+          ],
+        ),
+        body: Container(
+          padding: EdgeInsets.only(top:20 , left: 40 , right: 40),
+          color: _colorContainerFundo,
+          child: ListView(
+            children: [
+              SizedBox(
+                width: 128,
+                height: 128,
+                child: Image.asset("assets/images/porco_01.png"),
+              ),
+              TextFormField(
+                controller: _emailController,                
+                // autofocus: true,
+                keyboardType: TextInputType.emailAddress,
+                decoration: InputDecoration(
+                  labelText: "Email",
+                  labelStyle: TextStyle(
+                    color: _colorLetra,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 20,
+                  )
+                ),
+                style: TextStyle(fontSize: 20,color: _colorLetra),
+              ),
+
+              TextFormField(
+              controller: _senhaController,
+                // autofocus: true,
+                keyboardType: TextInputType.text,
+                obscureText: true,
+                decoration: InputDecoration(
+                  labelText: "Senha",
+                  labelStyle: TextStyle(
+                    color:_colorLetra,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 20,
+                  )
+                ),
+                style: TextStyle(fontSize: 20,color: _colorLetra),
+              ),
+              SizedBox(height: 20, ),
               Container(
-                padding: EdgeInsets.fromLTRB(0, 0, 25, 0),
-                child: InkWell(
-                  onTap: (){ Navigator.push( context , MaterialPageRoute( builder: (context) => ConfiguracoesTela() ) ); },
-                  child: Icon( MdiIcons.applicationCog , 
+                height: 60,
+                alignment: Alignment.centerLeft,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all( Radius.circular(5)),
+                ),
+                child: SizedBox.expand(
+                  child: FlatButton(
                     color: Theme.of(context).primaryColor,
-                    size: MediaQuery.of(context).textScaleFactor * 30,
-                  ) ,
+                    child: LabelQuicksand("LOGAR", cor: _colorLetra , bold: true, tamanho: 20 ),
+                    onPressed: () async {
+                      _modalMensagens.clear();                        
+                      _modalMensagens.add("ERRO !!!");
+                      if( _validar ) {
+                        await Funcoes.modalExibir(context, _modalMensagens ,0);
+                        return ;                          
+                      }
+
+                      _bloquearTela( true );
+                      var retorno = await _autenticacaoEmailAndSenha();
+                      _bloquearTela( false );
+
+                      print("RETORNO");
+                      print(retorno);
+
+                      // SALVAR NA MEMORIA DADO USUARIO
+                      if( retorno['success'] == false){
+                        _modalMensagens.add("ERRO: email ou senha incorretos !");
+                        await Funcoes.modalExibir(context,_modalMensagens,0);
+                        return;
+                      }
+
+                      if ( await _autenticacaoSalvar( retorno['dados'] ) != true){
+                        _modalMensagens.add("ERRO: autenticação não foi salva !");
+                        await Funcoes.modalExibir(context,_modalMensagens,0);
+                        return;
+                      }
+                      
+                      //CHEGOU AO FIM == SUCESSO !!!
+                      Navigator.pushReplacement( context,  MaterialPageRoute( builder: (context) => TabsTela() ) );
+                    },
+                  ),
                 ),
               ),
-            ],
-          ),
-          body: Container(
-            padding: EdgeInsets.only(top:20 , left: 40 , right: 40),
-            color: Colors.white,
-            child: ListView(
-              children: [
-                SizedBox(
-                  width: 128,
-                  height: 128,
-                  child: Image.asset("assets/images/porco_01.png"),
-                ),
-                TextFormField(
-                  controller: _emailController,                
-                  autofocus: true,
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: InputDecoration(
-                    labelText: "Email",
-                    labelStyle: TextStyle(
-                      color:Colors.black38,
-                      fontWeight: FontWeight.w400,
-                      fontSize: 20,
-                    )
+              Column(
+                children: [
+                  Container(
+                    height: 40,
+                    // alignment: Alignment.centerRight,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Visibility(
+                          visible: true,
+                          child: FlatButton(
+                            child: LabelOpensans("Entrar sem Login", cor: _colorLetra, ),
+                            onPressed: (){
+                              Navigator.push(context , MaterialPageRoute(builder: (context)=>TabsTela()));
+                            },
+                          ),
+                        ),
+                        FlatButton(
+                          child: LabelOpensans("Criar Senha", cor: _colorLetra, ),
+                          onPressed: (){
+                            Navigator.push(context , MaterialPageRoute(builder: (context)=>SplashTela()));
+                          },
+                        ),
+                      ],
+                    ),
                   ),
-                  style: TextStyle(fontSize: 20),
-                ),
-
-                TextFormField(
-                controller: _senhaController,
-                  autofocus: true,
-                  keyboardType: TextInputType.text,
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    labelText: "Senha",
-                    labelStyle: TextStyle(
-                      color:Colors.black38,
-                      fontWeight: FontWeight.w400,
-                      fontSize: 20,
-                    )
-                  ),
-                  style: TextStyle(fontSize: 20),
-                ),
-                SizedBox(height: 20, ),
-                Container(
-                  height: 60,
-                  alignment: Alignment.centerLeft,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all( Radius.circular(5)),
-                  ),
-                  child: SizedBox.expand(
+                  Container(
+                    height: 40,
+                    alignment: Alignment.centerRight,
                     child: FlatButton(
-                      color: Theme.of(context).primaryColor,
-                      child: Text("LOGAR",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 20),),
-                      onPressed: () async {
-                        _modalMensagens.clear();                        
-                        _modalMensagens.add("ERRO !!!");
-                        if( _validar ) {
-                          await Funcoes.modalExibir(context, _modalMensagens ,0);
-                          return ;                          
-                        }
-
-                        _bloquearTela( true );
-                        var retorno = await _autenticacaoEmailAndSenha();
-                        _bloquearTela( false );
-
-                        print("RETORNO");
-                        print(retorno);
-
-                        // SALVAR NA MEMORIA DADO USUARIO
-                        if( retorno['success'] == false){
-                          _modalMensagens.add("ERRO: email ou senha incorretos !");
-                          await Funcoes.modalExibir(context,_modalMensagens,0);
-                          return;
-                        }
-
-                        if ( await _autenticacaoSalvar( retorno['dados'] ) != true){
-                          _modalMensagens.add("ERRO: autenticação não foi salva !");
-                          await Funcoes.modalExibir(context,_modalMensagens,0);
-                          return;
-                        }
-                        
-                        //CHEGOU AO FIM == SUCESSO !!!
-                        Navigator.pushReplacement( context,  MaterialPageRoute( builder: (context) => TabsTela() ) );
+                      child: LabelOpensans("Recuperar Senha" , cor: _colorLetra, ),
+                      onPressed: (){
+                        Navigator.push(context , MaterialPageRoute(builder: (context)=>SplashTela()));
                       },
                     ),
                   ),
-                ),
-                Column(
-                  children: [
-                    Container(
-                      height: 40,
-                      // alignment: Alignment.centerRight,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Visibility(
-                            visible: true,
-                            child: FlatButton(
-                              child: Text("Entrar sem Login" ),
-                              onPressed: (){
-                                Navigator.push(context , MaterialPageRoute(builder: (context)=>TabsTela()));
-                              },
-                            ),
-                          ),
-                          FlatButton(
-                            child: Text("Criar Senha" ),
-                            onPressed: (){
-                              Navigator.push(context , MaterialPageRoute(builder: (context)=>SplashTela()));
-                            },
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      height: 40,
-                      alignment: Alignment.centerRight,
-                      child: FlatButton(
-                        child: Text("Recuperar Senha" ),
-                        onPressed: (){
-                          Navigator.push(context , MaterialPageRoute(builder: (context)=>SplashTela()));
-                        },
-                      ),
-                    ),
-                  
-                  ],
-                ),
-                SizedBox(height: 20,),
-                //BOTAO GOOGLE
-                botaoLogarMidiaSocial("Logar com Google", Colors.blue,"assets/images/logo_google.png" ),
-                SizedBox(height: 20,),
-                botaoLogarMidiaSocial("Logar com Facebok", Colors.indigo,"assets/images/logo_facebook.png" ),
-              ],
-            ),
+                
+                ],
+              ),
+              SizedBox(height: 20,),
+              //BOTAO GOOGLE
+              botaoLogarMidiaSocial("Logar com Google", Colors.blue,"assets/images/logo_google.png" ),
+              SizedBox(height: 20,),
+              botaoLogarMidiaSocial("Logar com Facebok", Colors.indigo,"assets/images/logo_facebook.png" ),
+            ],
           ),
-        )
+        ),
       );
     } else {
       _body = Scaffold(
         body: SafeArea(
           child: Container(
+            color: _colorContainerFundo,
             padding: EdgeInsets.all(10),
             width: MediaQuery.of(context).size.width,
             child: Column(
@@ -212,14 +240,13 @@ class _LoginTelaState extends State<LoginTela> {
               children: [
                 CircularProgressIndicator(),
                 SizedBox(height: 15,),
-                LabelQuicksand(" enviando ... ",bold: true,tamanho: 22,),
+                LabelQuicksand(" enviando ... ",bold: true,tamanho: 22,cor: _colorLetra,),
               ],
             ),
           )
         ),
       );
     }
-
     return _body;
   }
 
