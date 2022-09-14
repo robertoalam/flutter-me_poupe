@@ -108,6 +108,10 @@ class ConfiguracaoModel{
           'user_name':'teste@gmail.com',
           'user_pass':'1234',
           'host_url':'http://192.168.0.110/i9tecnosul.com.br/mepoupe',
+          'ftp_host':'192.168.0.110',
+          'ftp_host_user':'mepoupe',
+          'ftp_host_pass':'1234',
+          'ftp_porta':'21'            
         },
         'rest':{
           'auth_loging':'/api/v1/basic/logon',

@@ -1,7 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:me_poupe/componentes/label/label_opensans.dart';
 import 'package:me_poupe/componentes/label/label_quicksand.dart';
 import 'package:me_poupe/helper/funcoes_helper.dart';
@@ -9,6 +7,8 @@ import 'package:me_poupe/model/configuracoes/configuracao_model.dart';
 import 'package:me_poupe/pages/configuracoes/logs/log_rest_tela.dart';
 import 'package:me_poupe/pages/configuracoes/sobre_tela.dart';
 import 'package:me_poupe/pages/testes/teste_tela.dart';
+
+import 'logs/log_tela.dart';
 
 class ConfiguracoesTela extends StatefulWidget {
   bool flagExibirTodasConfiguracoes;
@@ -127,7 +127,7 @@ class _ConfiguracoesTelaState extends State<ConfiguracoesTela> {
 
             Container(
               child: ListTile(
-                onTap: () { Navigator.push(context, MaterialPageRoute(builder: (context) => LogRestTela())); },
+                onTap: () { Navigator.push(context, MaterialPageRoute(builder: (context) => LogTela())); },
                 leading: CircleAvatar(
                   backgroundColor: Color(int.parse(_colorLetra)),
                   child: Icon( Icons.error, color: Color(int.parse(_background)), ),

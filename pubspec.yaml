@@ -46,6 +46,11 @@ dependencies:
   http: ^0.12.0+1    
   dio: ^3.0.10
 
+  #FTP
+  ftpconnect: ^0.1.7
+  #zip files
+  flutter_archive: ^2.0.2
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

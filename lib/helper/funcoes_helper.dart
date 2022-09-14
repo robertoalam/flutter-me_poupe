@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_archive/flutter_archive.dart';
 import 'package:intl/intl.dart';
 import 'package:me_poupe/componentes/modal/modal_dialog_generic_typed_screen.dart';
 import 'package:path_provider/path_provider.dart';
@@ -139,6 +140,10 @@ class Funcoes{
     return await rootBundle.loadString('assets/git/versao.txt');
   }
 
+  static Future<Directory> get buscarPastaAPP async {
+    return Directory( ( ( Directory.systemTemp).path ).toString() );
+  }
+
   static Future<Directory> get buscarPastaLog async {
     return Directory( ( (await getApplicationDocumentsDirectory()).path).toString()+"/logs/" );
   } 
@@ -222,4 +227,22 @@ class Funcoes{
       }
     );
   } 
+
+  // ZIPAR ARQUIVO
+  static zipCriarArquivo(String zipLocalDoArquivo , List<File> lista) async {
+    final sourceDir = Directory( ( (await Funcoes.buscarPastaAPP).path).toString() );
+    // CRIANDO O ARQUIVO ZIP COM O NOME ESCOLHIDO
+    final zipFile = File( zipLocalDoArquivo );
+    try {
+      await ZipFile.createFromFiles(sourceDir: sourceDir, files: lista, zipFile: zipFile , includeBaseDirectory: true);  
+      return true;
+    } catch (e) {
+      
+      // GRAVAR LOG
+      // LogModel log = new LogModel(tipo: "ERRO",operacao: "", classe: "Funcoes", metodo: "zipCriarArquivo",  tabela: "" , dados: "Erro ao criar arquivo zip: ${e.toString()}" );      
+      // log.save();          
+      print(e);
+      return false;
+    }
+  }
 }
