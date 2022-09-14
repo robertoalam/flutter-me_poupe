@@ -54,7 +54,7 @@ class LogRestModel {
 		);
   }
 
-  get buscarLogRest async {
+  get buscarArquivoLog async {
     var texto = await Funcoes.lerArquivo( ( (await Funcoes.buscarPastaLog).path) .toString() , "rest.txt");
     texto = texto.replaceAll("'", '"');
 

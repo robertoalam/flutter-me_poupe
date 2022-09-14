@@ -4,15 +4,16 @@ import 'package:me_poupe/helper/funcoes_helper.dart';
 class LogModel {
   DateTime data;
   dynamic tipo;
+  String metodo;
   String mensagem;
   String texto;
   String observacao;
 
-  static final String ARQUIVO = "log.txt";
+  static final String ARQUIVO = "error.txt";
 
   LogModel( 
     this.tipo, this.mensagem, 
-    { this.data, this.texto, this.observacao }
+    { this.metodo , this.data, this.texto, this.observacao }
   );
 
   @override
@@ -21,7 +22,8 @@ class LogModel {
 	Map toMap(){
 		var map = new Map<String, dynamic>();
 		map["data"] = DateTime.now().toString().split(".")[0];
-		map["tipo"] = this.tipo;
+		map["tipo"] = this.tipo.toString().split(".")[1];
+		map["metodo"] = this.metodo.toString().split(".")[1];
 		map["mensagem"] = this.mensagem;
 		map["texto"] = this.texto;
 		map["observacao"] = this.observacao;
@@ -32,13 +34,14 @@ class LogModel {
 		return LogModel(
       json['tipo'],
       json['mensagem'],
+			metodo: json['metodo'],
 			data: DateTime.parse( json['data'] ),
 			texto: json['texto'],
 			observacao: json['observacao'],
 		);
   }
 
-  get buscarLogRest async {
+  get buscarArquivoLog async {
     var texto = await Funcoes.lerArquivo( ( (await Funcoes.buscarPastaLog).path) .toString() , ARQUIVO);
     texto = texto.replaceAll("'", '"');
 
