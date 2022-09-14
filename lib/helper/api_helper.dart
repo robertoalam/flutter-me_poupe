@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:me_poupe/helper/funcoes_helper.dart';
 import 'package:me_poupe/model/configuracoes/configuracao_model.dart';
+import 'package:me_poupe/model/logs/log_model.dart';
 import 'package:me_poupe/model/logs/log_rest_model.dart';
 
 class APIHelper {
@@ -11,15 +12,6 @@ class APIHelper {
     String fullUrl = opcoes['url'].toString();
     String ambiente = await ConfiguracaoModel.buscarConfiguracaoAmbiente;
     
-    LogRestModel log = new LogRestModel(
-      data: DateTime.now(),
-      ambiente: ambiente.toString(),
-      url: fullUrl.toString(),
-      rest: "ENVIADO",
-      dados: opcoes['data'],
-    );
-    await Funcoes.gravarArquivo( ( (await Funcoes.buscarPastaLogRest).path) .toString() , "rest.txt" , jsonEncode( log.toMap() ) ,limpar: false);
-
     Dio dio = new Dio();
     Response response;
     Map<String,dynamic> retorno = new Map();
@@ -34,12 +26,12 @@ class APIHelper {
         data: DateTime.now(),
         ambiente: ambiente.toString(),
         url: fullUrl.toString(),
-        token: opcoes['token'].toString(),
-        rest: "RECEBIDO",
+        verbo: "POST",
         statusCode: response.statusCode,
-        dados: json.decode ( response.data )['dados'],
+        dadosEnviado: opcoes['data'],
+        dadosRecebido: json.decode ( response.data )['dados'],
       );
-      await Funcoes.gravarArquivo( ( (await Funcoes.buscarPastaLogRest).path) .toString() , "rest.txt" , jsonEncode( log.toMap() ) ,limpar: false);
+      await Funcoes.gravarArquivo( ( (await Funcoes.buscarPastaLog).path) .toString() , "rest.txt" , jsonEncode( log.toMap() ) ,limpar: false);
 
       retorno['success'] = true;
       retorno['mensagem'] = "";
@@ -48,14 +40,9 @@ class APIHelper {
     
     }on DioError catch (e){
 
-      print("ERRO REQUISICAO: ${e.toString()}");
-      LogRestModel log = new LogRestModel(
-        ambiente: ambiente.toString(),
-        url: fullUrl.toString(),
-        rest: "RECEBIDO",
-        dados: response.data,
+      await Funcoes.logGravar( 
+        new LogModel( Tipo.ERRO, e.toString() ) 
       );
-      await Funcoes.gravarArquivo( ( (await Funcoes.buscarPastaLogRest).path) .toString() , "rest.txt" , jsonEncode( log.toMap() ) ,limpar: false);
 
       retorno['success'] = false;
       retorno['mensagem'] = e.toString();
@@ -63,4 +50,6 @@ class APIHelper {
       return retorno;
     }
   }
+
+
 }

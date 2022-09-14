@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:me_poupe/componentes/label/label_opensans.dart';
 import 'package:me_poupe/componentes/label/label_quicksand.dart';
 import 'package:me_poupe/helper/funcoes_helper.dart';
@@ -70,6 +72,7 @@ class _ConfiguracoesTelaState extends State<ConfiguracoesTela> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+
             Container(
               child: ListTile(
                 onTap: (){ Navigator.push(context, MaterialPageRoute(builder: (context) => SobreTela())); } ,
@@ -82,33 +85,23 @@ class _ConfiguracoesTelaState extends State<ConfiguracoesTela> {
             ),
             Divider( color: Color(int.parse(_colorLetra)), ),        
 
-
             Container(
               child: ListTile(
                 leading: CircleAvatar(
                   backgroundColor: Color(int.parse(_colorLetra)),
-                  child: Icon(
-                    Icons.remove_red_eye,
-                    color: Color(int.parse(_background)),
-                  ),
+                  child: Icon( Icons.remove_red_eye, color: Color(int.parse(_background)), ),
                 ),
                 title: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    LabelOpensans(
-                      "Modo Noturno",
-                      bold: true,
-                      cor: Color(int.parse(_colorLetra)),
-                    ),
+                    LabelOpensans( "Modo Noturno", bold: true, cor: Color(int.parse(_colorLetra)), ),
                     Container(
                       child: Switch(
                         value: _modoNoturno,
                         onChanged: (value) async {
                           _setarModo(value);
                           await buscarDados();
-                          setState(() {
-                            _modoNoturno = value;
-                          });
+                          setState(() { _modoNoturno = value; });
                         }
                       ),
                     )
@@ -121,28 +114,42 @@ class _ConfiguracoesTelaState extends State<ConfiguracoesTela> {
 
             Container(
               child: ListTile(
-                onTap: () { Navigator.push(context, MaterialPageRoute(builder: (context) => TesteTela())); },
+                onTap: () { Navigator.push(context, MaterialPageRoute(builder: (context) => LogRestTela())); },
                 leading: CircleAvatar(
                   backgroundColor: Color(int.parse(_colorLetra)),
-                  child: Icon( CupertinoIcons.gear , color: Color(int.parse(_background)), ),
+                  child: Icon( Icons.cloud, color: Color(int.parse(_background)), ),
                 ),
-                title: LabelOpensans( "Testes", bold: true, cor: Color(int.parse(_colorLetra)), ),
-                subtitle: LabelQuicksand( "Tela de testes", cor: Color(int.parse(_colorLetra)), ),
+                title: LabelOpensans( "LOGs REST", bold: true, cor: Color(int.parse(_colorLetra)), ),
+                subtitle: LabelQuicksand( "visualização dos logs do serviço REST", cor: Color(int.parse(_colorLetra)), ),
               ),
-            ),
-            Divider( color: Color(int.parse(_colorLetra)), ),
+            ),            
+            Divider( color: Color(int.parse(_colorLetra)), ),      
 
             Container(
               child: ListTile(
                 onTap: () { Navigator.push(context, MaterialPageRoute(builder: (context) => LogRestTela())); },
                 leading: CircleAvatar(
                   backgroundColor: Color(int.parse(_colorLetra)),
-                  child: Icon( CupertinoIcons.gear , color: Color(int.parse(_background)), ),
+                  child: Icon( Icons.error, color: Color(int.parse(_background)), ),
                 ),
-                title: LabelOpensans( "LOGs", bold: true, cor: Color(int.parse(_colorLetra)), ),
-                subtitle: LabelQuicksand( "visualização dos logs", cor: Color(int.parse(_colorLetra)), ),
+                title: LabelOpensans( "LOGs ERRO", bold: true, cor: Color(int.parse(_colorLetra)), ),
+                subtitle: LabelQuicksand( "visualização dos logs de ERRO", cor: Color(int.parse(_colorLetra)), ),
               ),
-            ),            
+            ),                   
+            Divider( color: Color(int.parse(_colorLetra)), ),
+
+            Container(
+              child: ListTile(
+                onTap: () { Navigator.push(context, MaterialPageRoute(builder: (context) => TesteTela())); },
+                leading: CircleAvatar(
+                  backgroundColor: Color(int.parse(_colorLetra)),
+                  child: Icon( CupertinoIcons.collections_solid , color: Color(int.parse(_background)), ),
+                ),
+                title: LabelOpensans( "Testes", bold: true, cor: Color(int.parse(_colorLetra)), ),
+                subtitle: LabelQuicksand( "Tela de testes", cor: Color(int.parse(_colorLetra)), ),
+              ),
+            ),
+            
           ],
         ),
       );
@@ -155,7 +162,7 @@ class _ConfiguracoesTelaState extends State<ConfiguracoesTela> {
     return Scaffold(
       backgroundColor: Color(int.parse(_background)),
       appBar: AppBar(
-        backgroundColor: Color(int.parse( Funcoes.converterCorStringColor( listaCores['corAppBarFundo'] ) )),
+        backgroundColor: Color(int.parse( _corAppBarFundo ) ) ,
         title: LabelOpensans( "Configurações", bold: true, cor: Colors.white, ),
       ),
       body: SafeArea(

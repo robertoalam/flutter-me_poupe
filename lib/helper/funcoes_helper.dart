@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -138,8 +139,8 @@ class Funcoes{
     return await rootBundle.loadString('assets/git/versao.txt');
   }
 
-  static Future<Directory> get buscarPastaLogRest async {
-    return Directory( ( (await getApplicationDocumentsDirectory()).path).toString()+"/logs/rest/" );
+  static Future<Directory> get buscarPastaLog async {
+    return Directory( ( (await getApplicationDocumentsDirectory()).path).toString()+"/logs/" );
   } 
 
   static Future<String> get buscarDeviceId async {
@@ -147,12 +148,12 @@ class Funcoes{
       return await PlatformDeviceId.getDeviceId;
     } on PlatformException {
       // GRAVAR ARQUIVO
-      await Funcoes.gravarArquivo( ( (await Funcoes.buscarPastaLogRest).path) .toString() , "rest.txt" , "ERRO BUSCAR DEVICE ID" ,limpar: false);
+      await Funcoes.gravarArquivo( ( (await Funcoes.buscarPastaLog).path) .toString() , "rest.txt" , "ERRO BUSCAR DEVICE ID" ,limpar: false);
       return null;    
     }    
   }
 
-  static  Future<Directory> criarPasta(String diretorio) async{
+  static Future<Directory> criarPasta(String diretorio) async{
     final Directory diretorioNovo = Directory(diretorio); 
     if(await diretorioNovo.exists()){
       return diretorioNovo;
@@ -162,7 +163,7 @@ class Funcoes{
     }
   }    
 
-  static  Future<File> criarArquivo(Directory diretorio , String nomeArquivo) async {
+  static Future<File> criarArquivo(Directory diretorio , String nomeArquivo) async {
     try{
       return File(diretorio.path.toString()+nomeArquivo.toString());
     }catch(e){
@@ -183,6 +184,16 @@ class Funcoes{
       }
     }
     return file.writeAsString('$texto');
+  }
+
+  // METODOS P/GRAVAR LOGS FISICOS
+  static Future<File> logGravarRest( log ,  { bool limpar = false}) async {
+    return await Funcoes.gravarArquivo( ( (await Funcoes.buscarPastaLog).path) .toString() , "rest.txt" , jsonEncode( log.toMap() ) ,limpar: false);
+  }
+
+  // METODOS P/GRAVAR LOGS FISICOS
+  static Future<File> logGravar( log ,  { bool limpar = false}) async {
+    return await Funcoes.gravarArquivo( ( (await Funcoes.buscarPastaLog).path) .toString() , "error.txt" , jsonEncode( log.toMap() ) ,limpar: false);
   }
 
   // METODOS P/GRAVAR LOGS FISICOS

@@ -270,7 +270,7 @@ class _LoginTelaState extends State<LoginTela> {
     }
 
     try{
-      await _autenticacaoSalvarMemoria();
+      await _autenticacaoSalvarMemoria( dados );
     }catch(e){
       print("ERRO MEMORIA: ${e.toString()}");
       flagErro = false;
@@ -279,11 +279,15 @@ class _LoginTelaState extends State<LoginTela> {
 
   }
 
-  _autenticacaoSalvarMemoria() async {
+  _autenticacaoSalvarMemoria( dados ) async {
     try{
       _shared = await SharedPreferences.getInstance();
-      _shared.setInt('id',_auth.id);
-      _shared.setString('token', _auth.token);
+      _shared.setInt('id',dados['id']);
+      _shared.setString('usuario', dados['email'].toString().split("@")[0]);
+      _shared.setString('nome', dados['nome']);
+      _shared.setString('email', dados['email']);
+      _shared.setString('assinatura', dados['assinatura']);
+      _shared.setString('token', dados['token']);
       return true;
     }catch(e){
       print("ERRO SALVAR MEMORIA: ${e}");

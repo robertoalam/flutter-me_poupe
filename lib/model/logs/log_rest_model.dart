@@ -7,15 +7,18 @@ class LogRestModel {
   String ambiente;
   String url;
   String token;
-  String rest;
-  dynamic dados;
+  dynamic verbo;
+  dynamic dadosEnviado;
+  dynamic dadosRecebido;
   int statusCode;
   String texto;
   String observacao;
 
+  static final String ARQUIVO = "rest.txt";
+
   LogRestModel({ 
-    this.data, this.ambiente, this.url, this.token, this.statusCode, this.rest, this.dados,
-    this.texto, this.observacao
+    this.data, this.ambiente, this.url, this.token, this.statusCode, this.verbo, 
+    this.dadosEnviado, this.dadosRecebido , this.texto, this.observacao
   });
 
 
@@ -29,9 +32,10 @@ class LogRestModel {
 		map["data"] = DateTime.now().toString().split(".")[0];
 		map["ambiente"] = this.ambiente;
 		map["url"] = this.url;
-		map["rest"] = this.rest;
-		map["dados"] = this.dados;
-		map["status"] = this.statusCode;
+		map["verbo"] = this.verbo;
+		map["status"] = this.statusCode;    
+		map["dadosEnviado"] = this.dadosEnviado;
+		map["dadosRecebido"] = this.dadosRecebido;
 		map["texto"] = this.texto;
 		map["observacao"] = this.observacao;
 		return map;
@@ -39,31 +43,27 @@ class LogRestModel {
 
   factory LogRestModel.fromJson(Map<String, dynamic> json) {
 		return LogRestModel(
-			data: json['data'],
+			data: DateTime.parse( json['data'] ),
 			ambiente: json['ambiente'],
 			url: json['url'],
 			token: json['token'],
-      rest: json['rest'],
-			dados: json['dados'],
+      verbo: json['verbo'],
+			statusCode: json['status'],
+			dadosEnviado: json['dadosEnviado'],
+			dadosRecebido: json['dadosRecebido'],
 		);
   }
 
   get buscarLogRest async {
-    var texto = await Funcoes.lerArquivo( ( (await Funcoes.buscarPastaLogRest).path) .toString() , "rest.txt");
+    var texto = await Funcoes.lerArquivo( ( (await Funcoes.buscarPastaLog).path) .toString() , "rest.txt");
     texto = texto.replaceAll("'", '"');
 
     List<LogRestModel> _lista = new List<LogRestModel>();
-
     LineSplitter.split(texto)
       .map((line) {
-        var temp = json.decode( line );
-        LogRestModel _log = new LogRestModel();
-        _log.data = DateTime.parse( temp['data'].toString() );
-        _log.ambiente =  temp['ambiente'];
-        _log.rest =  temp['rest'];
+        LogRestModel _log = LogRestModel.fromJson( json.decode( line ) );
         _lista.add( _log );
       }).toList();
     return _lista;
   }
-
 }
