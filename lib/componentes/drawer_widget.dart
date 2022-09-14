@@ -48,6 +48,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
     _preferences = await SharedPreferences.getInstance();
     _nome = _preferences.getString("nome");
     _versao = await Funcoes.buscarVersao;
+    print("VERSAO: ${_versao.toString()}");
     setState(() { });
   }
 
