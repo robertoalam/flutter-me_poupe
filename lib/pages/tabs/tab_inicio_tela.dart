@@ -273,12 +273,12 @@ class _TabInicioTelaState extends State<TabInicioTela> {
                   )
               ),
               Align(
-                child:LabelOpensans("Escolha o seu cartao",tamanho: 20,cor:Color(int.parse(_colorContainerFundo)),),
+                child:LabelOpensans("Escolha o seu cartao",tamanho: 20,cor:Color(int.parse(_colorLetra)),),
                 alignment: Alignment.topCenter,
               ),
               SizedBox( height: 15 ),
               Align(
-                child: LabelOpensans(cartaoDescricao),
+                child: LabelOpensans(cartaoDescricao , cor:Color(int.parse(_colorLetra)) ,),
                 alignment: Alignment.topCenter,
               ),
 
