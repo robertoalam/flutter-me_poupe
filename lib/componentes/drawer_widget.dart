@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:me_poupe/componentes/label/label_quicksand.dart';
 import 'package:me_poupe/helper/funcoes_helper.dart';
 import 'package:me_poupe/pages/auth/logout_screen.dart';
 import 'package:me_poupe/pages/configuracoes/configuracoes_tela.dart';
@@ -116,7 +117,8 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                       children: [
                         LabelOpensans("Bom Dia," , cor: Colors.black, tamanho: 15 ,bold: true,),
                         Expanded(
-                          child: LabelOpensans( _nome , cor: Colors.black, tamanho: 20 ,bold: true,),
+                          flex: 1,
+                          child: LabelQuicksand( (_nome !=null)?_nome : "" , cor: Colors.black, tamanho: 20 ,bold: true,),
                         ),
                       ],
                     ),
