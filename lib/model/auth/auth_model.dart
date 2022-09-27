@@ -65,7 +65,14 @@ class AuthModel{
     }
   }
 
-  create() async {
+  create( dados ) async {
+    this.id = dados['id'];
+    this.usuario = dados['email'].toString().split("@")[0];
+    this.nome = dados['nome'];
+    this.email = dados['email'];
+    this.token = dados['assinatura'];
+    this.datalogin = DateTime.now();
+
     var id;
     try{
       this.ativo = 1;
