@@ -5,7 +5,6 @@ import 'package:me_poupe/componentes/label/label_quicksand.dart';
 import 'package:me_poupe/helper/funcoes_helper.dart';
 import 'package:me_poupe/model/auth/auth_model.dart';
 import 'package:me_poupe/model/configuracoes/configuracao_model.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../configuracoes/configuracoes_tela.dart';
 import '../splash_tela.dart';
 import '../tabs_tela.dart';
@@ -25,7 +24,6 @@ class _LoginTelaState extends State<LoginTela> {
 
   bool _flagRequisicao = false;
   Widget _body;
-  SharedPreferences _shared;
   List<String> _modalMensagens = [];
 
   TextEditingController _emailController = new TextEditingController();
@@ -36,8 +34,6 @@ class _LoginTelaState extends State<LoginTela> {
   bool _flagExibirSenha = false;
 
   var body;
-  bool _modoNoturno = false;
-  var _dados = null;
   // CORES TELA
   Color _corAppBarFundo =  Color( int.parse( Funcoes.converterCorStringColor("#FFFFFF") ) );
   Color _background = Color( int.parse( Funcoes.converterCorStringColor("#FFFFFF") ) );
@@ -56,8 +52,8 @@ class _LoginTelaState extends State<LoginTela> {
   _start() async {
     _config = await _config.fetchByChave('debug');
     if( _config.valor.toString().toLowerCase() == "true"){
-      _emailController.text = "teste@gmail.com";
-      _senhaController.text = "1234";
+      _emailController.text = "robertoaa1981@gmail.com";
+      _senhaController.text = "8671b3HJ+11";
     }    
     await montarTela();
     buscarDados();
@@ -77,10 +73,7 @@ class _LoginTelaState extends State<LoginTela> {
 
   buscarDados() async {
     // await montarTela();
-  
-
     _flagRequisicao = false;
-
   }
 
   @override
@@ -145,7 +138,7 @@ class _LoginTelaState extends State<LoginTela> {
                     child: Icon( _flagExibirSenha ? Icons.visibility : Icons.visibility_off , color: _colorLetra,),
                   ),
                 ),
-                obscureText: _flagExibirSenha,                  
+                obscureText: !_flagExibirSenha,                  
                 style: TextStyle(fontSize: 20,color: _colorLetra),
               ),
               SizedBox(height: 20, ),
@@ -170,9 +163,6 @@ class _LoginTelaState extends State<LoginTela> {
                       _bloquearTela( true );
                       var retorno = await _autenticacaoEmailAndSenha();
                       _bloquearTela( false );
-
-                      print("RETORNO");
-                      print(retorno);
 
                       // SALVAR NA MEMORIA DADO USUARIO
                       if( retorno['success'] == false){
@@ -304,14 +294,14 @@ class _LoginTelaState extends State<LoginTela> {
   _autenticacaoSalvar( dados ) async {
     bool flagErro = true;
     try{
-      await _autenticacaoSalvarDatabase(dados);
+      await _auth.create( dados );
     }catch(e){
       print("ERRO DATABASE: ${e.toString()}");      
       flagErro = false;
     }
 
     try{
-      await _autenticacaoSalvarMemoria( dados );
+      await ConfiguracaoModel.sharedPreferencesSalvarDados(dados);
     }catch(e){
       print("ERRO MEMORIA: ${e.toString()}");
       flagErro = false;
@@ -320,42 +310,11 @@ class _LoginTelaState extends State<LoginTela> {
 
   }
 
-  _autenticacaoSalvarMemoria( dados ) async {
-    try{
-      _shared = await SharedPreferences.getInstance();
-      _shared.setInt('id',dados['id']);
-      _shared.setString('usuario', dados['email'].toString().split("@")[0]);
-      _shared.setString('nome', dados['nome']);
-      _shared.setString('email', dados['email']);
-      _shared.setString('assinatura', dados['assinatura']);
-      _shared.setString('token', dados['token']);
-      return true;
-    }catch(e){
-      print("ERRO SALVAR MEMORIA: ${e}");
-      return false;
-    }
-  }
-
-  _autenticacaoSalvarDatabase( dados ) async {
-    _auth.id = dados['id'];
-    _auth.usuario = dados['email'].toString().split("@")[0];
-    _auth.nome = dados['nome'];
-    _auth.email = dados['email'];
-    _auth.token = dados['assinatura'];
-    _auth.datalogin = DateTime.now();
-    
-    try{
-      await _auth.create();
-      return true;
-    }catch(e){
-      print("ERRO SALVAR DATABASE: ${e.toString()}");      
-      return false;
-    }
-  }
 
   _autenticacaoEmailAndSenha() async {
-    var _host = (await ConfiguracaoModel.buscarConstantesAmbiente)['host_auth'].toString();
-    var _servico = (await ConfiguracaoModel.buscarConstantesRest)['auth_loging'].toString();
+    var constantes = await ConfiguracaoModel.buscarConstantesAmbiente;
+    var _host = constantes['host_auth'].toString();
+    var _servico = constantes['auth_loging'].toString();
 
     try{
       return await _auth.authLogin( 
