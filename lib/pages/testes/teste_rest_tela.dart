@@ -4,6 +4,7 @@ import 'package:me_poupe/componentes/label/label_opensans.dart';
 import 'package:me_poupe/helper/api_helper.dart';
 import 'package:me_poupe/helper/funcoes_helper.dart';
 import 'package:me_poupe/model/configuracoes/configuracao_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class TesteRestTela extends StatefulWidget {
   const TesteRestTela();
@@ -47,13 +48,13 @@ class _TesteRestTelaState extends State<TesteRestTela> {
 
   @override
   Widget build(BuildContext context) {
-    
+    SharedPreferences _prefs;
     CancelToken token;
 
     return Scaffold(
       backgroundColor: _colorBackground,
       appBar: AppBar(
-        title: Text("Teste REST" , ),
+        title: Text("Teste REST"),
         backgroundColor: _colorAppBarFundo,
       ),
       body: SafeArea(
@@ -118,6 +119,29 @@ class _TesteRestTelaState extends State<TesteRestTela> {
                       ),
                     ),                    
                   ],
+                ),
+                Divider(thickness: 5,color: _colorLetra,),
+
+                Container(
+                  width: MediaQuery.of(context).size.width - 15,
+                  child: RaisedButton(
+                    onPressed: () async { 
+                      _prefs = await SharedPreferences.getInstance();
+                      print( _prefs.getString("usuario"));
+                      Map opcoes = new Map();
+                      var configuracoes = await ConfiguracaoModel.buscarConstantesAmbiente;
+                      opcoes['url'] = configuracoes['host_url'];
+                      opcoes['data'] = {
+                        "id":  1 , 
+                        "assinatura": _prefs.getString("assinatura")
+                      };
+
+                      var retorno = await APIHelper.post(opcoes);
+                      print("RETORNO: ${retorno}");
+                    },
+                    color: _colorContainerBorda,
+                    child: LabelOpensans("BUSCAR LANCAMENTOS",cor: _colorAppBarFundo,bold: true,)
+                  ),
                 ),
               ],
             ),

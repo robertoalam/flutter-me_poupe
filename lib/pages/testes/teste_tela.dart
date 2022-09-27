@@ -8,6 +8,7 @@ import 'package:me_poupe/helper/funcoes_helper.dart';
 import 'package:me_poupe/model/configuracoes/configuracao_model.dart';
 import 'package:me_poupe/model/logs/log_model.dart';
 import 'package:me_poupe/pages/testes/teste_rest_tela.dart';
+import 'package:me_poupe/pages/testes/teste_variaveis_constantes.dart';
 import '../configuracoes/icones_list_tela.dart';
 
 class TesteTela extends StatefulWidget {
@@ -62,11 +63,12 @@ class _TesteTelaState extends State<TesteTela> {
         backgroundColor: _corAppBarFundo,
       ),
       body: SafeArea(
-
         child: ListView(
           children: [
             _Elemento( context , Icons.format_paint , "Icones" , "Lista de Icones" , IconeListTela() ),
             Divider( color: _colorLetra, ),
+            _Elemento( context , Icons.cloud , "Variaveis & Constantes" , "na sharedpreferences e database" , TesteVariaveisConstantes()),
+            Divider( color: _colorLetra, ),             
             _Elemento( context , Icons.cloud , "REST" , "lista de servicos " , TesteRestTela()),
             Divider( color: _colorLetra, ), 
             InkWell(
