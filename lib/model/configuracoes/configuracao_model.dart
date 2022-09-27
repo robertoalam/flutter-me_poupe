@@ -1,4 +1,7 @@
 import 'package:me_poupe/helper/database_helper.dart';
+import 'package:me_poupe/helper/funcoes_helper.dart';
+import 'package:me_poupe/model/logs/log_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ConfiguracaoModel{
   
@@ -39,6 +42,21 @@ class ConfiguracaoModel{
     List configDatabase = await ConfiguracaoModel.buscarConfiguracoesDatabase;
     for( ConfiguracaoModel item in configDatabase ){ retorno[item.chave] = item.valor; }
     return retorno;
+  }
+
+  static get getConfiguracoesLista async {
+    final dbHelper = DatabaseHelper.instance;
+    List<Map<String,dynamic>> lista = new List<Map<String,dynamic>>();
+
+    final linhas = await dbHelper.queryAllRows(TABLE_NAME);
+    for(var linha in linhas){
+      Map<String,dynamic> elemento = Map<String,dynamic>();
+      elemento['chave'] = linha['chave'];
+      elemento['valor'] = linha['valor'];
+      lista.add( elemento );
+    }
+    
+    return lista;
   }
 
   static get buscarConfiguracaoAmbiente async {
@@ -117,10 +135,9 @@ class ConfiguracaoModel{
           'ftp_host':'192.168.0.110',
           'ftp_host_user':'mepoupe',
           'ftp_host_pass':'1234',
-          'ftp_porta':'21'            
-        },
-        'rest':{
+          'ftp_porta':'21',
           'auth_loging':'/api/v1/basic/logon',
+          'lancamento_user':'/api/v1//lancamento/user',
           'cidades_buscar':'/api/v1/cidade/get_all',
           'arquivo_send':'/api/v1/arquivo/send',
           'database_send':'/api/v1/database/send',
@@ -131,8 +148,6 @@ class ConfiguracaoModel{
           'username':'admin',
           'password':'admin',
           'host_url':'https://api.aguiaempresarial.com.br',
-        },
-        'rest':{
           'auth_loging':'/login/validar',          
           'clientes_buscar':'/clientes/get_all',
           'precos_buscar':'/listas_preco/get_all',
@@ -156,17 +171,18 @@ class ConfiguracaoModel{
     String _ambiente = (await ConfiguracaoModel.buscarConfiguracaoAmbiente).toString();
     var retorno = ConfiguracaoModel.CONFIGURACAO['ambientes'].where( 
       (item) => item['ambiente'] == _ambiente
-    ).toList() as List<Map<String,dynamic>>;
-    return retorno[0]['constantes'];
+    ).toList() ;
+    // MAPEANDO LISTA
+    return Map<String, dynamic>.from( retorno[0]['constantes'] );
   }
 
-  static get buscarConstantesRest async {
-    String _ambiente = (await ConfiguracaoModel.buscarConfiguracaoAmbiente).toString();
-    var retorno = ConfiguracaoModel.CONFIGURACAO['ambientes'].where(
-      (item) => item['ambiente'].toString() == _ambiente
-    ).toList() as List<Map<String,dynamic>>;
-    return retorno[0]['rest'];
-  }
+  // static get buscarConstantesRest async {
+  //   String _ambiente = (await ConfiguracaoModel.buscarConfiguracaoAmbiente).toString();
+  //   var retorno = ConfiguracaoModel.CONFIGURACAO['ambientes'].where(
+  //     (item) => item['ambiente'].toString() == _ambiente
+  //   ).toList() as List<Map<String,dynamic>>;
+  //   return retorno[0]['rest'];
+  // }
 
   //CORES
   static const cores = {
@@ -336,7 +352,34 @@ class ConfiguracaoModel{
     {"icone":"torneira-01" , "codigo": 0xe005, "familia":"FontAwesomeSolid" , "pacote":"font_awesome_flutter"},
 
     {"icone":"ventilador-01" , "codigo": 0xf0210, "familia":"Material Design Icons" , "pacote":"material_design_icons_flutter"},
-
   };
+
+  static sharedPreferencesSalvarDados( dados ) async {
+    try{
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString('id',dados['id'].toString());
+      prefs.setString('usuario', dados['email'].toString().split("@")[0].toString());
+      prefs.setString('nome', dados['nome'].toString());
+      prefs.setString('email', dados['email'].toString());
+      prefs.setString('assinatura', dados['assinatura'].toString());
+      prefs.setString('token', dados['token'].toString());
+      return true;
+    }catch(e){
+      await Funcoes.logGravar(  new LogModel( Tipo.ERRO, e.toString() ) );
+      return false;
+    }
+  }
+
+  static get sharedPreferencesBuscarDados async {
+    Map retorno = new Map();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    retorno['id'] = prefs.getString('id');
+    retorno['usuario'] = prefs.getString('usuario');
+    retorno['email'] = prefs.getString('email');
+    retorno['nome'] = prefs.getString('nome');
+    retorno['assinatura'] = prefs.getString('assinatura');
+    retorno['token'] = prefs.getString('token');
+    return retorno;
+  }
 }
 
