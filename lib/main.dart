@@ -39,6 +39,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       home: SplashTela(),
+      // home: LoadingTela(),
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate

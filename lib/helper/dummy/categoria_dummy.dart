@@ -51,7 +51,7 @@ class CategoriaDummy{
       CategoriaCadModel(id: 4001 , idPai: 40 , descricao: "Roupas",icone:"roupa-01"),
       CategoriaCadModel(id: 4002 , idPai: 40 , descricao: "Pets",icone:"pets-01"),
       CategoriaCadModel(id: 4003 , idPai: 40 , descricao: "Presente",icone:"presente-aniver-01"),
-      CategoriaCadModel(id: 4003 , idPai: 40 , descricao: "Presente Aniversário",icone:"presente-01"),
+      CategoriaCadModel(id: 4004 , idPai: 40 , descricao: "Presente Aniversário",icone:"presente-01"),
 
       //CASA
       CategoriaCadModel(id: 5001 , idPai: 50 , descricao: "Decoração",icone:"home-03"),

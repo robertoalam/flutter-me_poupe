@@ -4,6 +4,7 @@ import 'package:me_poupe/componentes/label/label_opensans.dart';
 import 'package:me_poupe/helper/api_helper.dart';
 import 'package:me_poupe/helper/funcoes_helper.dart';
 import 'package:me_poupe/model/configuracoes/configuracao_model.dart';
+import 'package:me_poupe/pages/testes/rest/teste_rest_logon_cancel_tela.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class TesteRestTela extends StatefulWidget {
@@ -23,12 +24,13 @@ class _TesteRestTelaState extends State<TesteRestTela> {
 	Color _colorContainerBorda = Color(int.parse( Funcoes.converterCorStringColor("#FFFFFF") ) );
 	Color _colorFundo = Color(int.parse( Funcoes.converterCorStringColor("#FFFFFF") ) );
 	Color _colorLetra = Color(int.parse( Funcoes.converterCorStringColor("#FFFFFF") ) );
-  
-    @override
-	  void initState() {
+  APIHelper _apiHelper;
+
+  @override
+  void initState() {
 		_start();
 		super.initState();
-	  }
+  }
 	  
 	_start() async {
 		await montarTela();
@@ -67,8 +69,9 @@ class _TesteRestTelaState extends State<TesteRestTela> {
                   width: MediaQuery.of(context).size.width - 15,
                   child: RaisedButton(
                     onPressed: () async { 
-                      var retorno = await APIHelper.post("");
-                      print("RETORNO: ${retorno}");
+                      await Navigator.push( 
+                        context , MaterialPageRoute( builder: (context) => TesteRestLogonCancelTela() ) 
+                      ); 
                     },
                     color: _colorContainerBorda,
                     child: LabelOpensans("LOGIN",cor: _colorAppBarFundo,bold: true,)
@@ -93,7 +96,7 @@ class _TesteRestTelaState extends State<TesteRestTela> {
                             );
 
                             var res = await dio.post(
-                              "http://192.168.0.110/i9tecnosul.com.br/auth/api/v1/basic/logon",
+                              "http://192.168.8.110/i9tecnosul.com.br/auth/api/v1/basic/logon",
                               data: {	"user_name":"robertoaa1981@gmail.com","user_pass":"8671b3HJ+11"}                              
                             );
 
@@ -102,7 +105,7 @@ class _TesteRestTelaState extends State<TesteRestTela> {
                             if (CancelToken.isCancel(e)) {
                               print('cancelled by dio');
                             } else {
-                              print('error${e.toString()}');
+                              print('ERRO ${e.toString()}');
                             }
                           }                          
                         },
@@ -135,12 +138,23 @@ class _TesteRestTelaState extends State<TesteRestTela> {
                         "id":  1 , 
                         "assinatura": _prefs.getString("assinatura")
                       };
-
-                      var retorno = await APIHelper.post(opcoes);
+                      _apiHelper = new APIHelper();  
+                      var retorno = await _apiHelper.post(opcoes);
                       print("RETORNO: ${retorno}");
                     },
                     color: _colorContainerBorda,
                     child: LabelOpensans("BUSCAR LANCAMENTOS",cor: _colorAppBarFundo,bold: true,)
+                  ),
+                ),
+
+                Container(
+                  width: MediaQuery.of(context).size.width - 15,
+                  child: RaisedButton(
+                    onPressed: () async { 
+                      await _buscarCategorias;
+                    },
+                    color: _colorContainerBorda,
+                    child: LabelOpensans("BUSCAR CATEGORIAS",cor: _colorAppBarFundo,bold: true,)
                   ),
                 ),
               ],
@@ -149,5 +163,10 @@ class _TesteRestTelaState extends State<TesteRestTela> {
         ),
       ),
     );
+  }
+
+
+  get _buscarCategorias{
+    
   }
 }

@@ -23,7 +23,7 @@ class LogModel {
 		var map = new Map<String, dynamic>();
 		map["data"] = DateTime.now().toString().split(".")[0];
 		map["tipo"] = this.tipo.toString().split(".")[1];
-		map["metodo"] = this.metodo.toString().split(".")[1];
+		map["metodo"] = this.metodo.toString();
 		map["mensagem"] = this.mensagem;
 		map["texto"] = this.texto;
 		map["observacao"] = this.observacao;

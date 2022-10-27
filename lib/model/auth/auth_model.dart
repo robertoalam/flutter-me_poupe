@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:me_poupe/helper/api_helper.dart';
 import 'package:me_poupe/helper/database_helper.dart';
@@ -48,22 +47,22 @@ class AuthModel{
     return map;
   }
 
-  authLogin(data , host ) async {
-    if( data == null) return null;
-    if( host == null) return null;
+  // authLogin(data , host ) async {
+  //   if( data == null) return null;
+  //   if( host == null) return null;
 
-    Map<String,dynamic> resposta;
+  //   Map<String,dynamic> resposta;
     
-    try{
-      resposta = await APIHelper.post({'url':host,'data':data});
-      if(resposta == null) return null;
-      return resposta;
+  //   try{
+  //     resposta = await APIHelper.post({'url':host,'data':data});
+  //     if(resposta == null) return null;
+  //     return resposta;
 
-    }catch(e){
-      print("ERRO: ${e.toString()}");
-      return resposta = null;
-    }
-  }
+  //   }catch(e){
+  //     print("ERRO: ${e.toString()}");
+  //     return resposta = null;
+  //   }
+  // }
 
   create( dados ) async {
     this.id = dados['id'];

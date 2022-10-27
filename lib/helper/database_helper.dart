@@ -49,7 +49,12 @@ class DatabaseHelper {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
     String path = join(documentsDirectory.path, _databaseName);
 
-    if(false){ await deleteDatabase(path); }
+    if(true){ 
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.clear();
+      await deleteDatabase(path); 
+    }
+
     return await openDatabase(path, version: _databaseVersion, onCreate: _onCreate);
   }
 
@@ -78,9 +83,6 @@ class DatabaseHelper {
     await cartaoTipoCadPopular(db);
 
     await contaCriar(db);
-    // await contaBancariaCriar(db);
-    // await carteiraCriar(db);
-    // await carteiraPopular(db);
 
     await categoriaCadCriar(db);
     await categoriaCadPopular(db);
@@ -98,8 +100,6 @@ class DatabaseHelper {
     await lancamentoPagamentoCriarTable(db);
     await lancamentoFrequenciaCriarTable(db);
     await lancamentoFrequenciaDetalheCriarTable(db);
-    // await lancamentoFrequenciaCriar(db);
-    // await usuarioTipoCadPopular(db);
 
     // await seedTestes(db);
   }
@@ -200,20 +200,11 @@ class DatabaseHelper {
     // NORMAL / NOTURNO
     await db.execute(" INSERT INTO "+ConfiguracaoModel.TABLE_NAME+" VALUES ('exibir_saldo','true' );  ");
     await db.execute(" INSERT INTO "+ConfiguracaoModel.TABLE_NAME+" VALUES ('modo','normal' );  ");
-    await db.execute(" INSERT INTO "+ConfiguracaoModel.TABLE_NAME+" VALUES ('debug','false'); ");    
+    await db.execute(" INSERT INTO "+ConfiguracaoModel.TABLE_NAME+" VALUES ('debug','true'); ");    
     await db.execute(" INSERT INTO "+ConfiguracaoModel.TABLE_NAME+" VALUES ('ambiente','local'); ");    
     String deviceId = await Funcoes.buscarDeviceId;  
     await db.execute(" INSERT INTO "+ConfiguracaoModel.TABLE_NAME+" VALUES ('device_id','${deviceId.toString()}' );  ");     
     return 1;
-  }
-
-  get setarEstilos async {
-    SharedPreferences _prefs = await SharedPreferences.getInstance();
-    List<String> lista = [ 'beto','luisa' ];
-    _prefs.setStringList('nomes', lista);
-    // ConfiguracaoModel.cores['normal'].forEach((key, value) { 
-    //   _prefs.setString(key, value);
-    // });
   }
 
   iconeCadPopular(Database db) async{
